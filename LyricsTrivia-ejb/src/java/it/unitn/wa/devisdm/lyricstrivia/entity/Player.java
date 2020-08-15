@@ -24,6 +24,9 @@ public class Player implements Serializable {
     
     @Id
     @Column
+    private String username; 
+    
+    @Column
     private String email;
     
     @Column
@@ -43,6 +46,14 @@ public class Player implements Serializable {
     
     @Column
     private int won;
+    
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
     
     public String getEmail() {
         return email;
@@ -100,7 +111,8 @@ public class Player implements Serializable {
         this.won = won;
     }
 
-    public Player(String email, String pwd, String salt, int age, char genre, int played, int won) {
+    public Player(String username, String email, String pwd, String salt, int age, char genre, int played, int won) {
+        this.username = username;
         this.email = email;
         this.pwd = pwd;
         this.salt = salt;
@@ -134,7 +146,7 @@ public class Player implements Serializable {
 
         boolean intCheck = this.age == other.age && this.genre == other.genre && this.played != other.played && this.won == other.won;
 
-        return intCheck && this.email.equals(other.email) && this.pwd.equals(other.pwd) && this.salt.equals(other.salt);
+        return intCheck && this.username.equals(other.username) && this.email.equals(other.email) && this.pwd.equals(other.pwd) && this.salt.equals(other.salt);
     }
     
     

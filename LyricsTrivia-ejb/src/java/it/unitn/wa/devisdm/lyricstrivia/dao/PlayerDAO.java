@@ -7,7 +7,7 @@ package it.unitn.wa.devisdm.lyricstrivia.dao;
 
 import it.unitn.wa.devisdm.lyricstrivia.entity.Player;
 import java.util.List;
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -16,8 +16,8 @@ import javax.persistence.Query;
  *
  * @author devis
  */
-@Stateful
-public class UserDAO implements UserDAORemote {
+@Stateless
+public class PlayerDAO implements PlayerDAORemote {
     
         
     @PersistenceContext
@@ -34,21 +34,22 @@ public class UserDAO implements UserDAORemote {
     }
 
     @Override
-    public void deletePlayer(String email) {
-        manager.remove(getPlayer(email));
+    public Player deletePlayer(String username) {
+        Player delP = getPlayer(username);
+        manager.remove(delP);
+        return delP;
     }
 
     @Override
-    public Player getPlayer(String email) {
-        return manager.find(Player.class, email);
+    public Player getPlayer(String username) {
+        return manager.find(Player.class, username);
     }
 
     @Override
     public List<Player> getAllPlayers() {
         Query query = manager.createQuery("from Player", Player.class);
         return query.getResultList();
+        
     }
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 }

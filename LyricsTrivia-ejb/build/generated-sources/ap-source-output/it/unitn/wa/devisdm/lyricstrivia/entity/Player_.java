@@ -15,6 +15,7 @@ public abstract class Player_ {
 	public static volatile SingularAttribute<Player, Integer> played;
 	public static volatile SingularAttribute<Player, String> email;
 	public static volatile SingularAttribute<Player, Integer> age;
+	public static volatile SingularAttribute<Player, String> username;
 
 }
 

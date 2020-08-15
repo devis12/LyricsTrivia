@@ -14,15 +14,15 @@ import javax.ejb.Remote;
  * @author devis
  */
 @Remote
-public interface UserDAORemote {
+public interface PlayerDAORemote {
     
     void addPlayer(Player player);
 
     void editPlayer(Player player);
 
-    void deletePlayer(String email);
+    Player deletePlayer(String username);
     
-    Player getPlayer(String email);
+    Player getPlayer(String username);
 
     List<Player> getAllPlayers();
 }
