@@ -13,5 +13,9 @@
         <session-timeout>
             30
         </session-timeout>
-    </session-config>
+    </session-config>    
+    <welcome-file-list>
+        <welcome-file>landing.jsp</welcome-file>
+    </welcome-file-list>
+
 </web-app>
