@@ -10,6 +10,7 @@ import it.unitn.wa.devisdm.lyricstrivia.dao.PlayerDAORemote;
 import it.unitn.wa.devisdm.lyricstrivia.entity.Player;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * RESTFUL operations on Players 
  * @author devis
  */
 public class Players extends HttpServlet {
@@ -76,20 +77,25 @@ public class Players extends HttpServlet {
         out.flush();
         
     }
-
+    
+    /*  
+     *   Trying to register a new account
+    */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        //mandatory fields
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String pwd = request.getParameter("pwd");
-        int age = Integer.parseInt(request.getParameter("age"));
+        
+        Date birthdate = new Date(Long.parseLong(request.getParameter("birthdate")));
         char gender = (request.getParameter("gender")).charAt(0);
         int played = Integer.parseInt(request.getParameter("played"));
         int won = Integer.parseInt(request.getParameter("won"));
         
-        Player newP = new Player(username, email, pwd, "salt", age, gender, played, won);
+        Player newP = new Player(username, email, pwd.getBytes(), "salt".getBytes(), birthdate, gender, played, won);
         playerDAORemote.addPlayer(newP);
         
         response.setContentType("application/json"); 
@@ -109,7 +115,7 @@ public class Players extends HttpServlet {
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String pwd = request.getParameter("pwd");
-        int age = Integer.parseInt(request.getParameter("age"));
+        Date birthdate = new Date(Long.parseLong(request.getParameter("birthdate")));
         char gender = (request.getParameter("gender")).charAt(0);
         int played = Integer.parseInt(request.getParameter("played"));
         int won = Integer.parseInt(request.getParameter("won"));
@@ -119,7 +125,7 @@ public class Players extends HttpServlet {
             return;
         }
         
-        Player updP = new Player(username, email, pwd, "salt", age, gender, played, won);
+        Player updP = new Player(username, email, pwd.getBytes(), "salt".getBytes(), birthdate, gender, played, won);
         playerDAORemote.editPlayer(updP);
         
         response.setContentType("application/json"); 

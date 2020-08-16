@@ -5,17 +5,24 @@
         <servlet-class>it.unitn.wa.devisdm.lyricstrivia.controller.Players</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>Registration</servlet-name>
+        <servlet-class>it.unitn.wa.devisdm.lyricstrivia.controller.Registration</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Players</servlet-name>
         <url-pattern>/Players/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Registration</servlet-name>
+        <url-pattern>/Registration</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
-    </session-config>    
+    </session-config>
     <welcome-file-list>
         <welcome-file>landing.jsp</welcome-file>
     </welcome-file-list>
-
 </web-app>

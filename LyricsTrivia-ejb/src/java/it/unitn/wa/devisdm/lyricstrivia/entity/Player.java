@@ -6,10 +6,13 @@
 package it.unitn.wa.devisdm.lyricstrivia.entity;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -29,13 +32,14 @@ public class Player implements Serializable {
     private String email;
     
     @Column
-    private String pwd;
+    private byte[] pwd;
     
     @Column
-    private String salt;
+    private byte[] salt;
     
     @Column
-    private int age;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date birthdate;
     
     @Column
     private char gender;
@@ -62,28 +66,28 @@ public class Player implements Serializable {
         this.email = email;
     }
 
-    public String getPwd() {
+    public byte[] getPwd() {
         return pwd;
     }
 
-    public void setPwd(String pwd) {
+    public void setPwd(byte[] pwd) {
         this.pwd = pwd;
     }
 
-    public String getSalt() {
+    public byte[] getSalt() {
         return salt;
     }
 
-    public void setSalt(String salt) {
+    public void setSalt(byte[] salt) {
         this.salt = salt;
     }
 
-    public int getAge() {
-        return age;
+    public Date getBirthdate() {
+        return birthdate;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
     }
 
     public char getGender() {
@@ -110,12 +114,12 @@ public class Player implements Serializable {
         this.won = won;
     }
 
-    public Player(String username, String email, String pwd, String salt, int age, char gender, int played, int won) {
+    public Player(String username, String email, byte[] pwd, byte[] salt, Date birthdate, char gender, int played, int won) {
         this.username = username;
         this.email = email;
         this.pwd = pwd;
         this.salt = salt;
-        this.age = age;
+        this.birthdate = birthdate;
         this.gender = gender;
         this.played = played;
         this.won = won;
@@ -143,9 +147,10 @@ public class Player implements Serializable {
         }
         final Player other = (Player) obj;
 
-        boolean intCheck = this.age == other.age && this.gender == other.gender && this.played != other.played && this.won == other.won;
+        boolean intCheck = this.gender == other.gender && this.played != other.played && this.won == other.won;
 
-        return intCheck && this.username.equals(other.username) && this.email.equals(other.email) && this.pwd.equals(other.pwd) && this.salt.equals(other.salt);
+        return intCheck && this.birthdate.compareTo(other.birthdate)==0 && this.username.equals(other.username) && 
+                this.email.equals(other.email) && Arrays.equals(this.pwd, other.pwd) && Arrays.equals(this.salt, other.salt);
     }
     
     

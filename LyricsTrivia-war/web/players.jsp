@@ -34,7 +34,7 @@
             </tr>
             <tr>
                 <td>Age</td>
-                <td><input type="number" ng-model="age" name="age" value="{{age}}"/></td>
+                <td><input type="date" ng-model="birthdate" name="birthdate" value="{{birthdate}}"/></td>
             </tr>
             <tr>
                 <td>Gender</td>
@@ -73,7 +73,7 @@
             <thead>
                     <tr>
                         <th>Player</th>
-                        <th>Age</th>
+                        <th>Birth date</th>
                         <th>Gender</th>
                         <th>Played Matches</th>
                         <th>Won Matches</th>
@@ -82,7 +82,7 @@
                 
                 <tr ng-repeat="p in players">
                     <td>{{p.username}}</td>
-                    <td>{{p.age}}</td>
+                    <td>{{p.birthdate}}</td>
                     <td>{{p.gender}}</td>
                     <td>{{p.played}}</td>
                     <td>{{p.won}}</td>

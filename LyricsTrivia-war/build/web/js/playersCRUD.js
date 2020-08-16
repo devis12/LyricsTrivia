@@ -11,7 +11,7 @@ angular.module('playersCRUD', [])
             $scope.username = player? player.username : null;
             $scope.email = player? player.email : null;
             $scope.pwd = player? player.pwd : null;
-            $scope.age = player? player.age : null;
+            $scope.birthdate = player? player.birthdate : null;
             
             $scope.isMale = false;
             $scope.isFemale = false;
@@ -37,7 +37,7 @@ angular.module('playersCRUD', [])
                 username: $scope.username,
                 email : $scope.email,
                 pwd : $scope.pwd,
-                age : $scope.age,
+                birthdate : new Date($scope.birthdate).getTime(),
                 gender : $scope.gender,
                 played : $scope.played,
                 won : $scope.won

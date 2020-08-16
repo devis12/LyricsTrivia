@@ -106,68 +106,70 @@
         <!--Registration modal-->
         <div class="modal fade bg-info text-center" data-backdrop="static" data-keyboard="false" id="registerModal" tabindex="-1" aria-labelledby="modal for recovering profile credentials" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                <div class="modal-body text-center">
-                    <i class="fas fa-user text-dark"></i>
-                    <h5 class="modal-title text-body">Registration</h5>
-                    <hr />
-                    
-                    <!--Username and email-->
-                    <div class="row text-body fs-18 text-center">
-                        
-                        <div class="col-6">
-                            <label for="username" class="label">Select your username</label>
-                            <input type="text" class="w-75 border border-info rounded-bottom border-top-0 border-left-0 border-right-0" name="username" value="" placeholder="username" required />
-                        </div>
+                <form method="POST" action="Registration">
+                    <div class="modal-content">
+                        <div class="modal-body text-center">
+                            <i class="fas fa-user text-dark"></i>
+                            <h5 class="modal-title text-body">Registration</h5>
+                            <hr />
+                            
+                            <!--Username and email-->
+                            <div class="row text-body fs-18 text-center">
 
-                        <div class="col-6">
-                            <label for="email" class="label">Type your email</label>
-                            <input type="email" class="w-75 border border-info rounded-bottom border-top-0 border-left-0 border-right-0" name="email" value="" placeholder="a@a.com" required />
+                                <div class="col-6">
+                                    <label for="username" class="label">Select your username</label>
+                                    <input type="text" class="w-75 border border-info rounded-bottom border-top-0 border-left-0 border-right-0" name="username" value="" placeholder="username" required />
+                                </div>
+
+                                <div class="col-6">
+                                    <label for="email" class="label">Type your email</label>
+                                    <input type="email" class="w-75 border border-info rounded-bottom border-top-0 border-left-0 border-right-0" name="email" value="" placeholder="a@a.com" required />
+                                </div>
+
+                            </div>
+
+                            <!--Pwds-->
+                            <div class="row text-body fs-18 text-center mt-5">
+                                <div class="col-2"></div>
+                                <div class="col-8">
+                                    <label for="password1" class="label float-left mr-5">Type your password</label>
+                                    <input type="password" class="w-50 float-none border border-info rounded-bottom border-top-0 border-left-0 border-right-0" name="password1" value="" placeholder="password" required />
+                                    <label for="password2" class="label float-left mr-4">Confirm your password</label>
+                                    <input type="password" class="w-50 float-none border border-info rounded-bottom border-top-0 border-left-0 border-right-0" name="password2" value="" placeholder="password" required />
+                                </div>
+                                <div class="col-2"></div>
+                            </div>
+
+                            <div class="row text-body fs-18 mt-5">
+                                <div class="col-6">
+                                    <label for="gender" class="label">Gender<span class="fs-12 ml-1 text-secondary">(optional)</span></label>
+                                    <select class="w-75 border border-info rounded custom-select" name="gender">
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                        <option value="O">Other</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-6">
+                                    <label for="email" class="label">Birth date<span class="fs-12 ml-1 text-secondary">(optional)</span></label>
+                                    <input type="date" class="w-75 border border-info rounded" name="birthdate" />
+                                </div>
+                            </div>
+
+                            <!--reCAPTCHA-->
+                            <div class="row text-body fs-18 mt-5">
+                                <div class="col-4"></div>
+                                <div class="col-4"><div class="g-recaptcha" data-sitekey="6Lfal78ZAAAAANUK80a_FSdn1jewQlwhWc9KCvEE"></div></div>
+                                <div class="col-4"></div>
+                            </div>
+
                         </div>
-                        
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-danger text-bold" value="Register"/>
+                        </div>
                     </div>
-
-                    <!--Pwds-->
-                    <div class="row text-body fs-18 text-center mt-5">
-                        <div class="col-2"></div>
-                        <div class="col-8">
-                            <label for="password1" class="label float-left mr-5">Type your password</label>
-                            <input type="password" class="w-50 float-none border border-info rounded-bottom border-top-0 border-left-0 border-right-0" name="password1" value="" placeholder="password" required />
-                            <label for="password2" class="label float-left mr-4">Confirm your password</label>
-                            <input type="password" class="w-50 float-none border border-info rounded-bottom border-top-0 border-left-0 border-right-0" name="password2" value="" placeholder="password" required />
-                        </div>
-                        <div class="col-2"></div>
-                    </div>
-
-                    <div class="row text-body fs-18 mt-5">
-                        <div class="col-6">
-                            <label for="gender" class="label">Gender<span class="fs-12 ml-1 text-secondary">(optional)</span></label>
-                            <select class="w-75 border border-info rounded custom-select" name="gender">
-                                <option value="M">Male</option>
-                                <option value="F">Female</option>
-                                <option value="O">Other</option>
-                            </select>
-                        </div>
-
-                        <div class="col-6">
-                            <label for="email" class="label">Birth date<span class="fs-12 ml-1 text-secondary">(optional)</span></label>
-                            <input type="date" class="w-75 border border-info rounded" name="birthdate" />
-                        </div>
-                    </div>
-
-                    <!--reCAPTCHA-->
-                    <div class="row text-body fs-18 mt-5">
-                        <div class="col-4"></div>
-                        <div class="col-4"><div class="g-recaptcha" data-sitekey="6Lfal78ZAAAAANUK80a_FSdn1jewQlwhWc9KCvEE"></div></div>
-                        <div class="col-4"></div>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger text-bold">Register</button>
-                </div>
-                </div>
+                </form>
             </div>
         </div>
 
