@@ -15,11 +15,11 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
         <script src="js/playersCRUD.js"></script>
     </head>
-    <body>
+    <body ng-app="playersCRUD" ng-controller="playersCtrl">
         
         <h1>Players</h1>
         
-        <table ng-app="playersCRUD" ng-controller="playersCtrl">
+        <table>
             <tr>
                 <td>Username</td>
                 <td><input type="text" ng-model="username" name="username" value="{{username}}"/></td>
@@ -37,7 +37,7 @@
                 <td><input type="number" ng-model="age" name="age" value="{{age}}"/></td>
             </tr>
             <tr>
-                <td>Genre</td>
+                <td>Gender</td>
                 <td>
                     <input type="radio" ng-model="gender" name="gender" value="M" ng-checked="isMale || !isFemale && !isOther"/>
                     <label for="male">Male</label><br>
@@ -46,7 +46,6 @@
                     <input type="radio" ng-model="gender" name="gender" value="O" ng-checked="isOther"/>
                     <label for="other">Other</label> 
                 </td>
-                <td><input type="button" ng-click="checkGenre()"></td>
             </tr>
             <tr>
                 <td>Played</td>
@@ -75,21 +74,19 @@
                     <tr>
                         <th>Player</th>
                         <th>Age</th>
-                        <th>Genre</th>
+                        <th>Gender</th>
                         <th>Played Matches</th>
                         <th>Won Matches</th>
                     </tr>
                 </thead>
                 
-                <c:forEach items="${requestScope.players}" var="p">
-                    <tr>
-                        <td>${p.username}</td>
-                        <td>${p.age}</td>
-                        <td>${p.genre}</td>
-                        <td>${p.played}</td>
-                        <td>${p.won}</td>
-                    </tr>
-                </c:forEach>
+                <tr ng-repeat="p in players">
+                    <td>{{p.username}}</td>
+                    <td>{{p.age}}</td>
+                    <td>{{p.gender}}</td>
+                    <td>{{p.played}}</td>
+                    <td>{{p.won}}</td>
+                </tr>
                 
         </table>
         

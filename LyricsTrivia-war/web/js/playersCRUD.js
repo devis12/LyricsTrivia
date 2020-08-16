@@ -18,7 +18,8 @@ angular.module('playersCRUD', [])
             $scope.isOther = false;
             
             if(player){
-                switch(player.genre){
+                $scope.gender = player.gender;
+                switch(player.gender){
                     case 'M': $scope.isMale = true; break;
                     case 'F': $scope.isFemale = true; break;
                     case 'O': $scope.isOther = true; break;
@@ -30,14 +31,6 @@ angular.module('playersCRUD', [])
             $scope.won = player? player.won : null;
         } 
         
-        $scope.checkGenre = function (){
-          
-            console.log($scope.genre);
-            console.log($scope.isMale);
-            console.log($scope.isFemale);
-            console.log($scope.isOther);
-        };
-        
         function getPlayerScope(){
             
             let player = {
@@ -45,7 +38,7 @@ angular.module('playersCRUD', [])
                 email : $scope.email,
                 pwd : $scope.pwd,
                 age : $scope.age,
-                genre : $scope.genre,
+                gender : $scope.gender,
                 played : $scope.played,
                 won : $scope.won
             };
@@ -66,7 +59,7 @@ angular.module('playersCRUD', [])
                 }
               })
                 .then(
-                    () => {console.log("success");},
+                    () => $scope.reloadTableAllUsers(),
                     (error) =>  console.error(error)
                 );
         };
@@ -84,7 +77,7 @@ angular.module('playersCRUD', [])
                 }
               })
                 .then(
-                    () => {console.log("success");},
+                    () => $scope.reloadTableAllUsers(),
                     (error) =>  console.error(error)
                 );
         };
@@ -102,7 +95,7 @@ angular.module('playersCRUD', [])
                 }
               })
                 .then(
-                    () => {console.log("success");},
+                    () => $scope.reloadTableAllUsers(),
                     (error) =>  console.error(error)
                 );
         };
@@ -115,4 +108,16 @@ angular.module('playersCRUD', [])
                     (error) =>  console.error(error)
                 );
         };
+        
+        $scope.reloadTableAllUsers = function (){
+            $http.get("Players")
+                .then(
+                    (response) => ($scope.players = response.data),
+                    (error) =>  console.error(error)
+                );
+        };
+        
+        angular.element(document).ready(function () {
+            $scope.reloadTableAllUsers();
+        });
 }]);

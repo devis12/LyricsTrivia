@@ -9,8 +9,8 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Player_ {
 
 	public static volatile SingularAttribute<Player, String> salt;
+	public static volatile SingularAttribute<Player, Character> gender;
 	public static volatile SingularAttribute<Player, Integer> won;
-	public static volatile SingularAttribute<Player, Character> genre;
 	public static volatile SingularAttribute<Player, String> pwd;
 	public static volatile SingularAttribute<Player, Integer> played;
 	public static volatile SingularAttribute<Player, String> email;

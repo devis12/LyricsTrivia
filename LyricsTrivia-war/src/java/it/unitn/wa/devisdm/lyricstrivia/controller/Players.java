@@ -57,22 +57,23 @@ public class Players extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+       response.setContentType("application/json"); 
+        PrintWriter out = response.getWriter();
+        
         String specificUsername = Utilities.getPathParameter(request); //extract username
-        HashMap<String, String> queryParameters = Utilities.getQueryParameters(request);//extract query parameters
+        //HashMap<String, String> queryParameters = Utilities.getQueryParameters(request);//extract query parameters
         
         if(specificUsername != null && specificUsername.length() > 0){//user wants info about a specific player
             Player p = playerDAORemote.getPlayer(specificUsername);
-            request.setAttribute("Player", p);
-            response.setContentType("application/json"); //TODO move it above
-            PrintWriter out = response.getWriter();
             out.print(gson.toJson(p));
-            out.flush();
         
-        }else{//just print out table with all the users //TODO fix it with JSON Array
+        }else{//return list of all players in a JSON Array
             List<Player> players = playerDAORemote.getAllPlayers();
-            request.setAttribute("players", players);
-            request.getRequestDispatcher("players.jsp").forward(request, response);
+            out.print(gson.toJson(players));
         }
+        
+        out.flush();
         
     }
 
@@ -84,11 +85,11 @@ public class Players extends HttpServlet {
         String email = request.getParameter("email");
         String pwd = request.getParameter("pwd");
         int age = Integer.parseInt(request.getParameter("age"));
-        char genre = (request.getParameter("genre")).charAt(0);
+        char gender = (request.getParameter("gender")).charAt(0);
         int played = Integer.parseInt(request.getParameter("played"));
         int won = Integer.parseInt(request.getParameter("won"));
         
-        Player newP = new Player(username, email, pwd, "salt", age, genre, played, won);
+        Player newP = new Player(username, email, pwd, "salt", age, gender, played, won);
         playerDAORemote.addPlayer(newP);
         
         response.setContentType("application/json"); 
@@ -109,7 +110,7 @@ public class Players extends HttpServlet {
         String email = request.getParameter("email");
         String pwd = request.getParameter("pwd");
         int age = Integer.parseInt(request.getParameter("age"));
-        char genre = (request.getParameter("genre")).charAt(0);
+        char gender = (request.getParameter("gender")).charAt(0);
         int played = Integer.parseInt(request.getParameter("played"));
         int won = Integer.parseInt(request.getParameter("won"));
         
@@ -118,7 +119,7 @@ public class Players extends HttpServlet {
             return;
         }
         
-        Player updP = new Player(username, email, pwd, "salt", age, genre, played, won);
+        Player updP = new Player(username, email, pwd, "salt", age, gender, played, won);
         playerDAORemote.editPlayer(updP);
         
         response.setContentType("application/json"); 

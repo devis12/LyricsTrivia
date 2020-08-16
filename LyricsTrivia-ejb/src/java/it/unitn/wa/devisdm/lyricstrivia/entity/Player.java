@@ -6,7 +6,6 @@
 package it.unitn.wa.devisdm.lyricstrivia.entity;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -39,7 +38,7 @@ public class Player implements Serializable {
     private int age;
     
     @Column
-    private char genre;
+    private char gender;
     
     @Column
     private int played;
@@ -87,12 +86,12 @@ public class Player implements Serializable {
         this.age = age;
     }
 
-    public char getGenre() {
-        return genre;
+    public char getGender() {
+        return gender;
     }
 
-    public void setGenre(char genre) {
-        this.genre = genre;
+    public void setGender(char gender) {
+        this.gender = gender;
     }
 
     public int getPlayed() {
@@ -111,13 +110,13 @@ public class Player implements Serializable {
         this.won = won;
     }
 
-    public Player(String username, String email, String pwd, String salt, int age, char genre, int played, int won) {
+    public Player(String username, String email, String pwd, String salt, int age, char gender, int played, int won) {
         this.username = username;
         this.email = email;
         this.pwd = pwd;
         this.salt = salt;
         this.age = age;
-        this.genre = genre;
+        this.gender = gender;
         this.played = played;
         this.won = won;
     }
@@ -144,7 +143,7 @@ public class Player implements Serializable {
         }
         final Player other = (Player) obj;
 
-        boolean intCheck = this.age == other.age && this.genre == other.genre && this.played != other.played && this.won == other.won;
+        boolean intCheck = this.age == other.age && this.gender == other.gender && this.played != other.played && this.won == other.won;
 
         return intCheck && this.username.equals(other.username) && this.email.equals(other.email) && this.pwd.equals(other.pwd) && this.salt.equals(other.salt);
     }
@@ -153,7 +152,7 @@ public class Player implements Serializable {
     
     @Override
     public String toString() {
-        return "it.unitn.wa.devisdm.lyricstrivia.entity.Player[ id=" + email + " ]";
+        return "it.unitn.wa.devisdm.lyricstrivia.entity.Player[ id=" + username + " ]";
     }
     
 }
