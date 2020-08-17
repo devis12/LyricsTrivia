@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <filter>
+        <filter-name>LoggedInFilter</filter-name>
+        <filter-class>it.unitn.wa.devisdm.lyricstrivia.filters.LoggedInFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoggedInFilter</filter-name>
+        <url-pattern>/home_page.jsp</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
     <servlet>
         <servlet-name>Players</servlet-name>
         <servlet-class>it.unitn.wa.devisdm.lyricstrivia.controller.Players</servlet-class>
@@ -9,6 +21,14 @@
         <servlet-name>Registration</servlet-name>
         <servlet-class>it.unitn.wa.devisdm.lyricstrivia.controller.Registration</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Validation</servlet-name>
+        <servlet-class>it.unitn.wa.devisdm.lyricstrivia.controller.Validation</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>it.unitn.wa.devisdm.lyricstrivia.controller.Login</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Players</servlet-name>
         <url-pattern>/Players/*</url-pattern>
@@ -17,12 +37,20 @@
         <servlet-name>Registration</servlet-name>
         <url-pattern>/Registration</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Validation</servlet-name>
+        <url-pattern>/Validation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>landing.jsp</welcome-file>
+        <welcome-file>home_page.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

@@ -48,6 +48,10 @@ public class Player implements Serializable {
     private int played;
     
     @Column
+    private boolean confirmed;
+    
+    
+    @Column
     private int won;
     
     public String getUsername() {
@@ -113,8 +117,16 @@ public class Player implements Serializable {
     public void setWon(int won) {
         this.won = won;
     }
+    
+    public boolean getConfirmed() {
+        return confirmed;
+    }
 
-    public Player(String username, String email, byte[] pwd, byte[] salt, Date birthdate, char gender, int played, int won) {
+    public void setConfirmed(boolean confirmed) {
+        this.confirmed = confirmed;
+    }
+
+    public Player(String username, String email, byte[] pwd, byte[] salt, Date birthdate, char gender, int played, int won, boolean confirmed) {
         this.username = username;
         this.email = email;
         this.pwd = pwd;
@@ -123,6 +135,7 @@ public class Player implements Serializable {
         this.gender = gender;
         this.played = played;
         this.won = won;
+        this.confirmed = confirmed;
     }
 
     public Player(){}
@@ -147,9 +160,9 @@ public class Player implements Serializable {
         }
         final Player other = (Player) obj;
 
-        boolean intCheck = this.gender == other.gender && this.played != other.played && this.won == other.won;
+        boolean intCheck = this.gender == other.gender && this.played == other.played && this.won == other.won;
 
-        return intCheck && this.birthdate.compareTo(other.birthdate)==0 && this.username.equals(other.username) && 
+        return intCheck && this.confirmed == other.confirmed && this.birthdate.compareTo(other.birthdate)==0 && this.username.equals(other.username) && 
                 this.email.equals(other.email) && Arrays.equals(this.pwd, other.pwd) && Arrays.equals(this.salt, other.salt);
     }
     

@@ -168,9 +168,6 @@ public class TokenGenerator {
      *
      * @param password password in clear text inserted by the user
      * @param salt salt generated at registration for this user
-     * @param iterations how many iterations we want to do with PBKDF2 hashing
-     * technique
-     * @param derivedKeyLength length of the key to store in bytes
      *
      * @return array of {@code byte[]} that will represent the hashed password
      * to store for this user
@@ -181,7 +178,9 @@ public class TokenGenerator {
      *
      * @author devis
      */
-    public static byte[] getEncryptedPassword(String password, byte[] salt, int iterations, int derivedKeyLength) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public static byte[] getEncryptedPassword(String password, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        int iterations = 1024;
+        int derivedKeyLength = 64;
         KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, iterations, derivedKeyLength * 8);
         SecretKeyFactory f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
 

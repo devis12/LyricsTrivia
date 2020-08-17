@@ -13,6 +13,7 @@ import it.unitn.wa.devisdm.lyricstrivia.util.Mail;
 import it.unitn.wa.devisdm.lyricstrivia.util.MailException;
 import it.unitn.wa.devisdm.lyricstrivia.util.TokenGenerator;
 import it.unitn.wa.devisdm.lyricstrivia.util.UtilityCheck;
+import it.unitn.wa.devisdm.lyricstrivia.util.VerifyRecaptcha;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
@@ -38,14 +39,21 @@ import javax.servlet.http.HttpServletResponse;
 public class Registration extends HttpServlet {
     
     private PlayerDAORemote playerDAORemote;
-    private Gson gson;
     
     @Override
     public void init(ServletConfig config) throws ServletException { 
         super.init(config);
         
-        gson = new Gson();
-        
+        initEJB();
+    }
+    
+    @Override
+    public void destroy(){
+        super.destroy();
+        playerDAORemote = null;
+    }
+    
+    private void initEJB(){
         try {
             InitialContext ctx = new InitialContext();
             playerDAORemote = 
@@ -54,12 +62,6 @@ public class Registration extends HttpServlet {
         } catch (NamingException ex) {
             Logger.getLogger(Players.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
-    @Override
-    public void destroy(){
-        super.destroy();
-        playerDAORemote = null;
     }
     
     /*  Check validity of mandatory parameters*/
@@ -79,12 +81,6 @@ public class Registration extends HttpServlet {
         }
         return true;
     }
-    
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        System.out.print("");
-    }
 
     
     /**
@@ -98,6 +94,10 @@ public class Registration extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        if(playerDAORemote == null)
+            initEJB();
+
         //mandatory fields
         String username = request.getParameter("username");
         String email = request.getParameter("email");
@@ -122,12 +122,16 @@ public class Registration extends HttpServlet {
         
         String contextPath = getServletContext().getContextPath();
         try{    
+            // get reCAPTCHA request param
+            String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+            System.out.println(gRecaptchaResponse);
+            boolean verifyCaptcha = VerifyRecaptcha.verify(gRecaptchaResponse);
             
-            if(validParameters(username, email, pwd1, pwd2)){//generate exception if something is wrong with info about it, i.e. else case handled in catch below with add. info
+            if(verifyCaptcha && validParameters(username, email, pwd1, pwd2)){//generate exception if something is wrong with info about it, i.e. else case handled in catch below with add. info
                 byte[] salt = TokenGenerator.generateSalt();//if everithing is correct it create the user
-                byte[] pwdHash = TokenGenerator.getEncryptedPassword(pwd1, salt, 1024, 64);
+                byte[] pwdHash = TokenGenerator.getEncryptedPassword(pwd1, salt);
 
-                Player newP = new Player(username, email, pwdHash, salt, birthdate, gender, played, won);
+                Player newP = new Player(username, email, pwdHash, salt, birthdate, gender, played, won, false);//false stands for not confirmed account (nned to click on token within email)
 
                 playerDAORemote.addPlayer(newP);
                 
@@ -145,18 +149,21 @@ public class Registration extends HttpServlet {
                 Mail mail = new Mail(email, "LyricsTrivia - Confirm Registration", content);
                 mail.send();//send the email to the user
                 
-                request.setAttribute("status_msg", "OK: email_sent");
+                request.setAttribute("success_msg", "Awesome! The email with the confirmation link has been sent");
+            
             }
             
         }catch(MailException emailEx){
-            request.setAttribute("error_txt", "Something went wrong while sending your email... repeat the registration or contact our staff");
-            request.getRequestDispatcher("landing.jsp").forward(request, response);
+            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, emailEx);
+            request.setAttribute("error_msg", "Something went wrong while sending your email... repeat the registration or contact our staff");
         
         }catch(InvalidArgumentException iEx){
-            request.setAttribute("error_txt", "Inserted parameters are not valid!");
+            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, iEx);
+            request.setAttribute("error_msg", "Inserted parameters are not valid!");
 
         }catch(NoSuchAlgorithmException | InvalidKeySpecException iEx){
-            request.setAttribute("error_txt", "Something went wrong and it's our fault! We're terribly sorry... repeat the registration or contact our staff");
+            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, iEx);
+            request.setAttribute("error_msg", "Something went wrong and it's our fault! We're terribly sorry... repeat the registration or contact our staff");
         }
         
         request.getRequestDispatcher("landing.jsp").forward(request, response);

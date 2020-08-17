@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.unitn.wa.devisdm.lyricstrivia.controller;
+package it.unitn.wa.devisdm.lyricstrivia.util;
 
 import java.util.HashMap;
 import java.util.StringTokenizer;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author devis
  */
-public class Utilities {
+public class RequestsUtilities {
     
     /*  e.g. Given request http://ciao.com/example/stud/18 returns 18*/
     public static String getPathParameter(HttpServletRequest request){

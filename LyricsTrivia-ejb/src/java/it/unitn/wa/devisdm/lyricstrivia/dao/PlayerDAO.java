@@ -47,9 +47,19 @@ public class PlayerDAO implements PlayerDAORemote {
 
     @Override
     public List<Player> getAllPlayers() {
-        Query query = manager.createQuery("from Player", Player.class);
+        Query query = manager.createQuery("from Player P", Player.class);
         return query.getResultList();
         
+    }
+
+    @Override
+    public Player getPlayerByEmail(String email) {
+        Query query = manager.createQuery("from Player P where P.email = :email", Player.class);
+        query.setParameter("email", email);
+        if(query.getResultList().size()>0)
+            return ((List<Player>)query.getResultList()).get(0);
+        
+        return null;
     }
 
 }

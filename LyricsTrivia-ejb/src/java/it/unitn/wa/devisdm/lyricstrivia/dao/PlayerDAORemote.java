@@ -25,4 +25,6 @@ public interface PlayerDAORemote {
     Player getPlayer(String username);
 
     List<Player> getAllPlayers();
+
+    Player getPlayerByEmail(String email);
 }
