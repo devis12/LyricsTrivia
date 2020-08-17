@@ -20,6 +20,8 @@
         
         <!--Registration ctrl-->
         <script src="js/registration.js"></script>
+        <!--Pwd recovery ctrl-->
+        <script src="js/recovery.js"></script>
         
     </head>
         
@@ -118,7 +120,7 @@
         <!--MODALS for this page-->
         
         <!--Recover pwd modal-->
-        <div class="modal fade" id="recoverProfileModal" tabindex="-1" aria-labelledby="modal for recovering profile credentials" aria-hidden="true">
+        <div ng-app="recovery" ng-controller="recoveryCtrl" class="modal fade" id="recoverProfileModal" tabindex="-1" aria-labelledby="modal for recovering profile credentials" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <form action="PwdRecovery" method="POST">
@@ -130,14 +132,16 @@
                         </div>
                         <div class="modal-body">
                             <p class="text-body fs-16 text-left">Type in your email
-                                <input type="email" class="ml-2 border border-info rounded-bottom border-top-0 border-left-0 border-right-0" 
+                                <input ng-model="emailRecovery" ng-change="checkEmail()" type="email" 
+                                       class="ml-2 border border-info rounded-bottom border-top-0 border-left-0 border-right-0" 
                                        name="emailRecovery" value="" placeholder="a@a.com" required />
                                 <label for="emailRecovery" class="label"></label>
                             </p>
+                            <input type="text" class="text-danger fs-10" value="{{emailWrong}}" readonly/>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <input type="submit" class="btn btn-info" value="Send email"/>
+                            <input id="submitRecovery" type="submit" class="btn btn-info" value="Send email" disabled/>
                         </div>
                     </form>
                 </div>

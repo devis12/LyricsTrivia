@@ -143,7 +143,6 @@ angular.module('registration', [])
                 document.getElementById("submitRegister").disabled = false;
         };
         
-        //triggered when captcha is verified: check if submit can be unlocked now
         
         angular.element(document).ready(function () {
             
