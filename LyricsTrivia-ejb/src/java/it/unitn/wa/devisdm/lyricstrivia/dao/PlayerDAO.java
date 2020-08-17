@@ -54,6 +54,8 @@ public class PlayerDAO implements PlayerDAORemote {
 
     @Override
     public Player getPlayerByEmail(String email) {
+        if(email == null)
+            return null;
         Query query = manager.createQuery("from Player P where P.email = :email", Player.class);
         query.setParameter("email", email);
         if(query.getResultList().size()>0)

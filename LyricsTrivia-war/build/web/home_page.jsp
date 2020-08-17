@@ -34,6 +34,9 @@
                 </div>
                 
                 <p>Logged as ${sessionScope.player.username}</p> 
+                <p>Set new pwd: ${sessionScope.set_new_pwd}</p> 
+                
+                <a href="Logout">Logout</a>
 
             </main>
 

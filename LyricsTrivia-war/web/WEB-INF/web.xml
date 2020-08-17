@@ -29,6 +29,14 @@
         <servlet-name>Login</servlet-name>
         <servlet-class>it.unitn.wa.devisdm.lyricstrivia.controller.Login</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>it.unitn.wa.devisdm.lyricstrivia.controller.Logout</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PwdRecovery</servlet-name>
+        <servlet-class>it.unitn.wa.devisdm.lyricstrivia.controller.PwdRecovery</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Players</servlet-name>
         <url-pattern>/Players/*</url-pattern>
@@ -44,6 +52,14 @@
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PwdRecovery</servlet-name>
+        <url-pattern>/PwdRecovery</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
