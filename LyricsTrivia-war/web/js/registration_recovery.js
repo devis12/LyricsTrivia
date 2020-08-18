@@ -5,9 +5,10 @@
  */
 
 
-angular.module('registration', [])
-    .controller('registrationCtrl', ['$scope', '$http', '$httpParamSerializer', function($scope, $http) {
+angular.module('registration_recovery', [])
+    .controller('regRecCtrl', ['$scope', '$http', '$httpParamSerializer', function($scope, $http) {
              
+        /*------------------------- REGISTRATION ---------------------*/
         
         //show "ok check", when username longer than 5 chars and not taken by other users    
         document.getElementById('iiUsername').innerHTML = "<i class=\"fas fa-pencil-alt\"></i>";
@@ -23,6 +24,7 @@ angular.module('registration', [])
                 $scope.usernameOK = false;
                 document.getElementById('iiUsername').innerHTML = "<i class=\"far fa-times-circle text-danger\"></i>";
                 $scope.usernameWrong = 'username too short!';
+                $scope.setDisabledSubmitBtn();
                 return;
             }
             
@@ -56,6 +58,7 @@ angular.module('registration', [])
                 $scope.emailOK = false;
                 document.getElementById('iiEmail').innerHTML = "<i class=\"far fa-times-circle text-danger\"></i>";
                 $scope.emailWrong = 'invalid email';
+                $scope.setDisabledSubmitBtn();
                 return;
             }
             
@@ -143,6 +146,49 @@ angular.module('registration', [])
             else
                 document.getElementById("submitRegister").disabled = false;
         };
+        
+        /*------------------------- PWD RECOVERY ---------------------*/
+        
+        //show "ok check", when email valid and not taken by other users  
+        $scope.emailRecOK = false;
+        $scope.emailRecWrong = '';
+        
+        $scope.checkEmailRec = function() {
+            
+            if(!$scope.isValidEmail($scope.emailRecovery)){
+                $scope.emailRecOK = false;
+                $scope.setDisabledSubmitBtnRec();
+                return;
+            }
+            
+            $http.get("Players?email="+$scope.emailRecovery)
+                .then(
+                    (response) => { 
+                        console.log(response);
+                        if(response.data){
+                            $scope.emailRecOK = true;
+                            $scope.emailRecWrong = '';
+                        }else{
+                            $scope.emailRecOK = false;
+                            $scope.emailRecWrong = 'No account found!';
+                        }
+                        
+                        $scope.setDisabledSubmitBtnRec();
+                    },
+                    (error) =>  console.error(error)
+                );
+        };
+        
+        //disable btn for submit when all the required fields are not filled
+        $scope.setDisabledSubmitBtnRec = function(){
+            
+            if(!$scope.emailRecOK)
+                document.getElementById("submitRecovery").disabled = true;
+                
+            else
+                document.getElementById("submitRecovery").disabled = false;
+        };
+       
         
         
         angular.element(document).ready(function () {
