@@ -1,5 +1,6 @@
 package it.unitn.wa.devisdm.lyricstrivia.controller;
 
+import it.unitn.wa.devisdm.lyricstrivia.dao.OnlinePlayersRemote;
 import it.unitn.wa.devisdm.lyricstrivia.dao.PlayerDAORemote;
 import it.unitn.wa.devisdm.lyricstrivia.entity.Player;
 import it.unitn.wa.devisdm.lyricstrivia.util.TokenGenerator;
@@ -7,6 +8,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
@@ -78,6 +80,12 @@ public class Login extends HttpServlet {
                 //user found
                 request.getSession().setAttribute("player", player);
                 response.sendRedirect(response.encodeRedirectURL(contextPath + "home_page.jsp"));
+                
+                //set the user as effectively online in the stateful bean handled by the app context
+                ((OnlinePlayersRemote) this.getServletContext().getAttribute("onlinePlayersRemote")).setOnline(Player.erasePrivateInfo(player, true));
+                /*debug
+                HashMap<Player, Boolean> map = ((OnlinePlayersRemote) this.getServletContext().getAttribute("onlinePlayersRemote")).getPlayersMap();
+                System.out.print("");*/
             }else{
                 request.setAttribute("error_msg", "Wrong credentials!");
                 request.getRequestDispatcher("landing.jsp").forward(request, response);

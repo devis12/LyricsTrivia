@@ -10,10 +10,12 @@
 <html>
     <head>
         <!--Generic meta-tag & css file to include-->
-        <%@include file="generic_header.jsp" %>
+        <%@include file="fragments/generic_header.jsp" %>
         
         <!--Generic js scripts/libraries to include (for bootstrap, AngularJS, jquery)-->
-        <%@include file="generic_js.jsp" %>
+        <%@include file="fragments/generic_js.jsp" %>
+        <!--Specific libs that you'll need in this page-->
+        <%@include file="fragments/landing_js.jsp" %>
         
         <!--reCAPTCHA google v2-->
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>

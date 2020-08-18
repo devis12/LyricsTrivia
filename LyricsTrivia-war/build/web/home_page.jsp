@@ -15,16 +15,18 @@
 <html>
     <head>
         <!--Generic meta-tag & css file to include-->
-        <%@include file="generic_header.jsp" %>
+        <%@include file="fragments/generic_header.jsp" %>
         
         <!--Generic js scripts/libraries to include (for bootstrap, AngularJS, jquery)-->
-        <%@include file="generic_js.jsp" %>
+        <%@include file="fragments/generic_js.jsp" %>
+        <!--Specific libs that you'll need in this page-->
+        <%@include file="fragments/home_js.jsp" %>
         
-        <script src="js/LT_routing.js"></script>
+        <script src="js/LT_app.js"></script>
         
     </head>
         
-    <body class="text-center"  ng-app="LTApp" ng-controller="LTController">
+    <body class="text-center"  ng-app="LTApp">
         <div class="d-flex w-100 h-100 p-3 mx-auto flex-column">
             <header class="masthead mb-auto">
                 <div class="inner">

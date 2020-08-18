@@ -173,4 +173,16 @@ public class Player implements Serializable {
         return "it.unitn.wa.devisdm.lyricstrivia.entity.Player[ id=" + username + " ]";
     }
     
+    /* Erase private information and create a new user without them... flag to hide also the email
+     *
+    */
+    public static Player erasePrivateInfo(Player player, boolean eraseAlsoEmail){
+        
+        if(player == null)
+            return null;
+        
+        String email = eraseAlsoEmail? "" : player.email;
+        
+        return new Player(player.username, email, "".getBytes(), "".getBytes(), player.birthdate, player.gender, player.played, player.won, player.confirmed);
+    }
 }

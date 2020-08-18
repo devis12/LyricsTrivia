@@ -7,11 +7,14 @@ package it.unitn.wa.devisdm.lyricstrivia.controller;
 
 import it.unitn.wa.devisdm.lyricstrivia.util.RequestsUtilities;
 import com.google.gson.Gson;
+import it.unitn.wa.devisdm.lyricstrivia.dao.OnlinePlayersRemote;
 import it.unitn.wa.devisdm.lyricstrivia.dao.PlayerDAORemote;
 import it.unitn.wa.devisdm.lyricstrivia.entity.Player;
 import it.unitn.wa.devisdm.lyricstrivia.util.UtilityCheck;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +34,17 @@ import javax.servlet.http.HttpServletResponse;
  * @author devis
  */
 public class Players extends HttpServlet {
-
+    
+    //to generate corresponding JSON
+    private class PlayerOnlineStatus extends Player implements Serializable{
+        boolean online;
+        PlayerOnlineStatus(Player player, boolean online){
+            super(player.getUsername(), player.getEmail(), player.getPwd(), player.getSalt(), 
+                    player.getBirthdate(),player.getGender(), player.getPlayed(), player.getWon(), player.getConfirmed());
+            this.online=online;
+        }
+    }
+    
     private PlayerDAORemote playerDAORemote;
     
     @Override
@@ -74,21 +87,26 @@ public class Players extends HttpServlet {
         
         if(specificUsername != null && specificUsername.length() > 0){//user wants info about a specific player
             Player p = playerDAORemote.getPlayer(specificUsername);
-            if(p != null){    
-                p.setSalt("".getBytes());p.setPwd("".getBytes());p.setEmail("");//cleanup all pwd/salt/email data (even if they are cripted)
-            }
-            out.print(new Gson().toJson(p));
+            out.print(new Gson().toJson(Player.erasePrivateInfo(p, true)));//cleanup all pwd/salt/email data (even if they are cripted) before sending
         
         }else if(queryParameters.containsKey("email") && UtilityCheck.isValidEmail(queryParameters.get("email"))){//return player having a specific email
             Player p = playerDAORemote.getPlayerByEmail(queryParameters.get("email"));
-            if(p != null){  
-                p.setSalt("".getBytes());p.setPwd("".getBytes());//cleanup all pwd/salt data (even if they are cripted)
-            }
-            out.print(new Gson().toJson(p));
+            out.print(new Gson().toJson(Player.erasePrivateInfo(p, true)));
             
-        }else{//return list of all players in a JSON Array
-            List<Player> players = playerDAORemote.getAllPlayers();
-            for(Player p : players){p.setSalt("".getBytes());p.setPwd("".getBytes());p.setEmail("");}//cleanup all pwd/salt/email data (even if they are cripted)
+        }else if (queryParameters.containsKey("online_status")){//return list of all players + online status by checking that info in
+            HashMap<Player, Boolean> onlinePlayers = ((OnlinePlayersRemote) this.getServletContext().getAttribute("onlinePlayersRemote")).getPlayersMap();
+            List<PlayerOnlineStatus> onlinePlayersList = new ArrayList<>();
+            for(Player p : onlinePlayers.keySet())
+                onlinePlayersList.add(new PlayerOnlineStatus(p, onlinePlayers.get(p)));
+
+            out.print(new Gson().toJson(onlinePlayersList));
+        
+        }else{//just return list of all players fetched from the db in a JSON Array
+            List<Player> playersPrivate = playerDAORemote.getAllPlayers();
+            List<Player> players = new ArrayList<>();
+            for(Player p : playersPrivate){
+                players.add(Player.erasePrivateInfo(p, true));//cleanup all pwd/salt/email data (even if they are cripted)
+            }
             out.print(new Gson().toJson(players));
         }
         

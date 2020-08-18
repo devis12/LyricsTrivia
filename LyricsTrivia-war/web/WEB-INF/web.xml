@@ -12,6 +12,10 @@
         <dispatcher>INCLUDE</dispatcher>
         <dispatcher>ERROR</dispatcher>
     </filter-mapping>
+    <listener>
+        <description>ServletContextListener</description>
+        <listener-class>it.unitn.wa.devisdm.lyricstrivia.listener.WebAppContextListener</listener-class>
+    </listener>
     <servlet>
         <servlet-name>Players</servlet-name>
         <servlet-class>it.unitn.wa.devisdm.lyricstrivia.controller.Players</servlet-class>

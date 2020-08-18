@@ -63,7 +63,7 @@ public class LoggedInFilter implements Filter {
             //user already logged, it can proceed to home page as long as its account is confirmed
             if(!loggedPlayer.getConfirmed()){
                 request.setAttribute("warning_msg", "You still haven't confirmed your account!");
-            request.getRequestDispatcher("landing.jsp").forward(request, response);
+                request.getRequestDispatcher("landing.jsp").forward(request, response);
             }
             
         }else{

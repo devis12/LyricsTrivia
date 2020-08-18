@@ -524,8 +524,16 @@ input.input100 {
   }
 }
 
+/*Players Table*/
 
+#playersTable{
+    background:#e0f2f1;
+}
 
+th{
+    cursor: pointer;
+    font-weight: bold;
+}
 
 
 /*//////////////////////////////////////////////////////////////////
