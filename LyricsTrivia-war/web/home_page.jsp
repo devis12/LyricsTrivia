@@ -20,23 +20,25 @@
         <!--Generic js scripts/libraries to include (for bootstrap, AngularJS, jquery)-->
         <%@include file="generic_js.jsp" %>
         
+        <script src="js/LT_routing.js"></script>
+        
     </head>
         
-    <body class="text-center">
+    <body class="text-center"  ng-app="LTApp" ng-controller="LTController">
         <div class="d-flex w-100 h-100 p-3 mx-auto flex-column">
-            <header class="mb-auto">                 
+            <header class="masthead mb-auto">
+                <div class="inner">
+                  <h3 class="masthead-brand"><i class="fas fa-music mr-4 chgColor2"></i>LyricsTrivia<i class="ml-4 fas fa-music chgColor1"></i></h3>
+                  <nav class="nav nav-masthead justify-content-center">
+                    <a class="nav-link active aNav" href="#Home">Home</a>
+                    <a class="nav-link aNav" href="#Players">Players</a>
+                    <a class="nav-link aNav" href="#Account">Account</a>
+                    <a class="nav-link aNav" href="Logout">Logout</a>
+                  </nav>
+                </div>
             </header>
 
-            <main role="main">
-
-                <div class="title">
-                    <h1><i class="fas fa-music mr-4 chgColor2"></i>LyricsTrivia<i class="ml-4 fas fa-music chgColor1"></i></h1>
-                </div>
-                
-                <p>Logged as ${sessionScope.player.username}</p> 
-                <p>Set new pwd: ${sessionScope.set_new_pwd}</p> 
-                
-                <a href="Logout">Logout</a>
+            <main role="main" class="inner cover" ng-view>
 
             </main>
 
@@ -46,10 +48,9 @@
                 </div>
             </footer>
         </div>
-
-
-
+                
         <!--Lyrics Trivia scripts-->
+        <script src="js/LT_main.js"></script>
     </body>
     
 </html>

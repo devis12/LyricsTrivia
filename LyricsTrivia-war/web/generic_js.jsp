@@ -17,6 +17,9 @@
 <!-- AngularJS -->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 
+<!-- AngularJS routing -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
+
 <!--Font Awesome-->
 <script src="https://kit.fontawesome.com/3d3780e70f.js" crossorigin="anonymous"></script>
 

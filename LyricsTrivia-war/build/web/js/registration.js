@@ -15,6 +15,7 @@ angular.module('registration', [])
         $scope.usernameWrong = '';
         
         $scope.checkUsername = function() {
+            console.log("username changing");
             if($scope.username === undefined || $scope.username === null)
                 return false;
             
