@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<h2 class="mb-auto">Players</h2>
+<hr class="mb-4"/>
+
+<div class="float-right">
+    <input placeholder="search" class="no-border border-bottom border-dark bg-transparent text-light float-left" type="text" ng-model="searchInput">
+    <i class="fas fa-search text-light"></i>
+</div>
+           
+<div class="float-none mt-2 table-responsive">
+    <table id="playersTable" class="m-auto table table-borderless text-monospace display nowrap">
+        <thead class="thead-dark">
+            <tr class="">
+                <th class="" ng-click="orderByMe('online')">Online</th>
+                <th class="" ng-click="orderByMe('username')">Player</th>
+                <th class="col-priority-low" ng-class="col_priority_low" ng-click="orderByMe('birthdate')">Age</th>
+                <th class="col-priority-low" ng-class="col_priority_low" ng-click="orderByMe('gender')">Gender</th>
+                <th class="col-priority-low" ng-class="col_priority_low" ng-click="orderByMe('played')"># Played</th>
+                <th class="col-priority-low" ng-class="col_priority_low" ng-click="orderByMe('won')"># Won</th>
+                <th class=""></th>
+            </tr>
+        </thead>
+        
+        <tr class="" ng-repeat="po in playersOnlineList | orderBy:myOrderBy | filter:searchInput">
+            <td class="" ng-bind-html="po.online | onlineStatus"></td>
+            <td class="">{{po.username}}</td>
+            <td class="col-priority-low" ng-class="col_priority_low" ng-bind-html='po.birthdate | computeAge'></td>
+            <td class="col-priority-low" ng-class="col_priority_low">{{po.gender}}</td>
+            <td class="col-priority-low" ng-class="col_priority_low">{{po.played}}</td>
+            <td class="col-priority-low" ng-class="col_priority_low">{{po.won}}</td>
+            <td class=""><input type="button" value="Challenge" class="btn btn-outline-dark"/></td>
+        </tr>
+
+    </table>
+</div>
+

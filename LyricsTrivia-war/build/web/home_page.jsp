@@ -15,31 +15,35 @@
 <html>
     <head>
         <!--Generic meta-tag & css file to include-->
-        <%@include file="fragments/generic_header.jsp" %>
+        <%@include file="templates/jsp/generic_header.jsp" %>
         
         <!--Generic js scripts/libraries to include (for bootstrap, AngularJS, jquery)-->
-        <%@include file="fragments/generic_js.jsp" %>
+        <%@include file="templates/jsp/generic_js.jsp" %>
         <!--Specific libs that you'll need in this page-->
-        <%@include file="fragments/home_js.jsp" %>
+        <%@include file="templates/jsp/home_js.jsp" %>
         
         <script src="js/LT_app.js"></script>
         
     </head>
         
     <body class="text-center"  ng-app="LTApp">
+        
+        <!-- username of the player that just logged in -->
+        <input type="hidden" id="usernamePlayer" value="${sessionScope.player.username}" />
+        
         <div class="d-flex w-100 h-100 p-3 mx-auto flex-column">
             <header class="masthead mb-auto">
                 <div class="inner">
                   <h3 class="masthead-brand"><i class="fas fa-music mr-4 chgColor2"></i>LyricsTrivia<i class="ml-4 fas fa-music chgColor1"></i></h3>
                   <nav class="nav nav-masthead justify-content-center">
-                    <a class="nav-link active aNav" href="#Home">Home</a>
-                    <a class="nav-link aNav" href="#Players">Players</a>
-                    <a class="nav-link aNav" href="#Account">Account</a>
+                    <a id="linkHome" class="nav-link aNav" href="#Home">Home</a>
+                    <a id="linkPlayers" class="nav-link aNav" href="#Players">Players</a>
+                    <a id="linkProfile" class="nav-link aNav" href="#Profile">Account</a>
                     <a class="nav-link aNav" href="Logout">Logout</a>
                   </nav>
                 </div>
             </header>
-
+            
             <main role="main" class="inner cover" ng-view>
 
             </main>

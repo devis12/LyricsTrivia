@@ -10,11 +10,15 @@ import com.google.gson.Gson;
 import it.unitn.wa.devisdm.lyricstrivia.dao.OnlinePlayersRemote;
 import it.unitn.wa.devisdm.lyricstrivia.dao.PlayerDAORemote;
 import it.unitn.wa.devisdm.lyricstrivia.entity.Player;
+import it.unitn.wa.devisdm.lyricstrivia.util.TokenGenerator;
 import it.unitn.wa.devisdm.lyricstrivia.util.UtilityCheck;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +32,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * RESTFUL operations on Players 
@@ -114,59 +119,95 @@ public class Players extends HttpServlet {
         
     }
     
-    /*
-    @Override
-    protected void doPut(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-        Map<String, String[]> parameters = request.getParameterMap();//TODO delete when development is ended
-        
+    /*  Check if PUT, DELETE operations are authorized */
+    private boolean isAuthorized(HttpServletRequest request){
         String specificUsername = RequestsUtilities.getPathParameter(request); //extract username
         
         String username = request.getParameter("username");
-        String email = request.getParameter("email");
-        String pwd = request.getParameter("pwd");
-        Date birthdate = new Date(Long.parseLong(request.getParameter("birthdate")));
-        char gender = (request.getParameter("gender")).charAt(0);
-        int played = Integer.parseInt(request.getParameter("played"));
-        int won = Integer.parseInt(request.getParameter("won"));
         
-        if(!username.equals(specificUsername)){
-            //bad request
-            return;
-        }
+        if(!username.equals(specificUsername))//username in the path do not match username passed in the obj
+            return false;
         
-        Player updP = new Player(username, email, pwd.getBytes(), "salt".getBytes(), birthdate, gender, played, won, false);
-        playerDAORemote.editPlayer(updP);
         
+        HttpSession session = request.getSession(false);
+        if(session==null)//session not present
+            return false;
+        
+        Player player = (Player)session.getAttribute("player");
+        
+        return player!=null && player.getUsername().equals(request.getParameter("username"));//just logged player can change just its value
+    }
+    
+    /*Only operation supported in PUT (for now) is password update*/
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        Map<String, String[]> parameters = request.getParameterMap();//TODO delete when development is ended
+        String specificUsername = RequestsUtilities.getPathParameter(request); //extract username
+        String newPwd = request.getParameter("pwd");
         response.setContentType("application/json"); 
         PrintWriter out = response.getWriter();
-        out.print(new Gson().toJson(updP));
-        out.flush();
+        
+        try{
+            if(!isAuthorized(request)){
+                //unauthorized
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            }else if(parameters.containsKey("updPwd") 
+                    && UtilityCheck.isStrong(newPwd) ){
+
+                Player updP = (Player) request.getSession(false).getAttribute("player");
+                updP.setPwd(TokenGenerator.getEncryptedPassword(newPwd, updP.getSalt()));
+                playerDAORemote.editPlayer(updP);
+
+                out.print(new Gson().toJson(updP));
+            
+            }else{
+                //bad request
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            }
+            
+        }catch(NoSuchAlgorithmException | InvalidKeySpecException nse){
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        
+        }finally{
+            out.flush();
+        }
+
     }
     
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Map<String, String[]> parameters = request.getParameterMap();//TODO delete when development is ended
-        
-        String specificUsername = RequestsUtilities.getPathParameter(request); //extract username
-        
-        String username = request.getParameter("username");
-        
-        if(!username.equals(specificUsername)){
-            //bad request
-            return;
-        }
-        
-        Player delP = playerDAORemote.deletePlayer(username);
-        
+        String delPwd = request.getParameter("pwd");
         response.setContentType("application/json"); 
         PrintWriter out = response.getWriter();
-        out.print(new Gson().toJson(delP));
-        out.flush();
+        
+        try{
+            if(!isAuthorized(request)){
+                //unauthorized
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            }else {
+                Player player = (Player) request.getSession(false).getAttribute("player");
+                if(!Arrays.equals(player.getPwd(), TokenGenerator.getEncryptedPassword(delPwd, player.getSalt())))//still unauthorized
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                else{
+                    Player delP = playerDAORemote.deletePlayer(player.getUsername());
+                    out.print(new Gson().toJson(delP));
+                    //delete player from the map and destroy session
+                    ((OnlinePlayersRemote) this.getServletContext().getAttribute("onlinePlayersRemote")).deletePlayer(Player.erasePrivateInfo(player, true));
+                    request.getSession(false).invalidate();
+                }
+            }
+            
+        }catch(NoSuchAlgorithmException | InvalidKeySpecException nse){
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        
+        }finally{
+            out.flush();
+        }
+        
     }
-    */
 
     /**
      * Returns a short description of the servlet.
