@@ -161,8 +161,11 @@ public class Player implements Serializable {
         final Player other = (Player) obj;
 
         boolean intCheck = this.gender == other.gender && this.played == other.played && this.won == other.won;
-
-        return intCheck && this.confirmed == other.confirmed && this.birthdate.compareTo(other.birthdate)==0 && this.username.equals(other.username) && 
+        
+        if(this.birthdate == null && other.birthdate != null || this.birthdate != null && other.birthdate == null)
+            return false;
+        
+        return intCheck && this.confirmed == other.confirmed && (this.birthdate==null && other.birthdate==null || this.birthdate.compareTo(other.birthdate)==0) && this.username.equals(other.username) && 
                 this.email.equals(other.email) && Arrays.equals(this.pwd, other.pwd) && Arrays.equals(this.salt, other.salt);
     }
     

@@ -193,8 +193,12 @@ LTApp.filter('computeAge', function() {
         let now = new Date();
         let birth = new Date(birthdate);
         let yearsDiff = now.getFullYear() - birth.getFullYear();
+        if(isNaN(yearsDiff))//user has not inserted its birth date
+            return '';
+        
         if(now.getMonth() < birth.getMonth() || now.getMonth() == birth.getMonth() && now.getDate() < birth.getDate()) //he/she is still not <yearsDiff>
             yearsDiff--;
+        
         return yearsDiff;
     };
 });

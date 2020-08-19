@@ -107,7 +107,7 @@ public class Registration extends HttpServlet {
         }
         
         char gender = (request.getParameter("gender") != null && request.getParameter("gender").length()>0)? request.getParameter("gender").charAt(0) : null;
-        gender = (gender == 'M' || gender == 'F' || gender == '0')? gender : null;
+        gender = (gender == 'M' || gender == 'F')? gender : 'O';
         
         //At registration, players cannot have played any games!
         int played = 0;

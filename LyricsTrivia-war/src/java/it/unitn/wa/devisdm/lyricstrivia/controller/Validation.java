@@ -1,5 +1,6 @@
 package it.unitn.wa.devisdm.lyricstrivia.controller;
 
+import it.unitn.wa.devisdm.lyricstrivia.dao.OnlinePlayersRemote;
 import it.unitn.wa.devisdm.lyricstrivia.dao.PlayerDAORemote;
 import it.unitn.wa.devisdm.lyricstrivia.entity.Player;
 import it.unitn.wa.devisdm.lyricstrivia.util.Mail;
@@ -86,7 +87,8 @@ public class Validation extends HttpServlet {
                 player.setConfirmed(true);
                 playerDAORemote.editPlayer(player);
                 
-                request.getSession().setAttribute("player", player); //the servlet log the user and send a message that confirm that the account is already verified               
+                request.getSession().setAttribute("player", player); //the servlet log the user and send a message that confirm that the account is already verified 
+                ((OnlinePlayersRemote) this.getServletContext().getAttribute("onlinePlayersRemote")).setOnline(Player.erasePrivateInfo(player, true));
                 request.setAttribute("success_msg", "Account confirmed correctly: now go on and play!");
                 response.sendRedirect(response.encodeRedirectURL(contextPath + "home_page.jsp"));
                 return;
