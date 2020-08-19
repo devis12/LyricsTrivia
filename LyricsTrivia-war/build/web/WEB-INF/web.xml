@@ -1,9 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <context-param>
+        <description>Username value for admin to log in</description>
+        <param-name>admin_user</param-name>
+        <param-value>admin</param-value>
+    </context-param>
+    <context-param>
+        <description>Password value for admin to log in</description>
+        <param-name>admin_pwd</param-name>
+        <param-value>admin</param-value>
+    </context-param>
     <filter>
         <filter-name>LoggedInFilter</filter-name>
         <filter-class>it.unitn.wa.devisdm.lyricstrivia.filters.LoggedInFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>it.unitn.wa.devisdm.lyricstrivia.filters.AdminFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/secret.jsp</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>LoggedInFilter</filter-name>
         <url-pattern>/home_page.jsp</url-pattern>

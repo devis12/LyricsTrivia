@@ -4,33 +4,38 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/src/java/it/unitn/wa/devisdm/lyricstrivia/listener/WebAppContextListener.java</file>
+            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/js/LT/LT_app.homeCtrl.js</file>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/src/java/it/unitn/wa/devisdm/lyricstrivia/controller/Players.java</file>
-            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/fragments/home/questions.html</file>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/src/java/it/unitn/wa/devisdm/lyricstrivia/controller/Registration.java</file>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/js/landing_main.js</file>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/home_page.jsp</file>
-            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/fragments/generic_js.jsp</file>
-            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/fragments/generic_header.jsp</file>
+            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/templates/angular/profile.template.html</file>
+            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/templates/angular/home.template.html</file>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/src/java/it/unitn/wa/devisdm/lyricstrivia/controller/Validation.java</file>
-            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/fragments/landing_js.jsp</file>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/src/java/it/unitn/wa/devisdm/lyricstrivia/util/VerifyRecaptcha.java</file>
+            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/templates/jsp/home_js.jsp</file>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/src/java/it/unitn/wa/devisdm/lyricstrivia/util/TokenGenerator.java</file>
-            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/fragments/home_js.jsp</file>
-            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/fragments/home/players.html</file>
+            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/src/java/it/unitn/wa/devisdm/lyricstrivia/controller/Test.java</file>
+            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/js/Registration_Recovery/registration_recovery.module.js</file>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/js/LT_main.js</file>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/src/java/it/unitn/wa/devisdm/lyricstrivia/controller/Logout.java</file>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/src/java/it/unitn/wa/devisdm/lyricstrivia/filters/LoggedInFilter.java</file>
-            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/fragments/home/profile.html</file>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/src/java/it/unitn/wa/devisdm/lyricstrivia/controller/Login.java</file>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/players.jsp</file>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/src/java/it/unitn/wa/devisdm/lyricstrivia/util/RequestsUtilities.java</file>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/css/lyricsTrivia.css</file>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/js/playersCRUD.js</file>
+            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/js/LT/LT_app.module.js</file>
+            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/templates/jsp/landing_js.jsp</file>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/css/utils.css</file>
+            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/js/LT/LT_app.playersCtrl.js</file>
+            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/secret.jsp</file>
+            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/templates/jsp/generic_js.jsp</file>
+            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/templates/jsp/generic_header.jsp</file>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/landing.jsp</file>
-            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/js/LT_app.js</file>
-            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/js/registration_recovery.js</file>
+            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/templates/angular/players.template.html</file>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/WEB-INF/web.xml</file>
+            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/js/LT/LT_app.profileCtrl.js</file>
         </group>
     </open-files>
 </project-private>

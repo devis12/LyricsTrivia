@@ -3,11 +3,6 @@
     Created on : 17-Aug-2020, 15:34:17
     Author     : devis
 --%>
-<%-- 
-    Document   : landing
-    Created on : 16-Aug-2020, 11:50:58
-    Author     : devis
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -53,8 +48,8 @@
             </footer>
         </div>
                 
-        <!--Lyrics Trivia scripts-->
-        <script src="js/LT_main.js"></script>
+        <!--Lyrics Trivia utils scripts for resizing-->
+        <script src="js/resize_utils.js"></script>
     </body>
     
 </html>

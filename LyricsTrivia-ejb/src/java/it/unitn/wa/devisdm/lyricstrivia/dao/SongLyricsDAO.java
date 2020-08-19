@@ -78,5 +78,11 @@ public class SongLyricsDAO implements SongLyricsDAORemote, SongLyricsDAOLocal {
         query = query.setMaxResults(n);
         return query.getResultList();
    }
+
+    @Override
+    public List<SongLyrics> getAllSongs() {
+        Query query = manager.createQuery("SELECT s FROM SongLyrics s", SongLyrics.class);
+        return query.getResultList();
+    }
     
 }

@@ -2,6 +2,7 @@ package it.unitn.wa.devisdm.lyricstrivia.controller;
 
 import it.unitn.wa.devisdm.lyricstrivia.dao.OnlinePlayersRemote;
 import it.unitn.wa.devisdm.lyricstrivia.dao.PlayerDAORemote;
+import it.unitn.wa.devisdm.lyricstrivia.dao.SongLyricsDAORemote;
 import it.unitn.wa.devisdm.lyricstrivia.entity.Player;
 import it.unitn.wa.devisdm.lyricstrivia.util.TokenGenerator;
 import java.io.IOException;
@@ -25,11 +26,19 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class Login extends HttpServlet {
     
+    private static String ADMIN_USER;
+    private static String ADMIN_PWD;
+    
     private PlayerDAORemote playerDAORemote;
+    private SongLyricsDAORemote songLyricsDAORemote;
     
     @Override
     public void init(ServletConfig config) throws ServletException { 
         super.init(config);
+        
+        ADMIN_USER = (String)getServletContext().getInitParameter("admin_user");
+        ADMIN_PWD = (String)getServletContext().getInitParameter("admin_pwd");
+        
         initEJB();
         
     }
@@ -38,6 +47,7 @@ public class Login extends HttpServlet {
     public void destroy(){
         super.destroy();
         playerDAORemote = null;
+        songLyricsDAORemote = null;
     }
     
     private void initEJB(){
@@ -45,6 +55,8 @@ public class Login extends HttpServlet {
             InitialContext ctx = new InitialContext();
             playerDAORemote = 
                     (PlayerDAORemote) ctx.lookup("java:global/LyricsTrivia-ejb/PlayerDAO!it.unitn.wa.devisdm.lyricstrivia.dao.PlayerDAORemote");
+            songLyricsDAORemote = 
+                        (SongLyricsDAORemote) ctx.lookup("java:global/LyricsTrivia/LyricsTrivia-ejb/SongLyricsDAO!it.unitn.wa.devisdm.lyricstrivia.dao.SongLyricsDAORemote");
             
         } catch (NamingException ex) {
             Logger.getLogger(Players.class.getName()).log(Level.SEVERE, null, ex);
@@ -68,6 +80,15 @@ public class Login extends HttpServlet {
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
+        }
+        
+        /*Check for admin login... this is solved in a trivial way*/
+        if(username.equals(ADMIN_USER) && pwd.equals(ADMIN_PWD)){
+            //admin login
+            request.getSession().setAttribute("admin", Boolean.TRUE);
+            request.getSession().setAttribute("songs", songLyricsDAORemote.getAllSongs());//load up all songs saved in the db
+            response.sendRedirect(response.encodeRedirectURL(contextPath + "secret.jsp"));
+            return;
         }
 
         if(playerDAORemote == null)

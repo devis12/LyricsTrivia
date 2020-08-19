@@ -29,4 +29,6 @@ public interface SongLyricsDAORemote {
     List<SongLyrics> getSongsByArtist(String trackArtist);
     
     List<SongLyrics> getSongsByName(String trackName);
+    
+    List<SongLyrics> getAllSongs();
 }
