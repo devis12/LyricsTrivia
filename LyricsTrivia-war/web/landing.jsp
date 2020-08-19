@@ -17,12 +17,6 @@
         <!--Specific libs that you'll need in this page-->
         <%@include file="templates/jsp/landing_js.jsp" %>
         
-        <!--reCAPTCHA google v2-->
-        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-        
-        <!--Registration and pwd recovery ctrl-->
-        <script src="js/registration_recovery.js"></script>
-        
     </head>
         
     <body class="text-center">

@@ -28,7 +28,12 @@
             <td class="col-priority-low" ng-class="col_priority_low">{{po.gender}}</td>
             <td class="col-priority-low" ng-class="col_priority_low">{{po.played}}</td>
             <td class="col-priority-low" ng-class="col_priority_low">{{po.won}}</td>
-            <td class=""><input type="button" value="Challenge" class="btn btn-outline-dark"/></td>
+            <td class="" ng-if="po.online">
+                <input type="button" value="Challenge" class="btn btn-outline-dark"/>
+            </td>
+            <td class="" ng-if="!po.online">
+                <input type="button" value="Challenge" class="btn btn-outline-dark" disabled/>
+            </td>
         </tr>
 
     </table>

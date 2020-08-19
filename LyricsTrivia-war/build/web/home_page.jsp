@@ -22,8 +22,6 @@
         <!--Specific libs that you'll need in this page-->
         <%@include file="templates/jsp/home_js.jsp" %>
         
-        <script src="js/LT_app.js"></script>
-        
     </head>
         
     <body class="text-center"  ng-app="LTApp">

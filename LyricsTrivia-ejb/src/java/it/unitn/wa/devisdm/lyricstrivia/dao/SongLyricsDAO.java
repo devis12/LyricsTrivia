@@ -55,6 +55,7 @@ public class SongLyricsDAO implements SongLyricsDAORemote, SongLyricsDAOLocal {
             return sl;
         
         sl = musixMatchLocal.getSongLyrics(trackName, trackArtist);
+        addSongLyrics(sl);//add it in this case, so next time it'll be found easily
         return sl;
     }
 

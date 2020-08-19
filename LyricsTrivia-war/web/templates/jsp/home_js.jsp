@@ -11,3 +11,9 @@
 
 <!-- AngularJS sanitize -->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-sanitize.min.js"></script>
+
+        
+<script src="js/LT/LT_app.module.js"></script>
+<script src="js/LT/LT_app.playersCtrl.js"></script>
+<script src="js/LT/LT_app.profileCtrl.js"></script>
+<script src="js/LT/LT_app.homeCtrl.js"></script>
