@@ -35,17 +35,18 @@
             <h2>Admin panel</h2>
             <hr class="mb-2"/>
             
-            <div class="container mt-5">
+            <div class="container-fluid w-75 mt-3">
                 <div class="row">
 
                     <div class="col">
                         <h5 class="mb-2">PRIVATE DUMP</h5>
-                        <table id="songsLyricsDB" class="table table-light text-monospace">
+                        <table id="songsLyricsDB" class="table table-light text-monospace fixed_header">
                             <thead class="thead-dark">
                               <tr>
                                 <th scope="col">TrackID</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Artist</th>
+                                <th scope="col"></th>
                                 <th scope="col"></th>
                               </tr>
                             </thead>
@@ -55,6 +56,7 @@
                                     <td class="">{{sl.trackName}}</td>
                                     <td class="">{{sl.trackArtist}}</td>
                                     <td class=""><button data-ng-click="showLyrics(sl.trackID, sl.trackName, true, false)" class="btn btn-outline-dark">Lyrics</button></td>
+                                    <td class=""><button data-ng-click="delSongLyricsDB(sl)" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -62,12 +64,13 @@
 
                     <div class="col">
                         <h5 class="mb-2">JMUSIXMATCH</h5>
-                        <table id="songsLyricsJMM" class="table table-light text-monospace">
+                        <table id="songsLyricsJMM" class="table table-light text-monospace fixed_header">
                             <thead class="thead-dark">
                               <tr>
                                 <th scope="col">TrackID</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Artist</th>
+                                <th scope="col"></th>
                                 <th scope="col"></th>
                               </tr>
                             </thead>
@@ -77,12 +80,15 @@
                                     <td class="">{{sl.trackName}}</td>
                                     <td class="">{{sl.trackArtist}}</td>
                                     <td class=""><button data-ng-click="showLyrics(sl.trackID, sl.trackName, false, true)" class="btn btn-outline-dark">Lyrics</button></td>
+                                    <td class=""><button data-ng-click="addSongLyricsDB(sl)" class="btn btn-outline-success"><i class="fas fa-database"></i></button></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+            
+            <input id="cliAdminTxt" ng-model="cliAdminTxt" type="text" class="mt-2 mb-2 w-75 mr-auto ml-auto fs-16 text-monospace bg-light text-dark" readonly/>
 
             <div class="jumbotron bg-dark w-75 m-auto">
                 <h5>Search your songs</h5>
