@@ -83,6 +83,13 @@ public class Songs extends HttpServlet {
         if(JMM) //fetch from jmusixmatch api
             sslJMM.add(songLyricsDAORemote.getSongLyricsJMM(trackID));
         
+        /*Cleanup null singleton*/
+        if(sslDB.size() > 0 && sslDB.get(0) == null)
+            sslDB.clear();
+        
+        if(sslJMM.size() > 0 && sslJMM.get(0) == null)
+            sslJMM.clear();
+        
         return new SongLyricsJSONResponse(sslDB, sslJMM);
     }
     
@@ -113,6 +120,13 @@ public class Songs extends HttpServlet {
             if(JMM) //fetch from jmusixmatch api
                 sslJMM = new ArrayList<>(songLyricsDAORemote.getSongsByArtistJMM(trackArtist));
         }
+        
+        /*Cleanup null singleton*/
+        if(sslDB.size() > 0 && sslDB.get(0) == null)
+            sslDB.clear();
+        
+        if(sslJMM.size() > 0 && sslJMM.get(0) == null)
+            sslJMM.clear();
         
         return new SongLyricsJSONResponse(sslDB, sslJMM);
         

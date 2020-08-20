@@ -17,15 +17,15 @@ angular.module('secret', [])
             
             let url = "Songs?";
             
-            if(name !== undefined)
+            if(name !== undefined && name !== '')
                 url += "trackName=" + name + "&";
-            if(artist !== undefined)
-                url += "trackArtist=" + artist + "&";
+            if(artist !== undefined && artist !== '')
+                url += "trackArtist=" + artist;
             
             $http.get(url)
                 .then(
                     (response) => { 
-                        
+                        //put in the scope objects an empty array in case there is just one single
                         $scope.sslDB = response.data.lyricstrivia;
                         //console.log(response.data);
                         $scope.sslJMM = response.data.jmusixmatch;
