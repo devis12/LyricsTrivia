@@ -15,6 +15,6 @@ import javax.ejb.Remote;
 @Remote
 public interface QuestionDAORemote {
     
-    Question getNewQuestion();
+    Question getNewRndQuestion();
     
 }

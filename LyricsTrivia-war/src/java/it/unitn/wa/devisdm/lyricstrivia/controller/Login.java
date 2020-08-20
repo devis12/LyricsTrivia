@@ -86,7 +86,7 @@ public class Login extends HttpServlet {
         if(username.equals(ADMIN_USER) && pwd.equals(ADMIN_PWD)){
             //admin login
             request.getSession().setAttribute("admin", Boolean.TRUE);
-            request.getSession().setAttribute("songs", songLyricsDAORemote.getAllSongs());//load up all songs saved in the db
+            request.getSession().setAttribute("songs", songLyricsDAORemote.getAllSongsDB());//load up all songs saved in the db
             response.sendRedirect(response.encodeRedirectURL(contextPath + "secret.jsp"));
             return;
         }

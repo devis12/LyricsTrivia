@@ -16,6 +16,7 @@ import javax.ejb.Local;
 @Local
 public interface MusixMatchLyricsLocal{
 
+    SongLyrics getSongLyrics(int trackID);
     SongLyrics getSongLyrics(String trackName, String trackArtist);
     
     List<SongLyrics> getSongsByArtist(String trackArtist);

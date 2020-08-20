@@ -55,16 +55,16 @@ public class Test extends HttpServlet {
                         (SongLyricsDAORemote) ctx.lookup("java:global/LyricsTrivia/LyricsTrivia-ejb/SongLyricsDAO!it.unitn.wa.devisdm.lyricstrivia.dao.SongLyricsDAORemote");
                 List<SongLyrics> list = new ArrayList<>();
                 if(request.getParameter("artist")!=null)
-                    list = songLyricsDAORemote.getSongsByArtist(request.getParameter("artist"));
+                    list = songLyricsDAORemote.getSongsByArtistJMM(request.getParameter("artist"));
                 if(request.getParameter("song")!=null)
-                    list = songLyricsDAORemote.getSongsByName(request.getParameter("song"));
+                    list = songLyricsDAORemote.getSongsByNameJMM(request.getParameter("song"));
 
                 for(SongLyrics sl : list){       
                     out.println("<br /><br /><br /><br /><b>ID</b>: " + sl.getTrackID());
                     out.println("<br /><b>Name</b>: " + sl.getTrackName());
                     out.println("<br /><b>Artist</b>: " + sl.getTrackArtist());
                     out.println("<br /><b>Lyrics</b>: " + sl.getTrackLyrics());
-                    songLyricsDAORemote.addSongLyrics(sl);
+                    songLyricsDAORemote.addSongLyricsDB(sl);
                 }
                 
             } catch (NamingException ex) {

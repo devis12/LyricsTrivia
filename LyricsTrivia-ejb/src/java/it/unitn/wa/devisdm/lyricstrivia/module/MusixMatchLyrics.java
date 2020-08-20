@@ -58,6 +58,23 @@ public class MusixMatchLyrics implements MusixMatchLyricsLocal{
         return null;
     }
     
+    @Override
+    public SongLyrics getSongLyrics(int trackID) {
+        Track track;
+        try {
+            //recover lyrics data of a specific song written by artist with name @trackArtist using musxmatch sdk
+            track = musixMatch.getTrack(trackID);
+            TrackData data = track.getTrack();
+            
+            return convertTrackToSongLyrics(data);
+            
+        } catch (MusixMatchException ex) {
+            Logger.getLogger(MusixMatchLyrics.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
+    }
+    
        
     @Override
     public List<SongLyrics> getSongsByArtist(String trackArtist) {

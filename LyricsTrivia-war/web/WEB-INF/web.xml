@@ -15,11 +15,11 @@
         <filter-class>it.unitn.wa.devisdm.lyricstrivia.filters.LoggedInFilter</filter-class>
     </filter>
     <filter>
-        <filter-name>AdminFilter</filter-name>
-        <filter-class>it.unitn.wa.devisdm.lyricstrivia.filters.AdminFilter</filter-class>
+        <filter-name>SecretFilter</filter-name>
+        <filter-class>it.unitn.wa.devisdm.lyricstrivia.filters.SecretFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>AdminFilter</filter-name>
+        <filter-name>SecretFilter</filter-name>
         <url-pattern>/secret.jsp</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
@@ -63,6 +63,10 @@
         <servlet-name>PwdRecovery</servlet-name>
         <servlet-class>it.unitn.wa.devisdm.lyricstrivia.controller.PwdRecovery</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Songs</servlet-name>
+        <servlet-class>it.unitn.wa.devisdm.lyricstrivia.controller.Songs</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Players</servlet-name>
         <url-pattern>/Players/*</url-pattern>
@@ -86,6 +90,10 @@
     <servlet-mapping>
         <servlet-name>PwdRecovery</servlet-name>
         <url-pattern>/PwdRecovery</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Songs</servlet-name>
+        <url-pattern>/Songs/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

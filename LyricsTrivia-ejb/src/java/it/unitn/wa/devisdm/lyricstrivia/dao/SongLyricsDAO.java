@@ -7,10 +7,12 @@ package it.unitn.wa.devisdm.lyricstrivia.dao;
 
 import it.unitn.wa.devisdm.lyricstrivia.entity.SongLyrics;
 import it.unitn.wa.devisdm.lyricstrivia.module.MusixMatchLyricsLocal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -28,51 +30,96 @@ public class SongLyricsDAO implements SongLyricsDAORemote, SongLyricsDAOLocal {
     private EntityManager manager;
     
     @Override
-    public void addSongLyrics(SongLyrics songLyrics) {
+    public void addSongLyricsDB(SongLyrics songLyrics) {
         manager.persist(songLyrics);
     }
 
     @Override
-    public void editSongLyrics(SongLyrics songLyrics) {
+    public void editSongLyricsDB(SongLyrics songLyrics) {
         manager.merge(songLyrics);
     }
 
     @Override
-    public void deleteSongLyrics(int trackID) {
-        manager.remove(getSongLyrics(trackID));
+    public void deleteSongLyricsDB(int trackID) {
+        manager.remove(getSongLyricsDB(trackID));
     }
 
     @Override
-    public SongLyrics getSongLyrics(int trackID) {
+    public SongLyrics getSongLyricsDB(int trackID) {
         return manager.find(SongLyrics.class, trackID);
     }
     
     @Override
-    public SongLyrics getSongLyrics(String trackName, String trackArtist) {
-        //check if already present in the current db dump, otherwise call jmusixmatch apis
-        SongLyrics sl = manager.createQuery("SELECT s FROM SongLyrics s WHERE s.trackName = " + trackName + " AND s.trackArtist = " + trackArtist, SongLyrics.class).getSingleResult();
-        if(sl != null)
-            return sl;
-        
-        sl = musixMatchLocal.getSongLyrics(trackName, trackArtist);
-        addSongLyrics(sl);//add it in this case, so next time it'll be found easily
+    public SongLyrics getSongLyricsJMM(int trackID) {
+        return musixMatchLocal.getSongLyrics(trackID);
+    }
+    
+    @Override
+    public SongLyrics getSongLyricsDB(String trackName, String trackArtist) {
+        trackName = trackName.replaceAll("\"", "");//remove quotes
+        trackName = trackName.replaceAll("'", "");//remove quotes
+        trackArtist = trackArtist.replaceAll("\"", "");
+        trackArtist = trackArtist.replaceAll("'", "");
+        Query query = manager.createQuery("SELECT s FROM SongLyrics s WHERE s.trackName LIKE :track AND s.trackArtist LIKE :artist", SongLyrics.class);
+        query.setParameter("track", "%"+trackName+"%");
+        query.setParameter("artist", "%"+trackArtist+"%");
+        SongLyrics sl;
+        try{ 
+            sl = (SongLyrics) query.getSingleResult();
+        }catch(NoResultException nre){
+            sl = null;
+        }
+        return sl;
+    }
+    
+    @Override
+    public SongLyrics getSongLyricsJMM(String trackName, String trackArtist) {
+        SongLyrics sl = musixMatchLocal.getSongLyrics(trackName, trackArtist);
         return sl;
     }
 
     @Override
-    public List<SongLyrics> getSongsByArtist(String trackArtist) {
-        //do NOT check in the db, there can be new songs having this name if you consult jmusixmatch apis
+    public List<SongLyrics> getSongsByArtistJMM(String trackArtist) {
         return  musixMatchLocal.getSongsByArtist(trackArtist);
     }
-
+    
     @Override
-    public List<SongLyrics> getSongsByName(String trackName) {
-        //do NOT check in the db, there can be new songs having this name if you consult jmusixmatch apis
-        return musixMatchLocal.getSongsByName(trackName);
+    public List<SongLyrics> getSongsByArtistDB(String trackArtist) {
+        trackArtist = trackArtist.replaceAll("\"", "");
+        trackArtist = trackArtist.replaceAll("'", "");
+        Query query = manager.createQuery("SELECT s FROM SongLyrics s WHERE s.trackArtist LIKE :artist", SongLyrics.class);
+        query.setParameter("artist", "%"+trackArtist+"%");
+        List<SongLyrics> ssl;
+        try{ 
+             ssl = query.getResultList();
+        }catch(NoResultException nre){
+            ssl = new ArrayList<>();
+        }
+        return ssl;
     }
 
     @Override
-    public List<SongLyrics> getRandomSongLyrics(int n) {
+    public List<SongLyrics> getSongsByNameJMM(String trackName) {
+        return musixMatchLocal.getSongsByName(trackName);
+    }
+    
+     @Override
+    public List<SongLyrics> getSongsByNameDB(String trackName) {
+        trackName = trackName.replaceAll("\"", "");
+        trackName = trackName.replaceAll("'", "");
+        Query query = manager.createQuery("SELECT s FROM SongLyrics s WHERE s.trackName LIKE :name", SongLyrics.class);
+        query.setParameter("name", "%"+trackName+"%");
+        List<SongLyrics> ssl;
+        try{ 
+             ssl = query.getResultList();
+        }catch(NoResultException nre){
+            ssl = new ArrayList<>();
+        }
+        return ssl;
+    }
+
+    @Override
+    public List<SongLyrics> getRandomSongLyricsDB(int n) {
         //select n random songlyrics from the db
         Query query = manager.createQuery("SELECT s FROM SongLyrics s ORDER BY random()", SongLyrics.class);
         query = query.setMaxResults(n);
@@ -80,7 +127,7 @@ public class SongLyricsDAO implements SongLyricsDAORemote, SongLyricsDAOLocal {
    }
 
     @Override
-    public List<SongLyrics> getAllSongs() {
+    public List<SongLyrics> getAllSongsDB() {
         Query query = manager.createQuery("SELECT s FROM SongLyrics s", SongLyrics.class);
         return query.getResultList();
     }

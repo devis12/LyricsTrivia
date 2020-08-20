@@ -16,5 +16,5 @@ import javax.ejb.Local;
 @Local
 public interface SongLyricsDAOLocal {
     
-   List<SongLyrics> getRandomSongLyrics(int n);
+   List<SongLyrics> getRandomSongLyricsDB(int n);
 }

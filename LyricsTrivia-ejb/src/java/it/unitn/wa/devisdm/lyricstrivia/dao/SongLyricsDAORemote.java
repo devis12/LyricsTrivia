@@ -16,19 +16,23 @@ import javax.ejb.Remote;
 @Remote
 public interface SongLyricsDAORemote {
     
-   void addSongLyrics(SongLyrics songLyrics);
+   void addSongLyricsDB(SongLyrics songLyrics);
 
-   void editSongLyrics(SongLyrics songLyrics);
+   void editSongLyricsDB(SongLyrics songLyrics);
 
-   void deleteSongLyrics(int trackID);
+   void deleteSongLyricsDB(int trackID);
 
-    SongLyrics getSongLyrics(int trackID);
+    SongLyrics getSongLyricsDB(int trackID);
+    SongLyrics getSongLyricsJMM(int trackID);
     
-    SongLyrics getSongLyrics(String trackName, String trackArtist);
+    SongLyrics getSongLyricsDB(String trackName, String trackArtist);
+    SongLyrics getSongLyricsJMM(String trackName, String trackArtist);
     
-    List<SongLyrics> getSongsByArtist(String trackArtist);
+    List<SongLyrics> getSongsByArtistDB(String trackArtist);
+    List<SongLyrics> getSongsByArtistJMM(String trackArtist);
     
-    List<SongLyrics> getSongsByName(String trackName);
+    List<SongLyrics> getSongsByNameDB(String trackName);
+    List<SongLyrics> getSongsByNameJMM(String trackName);
     
-    List<SongLyrics> getAllSongs();
+    List<SongLyrics> getAllSongsDB();
 }

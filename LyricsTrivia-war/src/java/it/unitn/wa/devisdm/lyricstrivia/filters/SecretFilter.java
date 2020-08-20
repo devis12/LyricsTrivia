@@ -30,7 +30,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author devis
  */
-public class AdminFilter implements Filter {
+public class SecretFilter implements Filter {
     
     private static final boolean debug = false;
 
@@ -39,7 +39,7 @@ public class AdminFilter implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
     
-    public AdminFilter() {
+    public SecretFilter() {
     }    
     
     private void doBeforeProcessing(RequestWrapper request, ResponseWrapper response)
