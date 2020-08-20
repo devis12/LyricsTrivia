@@ -538,7 +538,16 @@ th{
 /*Admin Page*/
 #songsLyricsDB tbody, #songsLyricsJMM tbody{
     height: 256px;
+    display:block;
+    overflow:auto;
 }
+
+#songsLyricsJMM thead, #songsLyricsDB thead,  #songsLyricsJMM tr, #songsLyricsDB tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+}
+
 
 
 /*//////////////////////////////////////////////////////////////////

@@ -20,7 +20,7 @@
         
     </head>
         
-    <body class="text-center"  ng-app="LTApp">
+    <body class="text-center"  ng-app="secret" ng-controller="secretCtrl">
         
         <div class="d-flex w-100 h-100 p-3 mx-auto flex-column">
             <header class="masthead mb-auto">
@@ -50,6 +50,12 @@
                               </tr>
                             </thead>
                             <tbody class="d-block">
+                                <tr class="" ng-repeat="sl in sslDB">
+                                    <td class="">{{sl.trackID}}</td>
+                                    <td class="">{{sl.trackName}}</td>
+                                    <td class="">{{sl.trackArtist}}</td>
+                                    <td class=""><button data-ng-click="showLyrics(sl.trackID, sl.trackName, true, false)" class="btn btn-outline-dark">Lyrics</button></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -66,6 +72,12 @@
                               </tr>
                             </thead>
                             <tbody class="d-block">
+                                <tr class="" ng-repeat="sl in sslJMM">
+                                    <td class="">{{sl.trackID}}</td>
+                                    <td class="">{{sl.trackName}}</td>
+                                    <td class="">{{sl.trackArtist}}</td>
+                                    <td class=""><button data-ng-click="showLyrics(sl.trackID, sl.trackName, false, true)" class="btn btn-outline-dark">Lyrics</button></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -77,16 +89,19 @@
                 <div class="row">
                     <div class="col-6 col-6-12">
                         <label for="trackName" class="label">Insert name of the song</label>
-                        <input id="trackName" class="w-75 m-auto fs-16 pb-2 pt-2" type="text" name="trackName" value="" placeholder="song name" />
+                        <input id="trackName" ng-model="trackName" class="w-75 m-auto fs-16 pb-2 pt-2" type="text" name="trackName" value="" placeholder="song name" />
                     </div>
 
                     <div class="col-6 col-6-12"> 
                         <label for="trackArtist" class="label">Insert name of the artist</label>
-                        <input id="trackArtist" class="w-75 m-auto fs-16 pb-2 pt-2" type="text" name="trackArtist" value="" placeholder="artist name" />
+                        <input id="trackArtist" ng-model="trackArtist" class="w-75 m-auto fs-16 pb-2 pt-2" type="text" name="trackArtist" value="" placeholder="artist name" />
                     </div>
                 </div>
                 <div class="mt-3">
-                    <button type="button" class="btn btn-info text-bold w-50 m-auto">SEARCH</button>
+                    <button id="searchBtn" type="button" class="btn btn-info text-bold w-50 m-auto" ng-click="searchSongs()">
+                        <span id="loadFa" class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span id="searchTxt" class="text-bold">SEARCH</span>
+                    </button>
                 </div>
             </div>
 
@@ -95,6 +110,23 @@
                 <p class="txt1">LyricsTrivia game produced by <a href="mailto:devis.dalmoro@studenti.unitn.it">Devis Dal Moro</a></p>
                 </div>
             </footer>
+        </div>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="modalLyrics" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="Lyrics Modal" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header text-dark">
+                <h5 class="modal-title" id="staticBackdropLabel">{{modalLyricsTitle}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body text-dark">
+                {{modalLyricsTxt}}
+              </div>
+            </div>
+          </div>
         </div>
         
         <!--Lyrics Trivia utils scripts for resizing-->

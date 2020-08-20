@@ -21,7 +21,7 @@ $(document).ready(function(){
   }
   
   $(window).resize(function(){
-      console.log("Resize " + $(window).width());
+      //console.log("Resize " + $(window).width());
       if($(window).width()<768){
         $('.col-priority-low').addClass('d-none');
         $('.col-6-12').addClass('col-12');
