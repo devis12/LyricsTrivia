@@ -150,8 +150,8 @@ public class Songs extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         int trackID = -1;
+        String trackName  = null;
         String trackArtist = null;
-        String trackName = null;
         String storage = null;
         
         String sTrackID = RequestsUtilities.getPathParameter(request); //extract trackID (if present)
@@ -161,8 +161,14 @@ public class Songs extends HttpServlet {
         
         HashMap<String, String> queryParameters = RequestsUtilities.getQueryParameters(request);//extract query parameters
         trackArtist = request.getParameter("trackArtist");
+        if(trackArtist != null)
+            trackArtist = trackArtist.replaceAll("\"", "");//remove double quotes if present
         trackName = request.getParameter("trackName");
+        if(trackName != null)
+            trackName = trackName.replaceAll("\"", "");
         storage = request.getParameter("storage"); // "lyricstrivia", "jmusixmatch" or null for both
+        if(storage != null)
+            storage = storage.replaceAll("\"", "");
         
         SongLyricsJSONResponse slJSONresponse = new SongLyricsJSONResponse();
         

@@ -56,8 +56,6 @@ public class SongLyricsDAO implements SongLyricsDAORemote, SongLyricsDAOLocal {
     
     @Override
     public SongLyrics getSongLyricsDB(String trackName, String trackArtist) {
-        trackName = trackName.replaceAll("\"", "");//remove quotes
-        trackArtist = trackArtist.replaceAll("\"", "");
         Query query = manager.createQuery("SELECT s FROM SongLyrics s WHERE lower(s.trackName) LIKE lower(:track) AND lower(s.trackArtist) LIKE lower(:artist)", SongLyrics.class);
         query.setParameter("track", "%"+trackName+"%");
         query.setParameter("artist", "%"+trackArtist+"%");
@@ -83,7 +81,6 @@ public class SongLyricsDAO implements SongLyricsDAORemote, SongLyricsDAOLocal {
     
     @Override
     public List<SongLyrics> getSongsByArtistDB(String trackArtist) {
-        trackArtist = trackArtist.replaceAll("\"", "");
         Query query = manager.createQuery("SELECT s FROM SongLyrics s WHERE lower(s.trackArtist) LIKE lower(:artist)", SongLyrics.class);
         query.setParameter("artist", "%"+trackArtist+"%");
         List<SongLyrics> ssl;
@@ -102,7 +99,6 @@ public class SongLyricsDAO implements SongLyricsDAORemote, SongLyricsDAOLocal {
     
      @Override
     public List<SongLyrics> getSongsByNameDB(String trackName) {
-        trackName = trackName.replaceAll("\"", "");
         Query query = manager.createQuery("SELECT s FROM SongLyrics s WHERE lower(s.trackName) LIKE lower(:name)", SongLyrics.class);
         query.setParameter("name", "%"+trackName+"%");
         List<SongLyrics> ssl;

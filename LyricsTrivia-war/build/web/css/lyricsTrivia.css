@@ -548,6 +548,20 @@ th{
     table-layout:fixed;
 }
 
+/*Question option*/
+.qoption{
+    height: 48px;
+    width: 256px;
+    font-size: 16px;
+}
+
+@media (min-width: 768px) {
+    .qoption{
+        height: 42px;
+        font-size: 12px;
+    }
+}
+
 
 
 /*//////////////////////////////////////////////////////////////////
