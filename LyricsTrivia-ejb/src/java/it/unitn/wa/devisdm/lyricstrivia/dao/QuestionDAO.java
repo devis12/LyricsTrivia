@@ -28,6 +28,6 @@ public class QuestionDAO implements QuestionDAORemote {
     public Question getNewRndQuestion() {
         List<SongLyrics> slList = songLyricsDAOLocal.getRandomSongLyricsDB(N_OPTIONS);//question has 4 options
         int rightAnswerIndex = new Random(System.currentTimeMillis()).nextInt(N_OPTIONS);//select 1 option as the answer within the pool of options
-        return new Question(slList, rightAnswerIndex, -1);//answer still not given, so -1 as index
+        return new Question(slList, rightAnswerIndex);//answer still not given, so -1 as index
     }
 }

@@ -9,6 +9,7 @@ import it.unitn.wa.devisdm.lyricstrivia.util.RequestsUtilities;
 import com.google.gson.Gson;
 import it.unitn.wa.devisdm.lyricstrivia.dao.OnlinePlayersRemote;
 import it.unitn.wa.devisdm.lyricstrivia.dao.PlayerDAORemote;
+import it.unitn.wa.devisdm.lyricstrivia.entities.PlayerOnlineStatus;
 import it.unitn.wa.devisdm.lyricstrivia.entity.Player;
 import it.unitn.wa.devisdm.lyricstrivia.util.TokenGenerator;
 import it.unitn.wa.devisdm.lyricstrivia.util.UtilityCheck;
@@ -39,16 +40,6 @@ import javax.servlet.http.HttpSession;
  * @author devis
  */
 public class Players extends HttpServlet {
-    
-    //to generate corresponding JSON
-    private class PlayerOnlineStatus extends Player implements Serializable{
-        boolean online;
-        PlayerOnlineStatus(Player player, boolean online){
-            super(player.getUsername(), player.getEmail(), player.getPwd(), player.getSalt(), 
-                    player.getBirthdate(),player.getGender(), player.getPlayed(), player.getWon(), player.getConfirmed());
-            this.online=online;
-        }
-    }
     
     private PlayerDAORemote playerDAORemote;
     
@@ -102,7 +93,7 @@ public class Players extends HttpServlet {
             HashMap<Player, Boolean> onlinePlayers = ((OnlinePlayersRemote) this.getServletContext().getAttribute("onlinePlayersRemote")).getPlayersMap();
             List<PlayerOnlineStatus> onlinePlayersList = new ArrayList<>();
             for(Player p : onlinePlayers.keySet())
-                onlinePlayersList.add(new PlayerOnlineStatus(p, onlinePlayers.get(p)));
+                onlinePlayersList.add(new PlayerOnlineStatus(p, onlinePlayers.get(p), false));//TODO this need to be fixed, because the challenge status changes as well
 
             out.print(new Gson().toJson(onlinePlayersList));
         

@@ -37,7 +37,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author devis
  */
-public class LoggedInFilter implements Filter {
+public class ForwardToHome implements Filter {
     
     private PlayerDAORemote playerDAORemote;
     
@@ -48,14 +48,15 @@ public class LoggedInFilter implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
     
-    public LoggedInFilter() {
+    public ForwardToHome() {
     }    
     
     private void doBeforeProcessing(RequestWrapper request, ResponseWrapper response)
             throws IOException, ServletException {
         if (debug) {
-            log("NewFilter:DoBeforeProcessing");
+            log("ForwardToHome:DoBeforeProcessing");
         }
+
         HttpSession session = request.getSession(false);
 
         Player loggedPlayer = (session!=null)? (Player) session.getAttribute("player") : null;
@@ -63,26 +64,57 @@ public class LoggedInFilter implements Filter {
         
         boolean adminLogged = (session!=null && session.getAttribute("admin")!=null)? (boolean) session.getAttribute("admin") : false;
 
-        if(loggedPlayer != null && fetchedPlayer.equals(loggedPlayer)){
+        if(loggedPlayer != null && fetchedPlayer.equals(loggedPlayer) && loggedPlayer.getConfirmed()){
             //user already logged, it can proceed to home page as long as its account is confirmed
-            if(!loggedPlayer.getConfirmed()){
-                request.setAttribute("warning_msg", "You still haven't confirmed your account!");
-                request.getRequestDispatcher("landing.jsp").forward(request, response);
-            }
+            request.getRequestDispatcher("home_page.jsp").forward(request, response);
             
-        }else if(!adminLogged){
-            request.setAttribute("error_msg", "Action not authorized!");           
-            
-            request.getRequestDispatcher("landing.jsp").forward(request, response);
+        }else if(adminLogged){  
+            //admin logged can proceed to admin panel
+            request.getRequestDispatcher("secret.jsp").forward(request, response);
         }
     }    
     
     private void doAfterProcessing(RequestWrapper request, ResponseWrapper response)
             throws IOException, ServletException {
         if (debug) {
-            log("NewFilter:DoAfterProcessing");
+            log("ForwardToHome:DoAfterProcessing");
         }
-        
+
+        // Write code here to process the request and/or response after
+        // the rest of the filter chain is invoked.
+        // For example, a logging filter might log the attributes on the
+        // request object after the request has been processed. 
+        /*
+	for (Enumeration en = request.getAttributeNames(); en.hasMoreElements(); ) {
+	    String name = (String)en.nextElement();
+	    Object value = request.getAttribute(name);
+	    log("attribute: " + name + "=" + value.toString());
+
+	}
+         */
+        // For example, a filter might append something to the response.
+        /*
+	PrintWriter respOut = new PrintWriter(response.getWriter());
+	respOut.println("<p><strong>This has been appended by an intrusive filter.</strong></p>");
+	
+	respOut.println("<p>Params (after the filter chain):<br>");
+	for (Enumeration en = request.getParameterNames(); en.hasMoreElements(); ) {
+		String name = (String)en.nextElement();
+		String values[] = request.getParameterValues(name);
+		int n = values.length;
+		StringBuffer buf = new StringBuffer();
+		buf.append(name);
+		buf.append("=");
+		for(int i=0; i < n; i++) {
+		    buf.append(values[i]);
+		    if (i < n-1)
+			buf.append(",");
+		}
+		log(buf.toString());
+		respOut.println(buf.toString() + "<br>");
+	}
+        respOut.println("</p>");
+         */
     }
 
     /**
@@ -99,7 +131,7 @@ public class LoggedInFilter implements Filter {
             throws IOException, ServletException {
         
         if (debug) {
-            log("NewFilter:doFilter()");
+            log("ForwardToHome:doFilter()");
         }
 
         // Create wrappers for the request and response objects.
@@ -171,7 +203,7 @@ public class LoggedInFilter implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {                
-                log("NewFilter: Initializing filter");
+                log("ForwardToHome: Initializing filter");
             }
         }
         
@@ -191,9 +223,9 @@ public class LoggedInFilter implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("NewFilter()");
+            return ("ForwardToHome()");
         }
-        StringBuffer sb = new StringBuffer("NewFilter(");
+        StringBuffer sb = new StringBuffer("ForwardToHome(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());
@@ -268,7 +300,7 @@ public class LoggedInFilter implements Filter {
         
         public void setParameter(String name, String[] values) {
             if (debug) {
-                System.out.println("NewFilter::setParameter(" + name + "=" + values + ")" + " localParams = " + localParams);
+                System.out.println("ForwardToHome::setParameter(" + name + "=" + values + ")" + " localParams = " + localParams);
             }
             
             if (localParams == null) {
@@ -288,7 +320,7 @@ public class LoggedInFilter implements Filter {
         @Override
         public String getParameter(String name) {
             if (debug) {
-                System.out.println("NewFilter::getParameter(" + name + ") localParams = " + localParams);
+                System.out.println("ForwardToHome::getParameter(" + name + ") localParams = " + localParams);
             }
             if (localParams == null) {
                 return getRequest().getParameter(name);
@@ -307,7 +339,7 @@ public class LoggedInFilter implements Filter {
         @Override
         public String[] getParameterValues(String name) {
             if (debug) {
-                System.out.println("NewFilter::getParameterValues(" + name + ") localParams = " + localParams);
+                System.out.println("ForwardToHome::getParameterValues(" + name + ") localParams = " + localParams);
             }
             if (localParams == null) {
                 return getRequest().getParameterValues(name);
@@ -318,7 +350,7 @@ public class LoggedInFilter implements Filter {
         @Override
         public Enumeration getParameterNames() {
             if (debug) {
-                System.out.println("NewFilter::getParameterNames() localParams = " + localParams);
+                System.out.println("ForwardToHome::getParameterNames() localParams = " + localParams);
             }
             if (localParams == null) {
                 return getRequest().getParameterNames();
@@ -329,7 +361,7 @@ public class LoggedInFilter implements Filter {
         @Override
         public Map getParameterMap() {
             if (debug) {
-                System.out.println("NewFilter::getParameterMap() localParams = " + localParams);
+                System.out.println("ForwardToHome::getParameterMap() localParams = " + localParams);
             }
             if (localParams == null) {
                 return getRequest().getParameterMap();

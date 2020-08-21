@@ -24,6 +24,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *  REST APIs for song lyrics
@@ -195,6 +196,11 @@ public class Songs extends HttpServlet {
         out.print(new Gson().toJson(slJSONresponse));
         out.flush();
     }
+    
+    private boolean isAdmin(HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        return (session != null && session.getAttribute("admin") != null && ((Boolean)session.getAttribute("admin")));
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -211,8 +217,15 @@ public class Songs extends HttpServlet {
         if(songLyricsDAORemote == null)
             initEJB();
         
+        
         response.setContentType("application/json"); 
         PrintWriter out = response.getWriter();
+        
+        if(!isAdmin(request)){//security check (just admin on POST; PUT; DELETE)
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);//401
+            out.flush();
+            return;
+        }
         
         int trackID = -1;
         String trackArtist = request.getParameter("trackArtist");
@@ -249,6 +262,12 @@ public class Songs extends HttpServlet {
         
         response.setContentType("application/json"); 
         PrintWriter out = response.getWriter();
+                
+        if(!isAdmin(request)){//security check (just admin on POST; PUT; DELETE)
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);//401
+            out.flush();
+            return;
+        }
         
         int trackID = -1;
         String trackArtist = request.getParameter("trackArtist");
@@ -286,6 +305,13 @@ public class Songs extends HttpServlet {
         
         response.setContentType("application/json"); 
         PrintWriter out = response.getWriter();
+        
+                
+        if(!isAdmin(request)){//security check (just admin on POST; PUT; DELETE)
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);//401
+            out.flush();
+            return;
+        }
         
         int trackID = -1;
         

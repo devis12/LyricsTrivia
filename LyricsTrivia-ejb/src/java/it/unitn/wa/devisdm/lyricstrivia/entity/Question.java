@@ -5,6 +5,7 @@
  */
 package it.unitn.wa.devisdm.lyricstrivia.entity;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,12 +13,15 @@ import java.util.Objects;
  *
  * @author devis
  */
-public class Question {
+public class Question implements Serializable{
     
     private List<SongLyrics> options;
     
     //index of the "right" songlyrics obj: the one that should be chosen by the user
     private int rightAnswerIndex;
+ 
+    //lyrics of option rightAnswerIndex
+    private String lyrics;
     
     //index of the lyrics within the options chosen by the user
     private int givenAnswerIndex;
@@ -37,6 +41,14 @@ public class Question {
     public void setRightAnswerIndex(int rightAnswerIndex) {
         this.rightAnswerIndex = rightAnswerIndex;
     }
+    
+    public String getLyrics() {
+        return lyrics;
+    }
+
+    public void setLyrics(String lyrics) {
+        this.lyrics = lyrics;
+    }
 
     public int getGivenAnswerIndex() {
         return givenAnswerIndex;
@@ -46,10 +58,11 @@ public class Question {
         this.givenAnswerIndex = givenAnswerIndex;
     }
 
-    public Question(List<SongLyrics> options, int rightAnswerIndex, int givenAnswerIndex) {
+    public Question(List<SongLyrics> options, int rightAnswerIndex) {
         this.options = options;
+        this.lyrics = options.get(rightAnswerIndex).getTrackLyrics();
         this.rightAnswerIndex = rightAnswerIndex;
-        this.givenAnswerIndex = givenAnswerIndex;
+        this.givenAnswerIndex = -1; //when you instantiate it, user has'nt decided yet
     }
     
     public Question(){}
