@@ -93,7 +93,7 @@ public class Players extends HttpServlet {
             HashMap<Player, Boolean> onlinePlayers = ((OnlinePlayersRemote) this.getServletContext().getAttribute("onlinePlayersRemote")).getPlayersMap();
             List<PlayerOnlineStatus> onlinePlayersList = new ArrayList<>();
             for(Player p : onlinePlayers.keySet())
-                onlinePlayersList.add(new PlayerOnlineStatus(p, onlinePlayers.get(p), false));//TODO this need to be fixed, because the challenge status changes as well
+                onlinePlayersList.add(new PlayerOnlineStatus(p, onlinePlayers.get(p)));
 
             out.print(new Gson().toJson(onlinePlayersList));
         

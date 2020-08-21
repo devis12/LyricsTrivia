@@ -77,6 +77,11 @@ public class ForwardToHome implements Filter {
             String error_msg = (String) request.getParameter("error_msg");
             request.setParameter("error_msg", empty);
             request.setAttribute("error_msg", error_msg);
+        }else if(request.getParameter("success_msg") != null && request.getAttribute("success_msg") == null){//success_msg msg in url -> move into request attribute to display it
+            String[] empty = new String[0];
+            String error_msg = (String) request.getParameter("success_msg");
+            request.setParameter("success_msg", empty);
+            request.setAttribute("success_msg", error_msg);
         }
     }    
     

@@ -100,7 +100,10 @@ angular.module("LTApp").controller("profileCtrl", ['$scope', '$rootScope', '$htt
                 }
               })
                 .then(
-                    () => location.replace(location.origin + location.pathname.substring(0, location.pathname.lastIndexOf("/"))), //reload.. session will be expired at this point
+                    () => location.replace(
+                        location.origin + 
+                        location.pathname.substring(0, location.pathname.lastIndexOf("/")) 
+                        + "?success_msg=Account deleted successfully"), //reload.. session will be expired at this point
                     (error) =>  console.error(error)
                 );
         };
