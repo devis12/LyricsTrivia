@@ -48,22 +48,6 @@
     </filter-mapping>
     <filter-mapping>
         <filter-name>LoggedInFilter</filter-name>
-        <url-pattern>/Players</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-        <dispatcher>FORWARD</dispatcher>
-        <dispatcher>INCLUDE</dispatcher>
-        <dispatcher>ERROR</dispatcher>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>LoggedInFilter</filter-name>
-        <url-pattern>/Players/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-        <dispatcher>FORWARD</dispatcher>
-        <dispatcher>INCLUDE</dispatcher>
-        <dispatcher>ERROR</dispatcher>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>LoggedInFilter</filter-name>
         <url-pattern>/Songs</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>

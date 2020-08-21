@@ -550,15 +550,24 @@ th{
 
 /*Question option*/
 .qoption{
-    height: 48px;
-    width: 256px;
-    font-size: 16px;
+    height: 64px;
+    width: 302px;
+    font-size: 14px;
 }
 
-@media (min-width: 768px) {
+.qoption artist{
+    font-size: 13px;
+}
+
+@media (max-width: 768px) {
     .qoption{
-        height: 42px;
+        height: 48px;
+        width: 256px;
         font-size: 12px;
+    }
+    
+    .qoption artist{
+        font-size: 11px;
     }
 }
 

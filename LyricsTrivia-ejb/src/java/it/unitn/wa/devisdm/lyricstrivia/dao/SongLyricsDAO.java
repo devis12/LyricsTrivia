@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.commons.text.StringEscapeUtils;
 
 /**
  *
@@ -31,11 +32,13 @@ public class SongLyricsDAO implements SongLyricsDAORemote, SongLyricsDAOLocal {
     
     @Override
     public void addSongLyricsDB(SongLyrics songLyrics) {
+        songLyrics.escapeHtml();
         manager.persist(songLyrics);
     }
 
     @Override
     public void editSongLyricsDB(SongLyrics songLyrics) {
+        songLyrics.escapeHtml();
         manager.merge(songLyrics);
     }
 

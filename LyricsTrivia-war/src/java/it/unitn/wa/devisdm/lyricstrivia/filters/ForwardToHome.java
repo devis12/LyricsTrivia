@@ -71,6 +71,12 @@ public class ForwardToHome implements Filter {
         }else if(adminLogged){  
             //admin logged can proceed to admin panel
             request.getRequestDispatcher("secret.jsp").forward(request, response);
+            
+        }else if(request.getParameter("error_msg") != null && request.getAttribute("error_msg") == null){//error msg in url -> move into request attribute to display it
+            String[] empty = new String[0];
+            String error_msg = (String) request.getParameter("error_msg");
+            request.setParameter("error_msg", empty);
+            request.setAttribute("error_msg", error_msg);
         }
     }    
     

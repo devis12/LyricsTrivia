@@ -49,7 +49,7 @@
         </div>
                 
         <!--Lyrics Trivia utils scripts for resizing-->
-        <script src="js/resize_utils.js"></script>
+        <script src="js/ui_utils.js"></script>
     </body>
     
 </html>

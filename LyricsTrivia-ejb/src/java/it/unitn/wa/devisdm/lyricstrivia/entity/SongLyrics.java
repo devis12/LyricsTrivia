@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import org.apache.commons.text.StringEscapeUtils;
 
 /**
  *
@@ -68,6 +69,13 @@ public class SongLyrics implements Serializable {
 
     public void setTrackLyrics(String trackLyrics) {
         this.trackLyrics = trackLyrics;
+    }
+    
+    /*escape html characters within track info*/
+    public void escapeHtml(){
+        this.trackArtist = StringEscapeUtils.escapeHtml4(trackArtist);
+        this.trackName = StringEscapeUtils.escapeHtml4(trackName);
+        this.trackLyrics = StringEscapeUtils.escapeHtml4(trackLyrics);
     }
 
     public SongLyrics(int trackID, String trackName, String trackArtist, String trackLyrics) {

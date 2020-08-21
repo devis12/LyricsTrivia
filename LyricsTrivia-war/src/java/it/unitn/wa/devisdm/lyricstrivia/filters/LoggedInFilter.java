@@ -56,6 +56,11 @@ public class LoggedInFilter implements Filter {
         if (debug) {
             log("NewFilter:DoBeforeProcessing");
         }
+        String contextPath = request.getServletContext().getContextPath();
+        if (!contextPath.endsWith("/")) {
+            contextPath += "/";
+        }
+               
         HttpSession session = request.getSession(false);
 
         Player loggedPlayer = (session!=null)? (Player) session.getAttribute("player") : null;
@@ -70,10 +75,8 @@ public class LoggedInFilter implements Filter {
                 request.getRequestDispatcher("landing.jsp").forward(request, response);
             }
             
-        }else if(!adminLogged){
-            request.setAttribute("error_msg", "Action not authorized!");           
-            
-            request.getRequestDispatcher("landing.jsp").forward(request, response);
+        }else if(!adminLogged){       
+            response.sendRedirect(response.encodeRedirectURL(contextPath+"landing.jsp?error_msg=Action not authorized"));
         }
     }    
     

@@ -14,9 +14,9 @@ $(function(){
 
 $(document).ready(function(){
   
-  if(screen.width < 1268 || $(window).width()<1268){
-      $('.col-6-12-1268').addClass('col-12');
-      $('.col-6-12-1268').removeClass('col-6');
+  if(screen.width < 1368 || $(window).width()<1368){
+      $('.col-6-12-1368').addClass('col-12');
+      $('.col-6-12-1368').removeClass('col-6');
   }
   
   /*Hide some col or adjust their spacing, when resizing*/
@@ -28,12 +28,12 @@ $(document).ready(function(){
   
   $(window).resize(function(){
       
-      if($(window).width() < 1268){
-        $('.col-6-12-1268').addClass('col-12');
-        $('.col-6-12-1268').removeClass('col-6');
+      if($(window).width() < 1368){
+        $('.col-6-12-1368').addClass('col-12');
+        $('.col-6-12-1368').removeClass('col-6');
       }else{
-        $('.col-6-12-1268').removeClass('col-12');
-        $('.col-6-12-1268').addClass('col-6');
+        $('.col-6-12-1368').removeClass('col-12');
+        $('.col-6-12-1368').addClass('col-6');
       }
       
       //console.log("Resize " + $(window).width());
@@ -49,3 +49,5 @@ $(document).ready(function(){
       
   });
 });
+
+

@@ -52,3 +52,12 @@ LTApp.filter('computeAge', function() {
         return yearsDiff;
     };
 });
+
+LTApp.filter('noNewLine', function($sce) {
+    return function(s) {
+        if(s === undefined)
+            return "";
+        else
+            return $sce.trustAsHtml(s.replace("\n", "<br />"));
+    };
+});

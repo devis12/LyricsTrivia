@@ -7,40 +7,7 @@
     <div class="row">
         
         <div class="col-6 col-6-12">
-            
-            <div ng-if="{{challenged}}">
-                <h4>Question asked by </h4>
-                <h6 class="bg-warning text-bold text-dark">{{booh}}</h6>
 
-                <div class="bg-transparent">
-                    <div class="jumbotron w-75 ml-auto mr-auto mb-3 mt-1 bg-dark text-light font-italic">
-                                            In the town where I was born\nLived a man who sailed to sea\nAnd he told us of his life\nIn the land of submarines\n\nSo we sailed onto the sun\n'Til we found the sea of green\nAnd we lived beneath the waves\nIn our yellow submarine\n\nWe all live in a yellow submarine\nYellow submarine, yellow submarine\nWe all live in a yellow submarine\nYellow submarine, yellow submarine\n\n...\n\n
-                    </div>
-
-                    <div class="row mt-1 ml-auto mr-auto text-center">
-                        <div class="col-6 col-6-12-1268 mb-1">
-                            <button class="qoption btn btn-secondary">{{options1Practice.trackName}} <br /> {{option1Practice.trackArtist}}</button>
-                        </div>
-                        <div class="col-6 col-6-12-1268 ">
-                           <button class="qoption btn btn-secondary">{{options2Practice.trackName}} <br /> {{option2Practice.trackArtist}}</button> 
-                        </div>
-                    </div>
-
-                     <div class="row mt-1 ml-auto mr-auto text-center">
-                        <div class="col-6 col-6-12-1268 mb-1">
-                            <button class="qoption btn btn-secondary">{{options3Practice.trackName}} <br /> {{option3Practice.trackArtist}}</button>
-                        </div>
-                        <div class="col-6 col-6-12-1268">
-                            <button class="qoption btn btn-secondary">{{options4Practice.trackName}} <br /> {{option4Practice.trackArtist}}</button>
-                        </div>
-                    </div>
-        </div>
-            </div>
-            
-            <div ng-if="{{!challenged}}">
-                <h4>No challenges available</h4>
-                <h6>Wait for someone to challenge you!</h6>
-            </div>
         </div>
             
         <div class="col-6 col-6-12">
@@ -49,27 +16,27 @@
             <h6>(random questions)</h6>
             
             <div class="bg-transparent">
-                <div class="jumbotron w-75 ml-auto mr-auto mb-3 mt-1 bg-dark text-light font-italic">
-                                        In the town where I was born\nLived a man who sailed to sea\nAnd he told us of his life\nIn the land of submarines\n\nSo we sailed onto the sun\n'Til we found the sea of green\nAnd we lived beneath the waves\nIn our yellow submarine\n\nWe all live in a yellow submarine\nYellow submarine, yellow submarine\nWe all live in a yellow submarine\nYellow submarine, yellow submarine\n\n...\n\n
+                <div id="qplyrics" class="jumbotron w-75 ml-auto mr-auto mb-3 mt-1 bg-dark text-light font-italic fs-16"  ng-bind-html='qp.lyrics | noNewLine'>
+                  
                 </div>
                 
                 <div class="row mt-1 ml-auto mr-auto text-center">
-                    <div class="col-6 col-6-12-1268 mb-1">
-                        <button class="qoption btn btn-secondary">{{options1Practice.trackName}} <br /> {{option1Practice.trackArtist}}</button>
+                    <div class="col-6 col-6-12-1368 mb-1">
+                        <button id="qpoption1" class="qoption btn btn-secondary pb-5" ng-click="qpChoose(0)">{{qp.options[0].trackName}}<br /> <span class="artist">{{qp.options[0].trackArtist}}</span></button>
                     </div>
-                    <div class="col-6 col-6-12-1268 ">
-                       <button class="qoption btn btn-secondary">{{options2Practice.trackName}} <br /> {{option2Practice.trackArtist}}</button> 
-                    </div>
-                </div>
-                
-                 <div class="row mt-1 ml-auto mr-auto text-center">
-                    <div class="col-6 col-6-12-1268 mb-1">
-                        <button class="qoption btn btn-secondary">{{options3Practice.trackName}} <br /> {{option3Practice.trackArtist}}</button>
-                    </div>
-                    <div class="col-6 col-6-12-1268">
-                        <button class="qoption btn btn-secondary">{{options4Practice.trackName}} <br /> {{option4Practice.trackArtist}}</button>
+                    <div class="col-6 col-6-12-1368 ">
+                        <button id="qpoption2" class="qoption btn btn-secondary pb-5" ng-click="qpChoose(1)">{{qp.options[1].trackName}}<br /> <span class="artist">{{qp.options[1].trackArtist}}</span></button>
                     </div>
                 </div>
+
+                <div class="row mt-1 ml-auto mr-auto text-center">
+                   <div class="col-6 col-6-12-1368 mb-1">
+                       <button id="qpoption3" class="qoption btn btn-secondary pb-5" ng-click="qpChoose(2)">{{qp.options[2].trackName}}<br /> <span class="artist">{{qp.options[2].trackArtist}}</span></button>
+                   </div>
+                   <div class="col-6 col-6-12-1368">
+                       <button id="qpoption4" class="qoption btn btn-secondary pb-5" ng-click="qpChoose(3)">{{qp.options[3].trackName}}<br /> <span class="artist">{{qp.options[3].trackArtist}}</span></button>
+                   </div>
+               </div>
                 
             </div>
         </div>
