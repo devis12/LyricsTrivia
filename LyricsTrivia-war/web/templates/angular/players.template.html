@@ -47,7 +47,7 @@
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                    <h5 class="modal-title text-body">New challenge for {{newChg.askingPlayer}}</h5>
+                    <h5 class="modal-title text-body">New challenge for {{newChg.askedPlayer}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -68,7 +68,7 @@
                     
                     <div class="row text-body fs-16 text-left mt-3">
                         <div class="col-2 text-center">
-                            <input type="radio" class="mt-2" name="rightTrackID" value="1" checked/>
+                            <input type="radio" class="mt-2" name="rightTrackID" ng-model="rightTrackID" value="1" checked/>
                         </div>
                         <div class="col-9">
                             <input ng-model="track1Txt" type="text" ng-change="enableDisableSubmitChlg()"
@@ -82,7 +82,7 @@
                     
                     <div class="row text-body fs-16 text-left">
                         <div class="col-2 text-center">
-                            <input type="radio" class="mt-2" name="rightTrackID" value="2" />
+                            <input type="radio" class="mt-2" name="rightTrackID" ng-model="rightTrackID" value="2" />
                         </div>
                         <div class="col-9">
                             <input ng-model="track2Txt" type="text" ng-change="enableDisableSubmitChlg()"
@@ -96,7 +96,7 @@
                     
                     <div class="row text-body fs-16 text-left">
                         <div class="col-2 text-center">
-                            <input type="radio" class="mt-2" name="rightTrackID" value="3" />
+                            <input type="radio" class="mt-2" name="rightTrackID" ng-model="rightTrackID" value="3" />
                         </div>
                         <div class="col-9">
                             <input ng-model="track3Txt" type="text" ng-change="enableDisableSubmitChlg()"
@@ -110,7 +110,7 @@
                     
                     <div class="row text-body fs-16 text-left">
                         <div class="col-2 text-center">
-                            <input type="radio" class="mt-2" name="rightTrackID" value="4" />
+                            <input type="radio" class="mt-2" name="rightTrackID" ng-model="rightTrackID" value="4" />
                         </div>
                         <div class="col-9">
                             <input ng-model="track4Txt" type="text" ng-change="enableDisableSubmitChlg()"

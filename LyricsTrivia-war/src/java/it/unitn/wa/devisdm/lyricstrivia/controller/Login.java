@@ -98,6 +98,16 @@ public class Login extends HttpServlet {
         
         try{
             if(player != null && Arrays.equals(player.getPwd(), TokenGenerator.getEncryptedPassword(pwd, player.getSalt()))){//login success: set new session with player attribute 
+                
+                //check if the user has already an active session in another host: in that case, block the login
+                boolean alreadyLogged = ((OnlinePlayersRemote) this.getServletContext().getAttribute("onlinePlayersRemote")).getPlayersMap().get(Player.erasePrivateInfo(player, true));
+                if(alreadyLogged){//do NOT allow concurrently multiple active sessions to the same user... avoid any concurrency problems within its objects
+                    request.setAttribute("error_msg", "This account has currently another active session!");
+                    request.getRequestDispatcher("landing.jsp").forward(request, response);
+                    return;
+                }
+                
+                
                 //user found
                 request.getSession().setAttribute("player", player);
                 response.sendRedirect(response.encodeRedirectURL(contextPath + "home_page.jsp"));

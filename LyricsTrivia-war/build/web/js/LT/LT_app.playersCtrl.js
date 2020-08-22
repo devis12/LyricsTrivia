@@ -1,5 +1,5 @@
 /*Controller for players sub-page: containing list of all online/offline players*/
-angular.module("LTApp").controller("playersCtrl", ['$scope', '$rootScope', '$http', '$httpParamSerializer', function($scope, $rootScope, $http) {
+angular.module("LTApp").controller("playersCtrl", ['$scope', '$rootScope', '$http', '$httpParamSerializer', function($scope, $rootScope, $http, $httpParamSerializer) {
        $scope.page = 'players';
        $('.aNav').removeClass('active');
        $('#linkPlayers').addClass('active');
@@ -43,6 +43,8 @@ angular.module("LTApp").controller("playersCtrl", ['$scope', '$rootScope', '$htt
             $scope.track4Txt = '';
             
             setTrackIDVisibility();
+            
+            $scope.rightTrackID = "1";
         }
         
         function setTrackIDVisibility(){
@@ -55,7 +57,8 @@ angular.module("LTApp").controller("playersCtrl", ['$scope', '$rootScope', '$htt
         }
         
         $scope.newChlgModal = function(username){
-            $scope.newChg.askingPlayer = username;
+            $scope.newChg.askingPlayer = $rootScope.username;
+            $scope.newChg.askedPlayer = username;
             resetNewChlgValues();
             $('#newChallengeModal').modal();
         };
@@ -105,18 +108,22 @@ angular.module("LTApp").controller("playersCtrl", ['$scope', '$rootScope', '$htt
                 case 1: 
                     $scope.trackID1 = false;
                     $scope.track1Txt = '';
+                    $scope.newChg.trackID1 = undefined;
                     break;
                 case 2: 
                     $scope.trackID2 = false;
                     $scope.track2Txt = '';
+                    $scope.newChg.trackID2 = undefined;
                     break;
                 case 3: 
                     $scope.trackID3 = false;
                     $scope.track3Txt = '';
+                    $scope.newChg.trackID3 = undefined;
                     break;
                 case 4: 
                     $scope.trackID4 = false;
                     $scope.track4Txt = '';
+                    $scope.newChg.trackID4 = undefined;
                     break;
             }
             
@@ -143,18 +150,22 @@ angular.module("LTApp").controller("playersCtrl", ['$scope', '$rootScope', '$htt
                 case 1: 
                     $scope.trackID1 = trackID;
                     $scope.track1Txt = trackName + " ("+ trackArtist +")";
+                    $scope.newChg.trackID1 = trackID;
                     break;
                 case 2: 
                     $scope.trackID2 = trackID;
                     $scope.track2Txt = trackName + " ("+ trackArtist +")";
+                    $scope.newChg.trackID2 = trackID;
                     break;
                 case 3: 
                     $scope.trackID3 = trackID;
                     $scope.track3Txt = trackName + " ("+ trackArtist +")";
+                    $scope.newChg.trackID3 = trackID;
                     break;
                 case 4: 
                     $scope.trackID4 = trackID;
                     $scope.track4Txt = trackName + " ("+ trackArtist +")";
+                    $scope.newChg.trackID4 = trackID;
                     break;
             }
             
@@ -180,5 +191,35 @@ angular.module("LTApp").controller("playersCtrl", ['$scope', '$rootScope', '$htt
           else
               $('#submitNewChlg').prop('disabled', true);
         };
+        
+        
+        $scope.throwNewChallenge = function(){
+            
+            $scope.rightTrackID = parseInt($scope.rightTrackID);
+            switch($scope.rightTrackID){
+                case 1: $scope.newChg.rightTrackID = $scope.newChg.trackID1; break;
+                case 2: $scope.newChg.rightTrackID = $scope.newChg.trackID2; break;
+                case 3: $scope.newChg.rightTrackID = $scope.newChg.trackID3; break;
+                case 4: $scope.newChg.rightTrackID = $scope.newChg.trackID4; break;
+            }
+            console.log($scope.newChg);
+            
+            $http({
+                url: ("Challenge"), //
+                method: 'POST',
+                data: $httpParamSerializer($scope.newChg), // 
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded' // Note the appropriate header
+                }
+              })
+                .then(
+                    () => {
+                        console.log("Challenge throwed");
+                        $('#newChallengeModal').modal('toggle');
+                        reset
+                    },
+                    (error) =>  console.error(error)
+                );
+            };
         
     }]);

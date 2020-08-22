@@ -40,6 +40,14 @@
     </filter-mapping>
     <filter-mapping>
         <filter-name>LoggedInFilter</filter-name>
+        <url-pattern>/Challenge</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>LoggedInFilter</filter-name>
         <url-pattern>/Practice</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
@@ -107,6 +115,10 @@
         <servlet-name>Practice</servlet-name>
         <servlet-class>it.unitn.wa.devisdm.lyricstrivia.controller.Practice</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Challenge</servlet-name>
+        <servlet-class>it.unitn.wa.devisdm.lyricstrivia.controller.Challenge</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Players</servlet-name>
         <url-pattern>/Players/*</url-pattern>
@@ -138,6 +150,10 @@
     <servlet-mapping>
         <servlet-name>Practice</servlet-name>
         <url-pattern>/Practice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Challenge</servlet-name>
+        <url-pattern>/Challenge</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
