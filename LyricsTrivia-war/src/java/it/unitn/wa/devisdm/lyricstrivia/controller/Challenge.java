@@ -6,6 +6,7 @@
 package it.unitn.wa.devisdm.lyricstrivia.controller;
 
 import com.google.gson.Gson;
+import it.unitn.wa.devisdm.lyricstrivia.dao.OnlinePlayersRemote;
 import it.unitn.wa.devisdm.lyricstrivia.dao.PlayerDAORemote;
 import it.unitn.wa.devisdm.lyricstrivia.dao.QuestionDAORemote;
 import it.unitn.wa.devisdm.lyricstrivia.dao.SongLyricsDAORemote;
@@ -15,6 +16,7 @@ import it.unitn.wa.devisdm.lyricstrivia.entity.SongLyrics;
 import it.unitn.wa.devisdm.lyricstrivia.entity.StoredQuestion;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -69,7 +71,7 @@ public class Challenge extends HttpServlet {
     
     /**
      * Handles the HTTP <code>GET</code> method.
-     * Get unanswered challenges
+     * Get unanswered challenge question
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -97,7 +99,7 @@ public class Challenge extends HttpServlet {
         //see if you've already fetched some unanswered question from the db and proposed them to the player
         List<Question> challengeQuestions = (session.getAttribute("challengeQuestions") != null)? (List<Question>) session.getAttribute("challengeQuestions") : null;
         
-        Question newChallenge = null;
+        Question cq = null;//challenge question to propose
         
         if(challengeQuestions == null || challengeQuestions.isEmpty()){//no challenge questions in the session obj, try to fetch them from db 
             challengeQuestions = questionDAORemote.getUnansweredQuestion(player.getUsername());
@@ -105,10 +107,15 @@ public class Challenge extends HttpServlet {
         
         }// else there is still unanswered questions in the session list... give the first one of them
         
-        if(challengeQuestions != null && challengeQuestions.size() > 0)//there can be ZERO challenge to propose
-            newChallenge = challengeQuestions.get(0);//answer back with the first one in the array 
+        if(challengeQuestions != null && challengeQuestions.size() > 0){//there is a challenge question to propose
+            cq = challengeQuestions.get(0);//answer back with the first one in the array 
+            cq.setRightAnswerIndex(-1);//hidden answer index to user (so it can't check json)
+
+            for(SongLyrics sl : cq.getOptions()){sl.setTrackLyrics("");}//hidden lyrics of the four options, so user can't cheat
+            session.setAttribute("cq", cq);
+        }
         
-        out.print(new Gson().toJson(newChallenge));
+        out.print(new Gson().toJson(cq));
     }
 
     /**
@@ -174,7 +181,99 @@ public class Challenge extends HttpServlet {
         }catch(NumberFormatException nfe){//errors within parsing of trackIDs
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
+        
         out.flush();
+    }
+    
+    // 
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     * PUT to answer the challenge question obtain with GET
+     * 
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        if(questionDAORemote == null)
+            initEJB();
+        
+        response.setContentType("application/json"); 
+        PrintWriter out = response.getWriter();
+        
+        HttpSession session = request.getSession(false);
+        if(session == null || session.getAttribute("player") == null || 
+                session.getAttribute("cq") == null || request.getParameter("givenAnswerIndex") == null){//this should never happen in any case (assuming proper filters)
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);//401
+            out.flush();
+            return;
+        }
+        
+        Question cq = (Question) session.getAttribute("cq");
+        
+        // check compatibility of given question <-> answered one by id of the corresp. stored question
+        int receivedStoredId = -1;
+        try{
+            receivedStoredId = Integer.parseInt(request.getParameter("storedId"));
+        }catch(NumberFormatException nfe){
+            receivedStoredId = -1;
+        }
+        if(receivedStoredId != cq.getStoredId()){
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);//400
+            out.flush();
+            return;
+        }
+        
+        StoredQuestion sq = questionDAORemote.getStoredQuestion(cq.getStoredId());
+        
+        /*compute rightAnswerIndex to deliver to the client as an index in [0, 3]*/
+        int rightTrackID = sq.getRightTrackID();
+        int trackID1 = sq.getTrackID1();
+        int trackID2 = sq.getTrackID2();
+        int trackID3 = sq.getTrackID3();
+        int trackID4 = sq.getTrackID4();
+        int cqRightIndex = -1;
+        cqRightIndex = (rightTrackID == trackID1)? 0 : cqRightIndex;
+        cqRightIndex = (rightTrackID == trackID2)? 1 : cqRightIndex;
+        cqRightIndex = (rightTrackID == trackID3)? 2 : cqRightIndex;
+        cqRightIndex = (rightTrackID == trackID4)? 3 : cqRightIndex;
+        
+        int givenAnswerIndex = Integer.parseInt(request.getParameter("givenAnswerIndex"));
+        cq.setGivenAnswerIndex(givenAnswerIndex);
+        cq.setRightAnswerIndex(cqRightIndex);//put again the right answer index in the challenge question, so the player will know if he/she answered right
+        
+        //update player stats
+        Player player = (Player) session.getAttribute("player");
+        int gamesPlayed = player.getPlayed() + 1;
+        int gamesWon = (cqRightIndex == givenAnswerIndex)? player.getWon() + 1 : player.getWon();
+        player.setPlayed(gamesPlayed);
+        player.setWon(gamesWon);
+        playerDAORemote.editPlayer(player);
+        //edit also its entry in the onlineMap of players
+        HashMap<Player, Boolean> onlinePlayers = ((OnlinePlayersRemote) this.getServletContext().getAttribute("onlinePlayersRemote")).getPlayersMap();
+        ((OnlinePlayersRemote) this.getServletContext().getAttribute("onlinePlayersRemote")).setMatches(Player.erasePrivateInfo(player, true));
+        onlinePlayers = ((OnlinePlayersRemote) this.getServletContext().getAttribute("onlinePlayersRemote")).getPlayersMap();
+        
+        //update stored question in the db (with the given answer)
+        sq.setGivenTrackID(cq.getOptions().get(givenAnswerIndex).getTrackID());
+        questionDAORemote.editStoredQuestion(sq);
+        
+        //remove session attributes
+        session.removeAttribute("cq");
+        
+        //update session array containing unanswered challenge questions
+        List<Question> challengeQuestions = (List<Question>) session.getAttribute("challengeQuestions");
+        challengeQuestions.remove(cq);
+        session.setAttribute("challengeQuestions", challengeQuestions);
+        //IMPORTANT NOTE.... for now maintain the API very simple and assume sequence of GET -> PUT -> GET -> PUT....
+        
+        response.setStatus(HttpServletResponse.SC_OK);
+        out.print(new Gson().toJson(cq));
+        out.flush();
+        
     }
 
     /**
@@ -184,7 +283,7 @@ public class Challenge extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Servlet for simple request - reply challenge questions";
     }// </editor-fold>
 
 }

@@ -26,7 +26,7 @@ public class StoredQuestion implements Serializable {
     
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
     /*Player from which the question is coming*/

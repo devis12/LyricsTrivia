@@ -76,3 +76,13 @@ LTApp.filter('cleanTrackInfo', function() {
         }
     };
 });
+
+/*substring to n*/
+LTApp.filter('substringN', function() {
+    return function(s, n) {
+        if(s === undefined || s.length < n)
+            return s;
+        else
+            return s.substring(0, n) + "...";
+    };
+});

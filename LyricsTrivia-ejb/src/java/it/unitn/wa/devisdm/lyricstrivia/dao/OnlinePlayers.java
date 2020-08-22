@@ -42,4 +42,15 @@ public class OnlinePlayers implements OnlinePlayersRemote {
     public HashMap<Player, Boolean> getPlayersMap() {
         return playerMap;
     }
+
+    /*Updates played and won matches of a player in the keyset*/
+    @Override
+    public void setMatches(Player p) {
+        if(playerMap.containsKey(p)){
+            //when comparing player, it doesn't take into account #player and #won
+            //thus, just remove it and readd the player to the map, where p here will have more played and (hopefully) more wins
+            Boolean onlineStatus = playerMap.remove(p);
+            playerMap.put(p, onlineStatus);
+        }
+    }
 }

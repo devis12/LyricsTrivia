@@ -548,54 +548,75 @@ th{
     table-layout:fixed;
 }
 
-/*Question option*/
-.qoption{
+/*Question option (pqoption for practice q, cq for challenge q)*/
+.cqoption, .pqoption{
     height: 76px;
     width: 364px;
     font-size: 16px;
 }
 
-.qoption artist{
+.cqoption artist, .pqoption artist{
     font-size: 14px;
 }
 
 @media (max-width: 1608px) {
-    .qoption{
+    .cqoption, .pqoption{
         height: 64px;
         width: 332px;
         font-size: 14px;
     }
     
-    .qoption artist{
+    .cqoption artist, .pqoption artist{
         font-size: 12px;
     }
 }
 
 @media (max-width: 1468px) {
-    .qoption{
+    .cqoption, .pqoption{
         height: 60px;
         width: 286px;
         font-size: 13px;
     }
     
-    .qoption artist{
+    .cqoption artist, .pqoption artist{
         font-size: 12px;
     }
 }
 
 @media (max-width: 768px) {
-    .qoption{
+    .cqoption, .pqoption{
         height: 56px;
         width: 256px;
         font-size: 12px;
     }
     
-    .qoption artist{
+    .cqoption artist, .pqoption artist{
         font-size: 10px;
     }
 }
 
+/*Uniform height lyrics boxes in home*/
+#cqlyrics, #pqlyrics{
+    height: 416px;
+}
 
+@media (max-width: 1368px) {
+    #cqlyrics, #pqlyrics{
+        height: 512px;
+    }
+}
+
+@media (max-width: 1068px) {
+    #cqlyrics, #pqlyrics{
+        height: 664px;
+    }
+}
+
+@media (max-width: 768px) {
+    #cqlyrics, #pqlyrics{
+        height: 712px;
+    }
+}
 
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/

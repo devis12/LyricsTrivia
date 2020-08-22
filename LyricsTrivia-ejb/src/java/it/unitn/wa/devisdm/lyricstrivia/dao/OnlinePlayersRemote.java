@@ -20,6 +20,7 @@ public interface OnlinePlayersRemote {
     void deletePlayer(Player p);
     
     void setOnline(Player p);
+    void setMatches(Player p);
     void setOffline(Player p);
     
     HashMap<Player, Boolean> getPlayersMap();//map with players and their online/offline status

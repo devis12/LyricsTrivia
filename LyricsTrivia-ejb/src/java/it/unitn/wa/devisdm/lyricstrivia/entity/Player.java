@@ -160,7 +160,7 @@ public class Player implements Serializable {
         }
         final Player other = (Player) obj;
 
-        boolean intCheck = this.gender == other.gender && this.played == other.played && this.won == other.won;
+        boolean intCheck = this.gender == other.gender;
         
         if(this.birthdate == null && other.birthdate != null || this.birthdate != null && other.birthdate == null)
             return false;

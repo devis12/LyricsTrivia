@@ -32,6 +32,11 @@ angular.module("LTApp").controller("playersCtrl", ['$scope', '$rootScope', '$htt
         $scope.newChg = {};
         
         function resetNewChlgValues(){
+            //cleanup search params
+            $scope.trackName = '';
+            $scope.trackArtist = '';
+            $scope.sslDB = []; //cleanup search result table
+            
             $scope.trackID1 = false;
             $scope.trackID2 = false;
             $scope.trackID3 = false;
@@ -44,7 +49,10 @@ angular.module("LTApp").controller("playersCtrl", ['$scope', '$rootScope', '$htt
             
             setTrackIDVisibility();
             
-            $scope.rightTrackID = "1";
+            $scope.rightTrackID = "1";//put the radio checked ad default to 1
+            
+            $('#submitNewChlg').removeClass("btn-success");
+            $('#submitNewChlg').addClass("btn-primary");
         }
         
         function setTrackIDVisibility(){
@@ -214,9 +222,12 @@ angular.module("LTApp").controller("playersCtrl", ['$scope', '$rootScope', '$htt
               })
                 .then(
                     () => {
-                        console.log("Challenge throwed");
-                        $('#newChallengeModal').modal('toggle');
-                        reset
+                        //$('#newChallengeModal').modal('toggle');
+                        $('#submitNewChlg').removeClass("btn-primary");
+                        $('#submitNewChlg').addClass("btn-success");
+                        $('#submitNewChlg').prop("disabled", true);
+                        $('#submitNewChlg').val("SENT");
+                        setTimeout(() => $('#newChallengeModal').modal('toggle'), 3000);
                     },
                     (error) =>  console.error(error)
                 );

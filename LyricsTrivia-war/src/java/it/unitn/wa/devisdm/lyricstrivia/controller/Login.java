@@ -111,7 +111,7 @@ public class Login extends HttpServlet {
                 //user found
                 request.getSession().setAttribute("player", player);
                 response.sendRedirect(response.encodeRedirectURL(contextPath + "home_page.jsp"));
-                
+                    
                 //set the user as effectively online in the stateful bean handled by the app context
                 ((OnlinePlayersRemote) this.getServletContext().getAttribute("onlinePlayersRemote")).setOnline(Player.erasePrivateInfo(player, true));
                 /*debug
