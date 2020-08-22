@@ -7,34 +7,42 @@
     <div class="row">
         
         <div class="col-6 col-6-12">
-
+            <h4>Challenge</h4>
+            <h6 class="text-transparent">Coming up!</h6>
+            
+            <div id="waitChg" class="jumbotron w-75 ml-auto mr-auto mb-3 mt-1 bg-dark text-light font-italic fs-16">
+                <h6>Nothing new <i class="far fa-frown"></i></h6><br />  
+                Wait for someone to challenge you and answer to its question. These will let you move up and down in the global standings visible in the section
+                <a class="fs-16 text-bold text-info" href="#Players">Players</a>
+            </div>
+            
         </div>
             
-        <div class="col-6 col-6-12">
+        <div class="col-6 col-6-12" style="min-height: 75%">
             
             <h4>Practice</h4>
             <h6>(random questions)</h6>
             
             <div class="bg-transparent">
-                <div id="qplyrics" class="jumbotron w-75 ml-auto mr-auto mb-3 mt-1 bg-dark text-light font-italic fs-16"  ng-bind-html='qp.lyrics | noNewLine'>
+                <div id="qplyrics" class="jumbotron w-75 ml-auto mr-auto mb-3 mt-1 bg-dark text-light font-italic fs-16" style="opacity: 0"  ng-bind-html='qp.lyrics | noNewLine'>
                   
                 </div>
                 
                 <div class="row mt-1 ml-auto mr-auto text-center">
                     <div class="col-6 col-6-12-1368 mb-1">
-                        <button id="qpoption1" class="qoption btn btn-secondary pb-5" ng-click="qpChoose(0)">{{qp.options[0].trackName}}<br /> <span class="artist">{{qp.options[0].trackArtist}}</span></button>
+                        <a id="qpoption1" class="qoption btn bg-secondary text-white pb-5" style="opacity: 0" ng-click="qpChoose(0)">{{qp.options[0].trackName | cleanTrackInfo}}<br /> <span class="artist">{{qp.options[0].trackArtist | cleanTrackInfo}}</span></a>
                     </div>
                     <div class="col-6 col-6-12-1368 ">
-                        <button id="qpoption2" class="qoption btn btn-secondary pb-5" ng-click="qpChoose(1)">{{qp.options[1].trackName}}<br /> <span class="artist">{{qp.options[1].trackArtist}}</span></button>
+                        <a id="qpoption2" class="qoption btn bg-secondary text-white pb-5" style="opacity: 0" ng-click="qpChoose(1)">{{qp.options[1].trackName | cleanTrackInfo}}<br /> <span class="artist">{{qp.options[1].trackArtist | cleanTrackInfo}}</span></a>
                     </div>
                 </div>
 
                 <div class="row mt-1 ml-auto mr-auto text-center">
                    <div class="col-6 col-6-12-1368 mb-1">
-                       <button id="qpoption3" class="qoption btn btn-secondary pb-5" ng-click="qpChoose(2)">{{qp.options[2].trackName}}<br /> <span class="artist">{{qp.options[2].trackArtist}}</span></button>
+                       <a id="qpoption3" class="qoption btn bg-secondary text-white pb-5" style="opacity: 0" ng-click="qpChoose(2)">{{qp.options[2].trackName | cleanTrackInfo}}<br /> <span class="artist">{{qp.options[2].trackArtist | cleanTrackInfo}}</span></a>
                    </div>
                    <div class="col-6 col-6-12-1368">
-                       <button id="qpoption4" class="qoption btn btn-secondary pb-5" ng-click="qpChoose(3)">{{qp.options[3].trackName}}<br /> <span class="artist">{{qp.options[3].trackArtist}}</span></button>
+                       <a id="qpoption4" class="qoption btn bg-secondary text-white pb-5" style="opacity: 0" ng-click="qpChoose(3)">{{qp.options[3].trackName | cleanTrackInfo}}<br /> <span class="artist">{{qp.options[3].trackArtist | cleanTrackInfo}}</span></a>
                    </div>
                </div>
                 

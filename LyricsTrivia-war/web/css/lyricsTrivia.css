@@ -550,24 +550,48 @@ th{
 
 /*Question option*/
 .qoption{
-    height: 64px;
-    width: 302px;
-    font-size: 14px;
+    height: 76px;
+    width: 364px;
+    font-size: 16px;
 }
 
 .qoption artist{
-    font-size: 13px;
+    font-size: 14px;
+}
+
+@media (max-width: 1608px) {
+    .qoption{
+        height: 64px;
+        width: 332px;
+        font-size: 14px;
+    }
+    
+    .qoption artist{
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 1468px) {
+    .qoption{
+        height: 60px;
+        width: 286px;
+        font-size: 13px;
+    }
+    
+    .qoption artist{
+        font-size: 12px;
+    }
 }
 
 @media (max-width: 768px) {
     .qoption{
-        height: 48px;
+        height: 56px;
         width: 256px;
         font-size: 12px;
     }
     
     .qoption artist{
-        font-size: 11px;
+        font-size: 10px;
     }
 }
 

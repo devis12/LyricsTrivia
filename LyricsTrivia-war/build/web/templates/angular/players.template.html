@@ -3,7 +3,7 @@
 <hr class="mb-4"/>
 
 <div class="float-right">
-    <input placeholder="search" class="no-border border-bottom border-dark bg-transparent text-light float-left" type="text" ng-model="searchInput">
+    <input placeholder="search" class="no-border border-bottom border-dark bg-transparent text-light float-left" type="text" ng-model="searchInput" />
     <i class="fas fa-search text-light"></i>
 </div>
            
@@ -28,14 +28,145 @@
             <td class="col-priority-low" ng-class="col_priority_low">{{po.gender}}</td>
             <td class="col-priority-low" ng-class="col_priority_low">{{po.played}}</td>
             <td class="col-priority-low" ng-class="col_priority_low">{{po.won}}</td>
-            <td class="" ng-if="po.online">
-                <input type="button" value="Challenge" class="btn btn-outline-dark"/>
+            <td class="">
+                <input type="button" value="Challenge" class="btn btn-outline-dark" ng-click="newChlgModal(po.username)"/>
+            </td>
+            <!--<td class="" ng-if="po.online">
+                <input type="button" value="Challenge" class="btn btn-outline-dark" ng-click="newChlgModal(po.username)"/>
             </td>
             <td class="" ng-if="!po.online">
                 <input type="button" value="Challenge" class="btn btn-outline-dark" disabled/>
-            </td>
+            </td>-->
         </tr>
 
     </table>
 </div>
 
+<!--new challenge modal-->
+<div class="modal fade" id="newChallengeModal" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <h5 class="modal-title text-body">New challenge for {{newChg.askingPlayer}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    
+                    <div class="row text-body fs-16 text-center ml-auto mr-auto">
+                        <div class="col-12">
+                            Search the songs and select <strong> 4 options </strong> to build up the question and toggle the one you want to show the lyrics of
+                        </div>
+                    </div>
+                    
+                    <div class="row text-body fs-16 text-center text-bold bg-info mt-3 ml-auto mr-auto">
+                        <div class="col-2 text-light"> Answer </div>
+                        <div class="col-9 text-light">Options </div>
+                        <div class="col-1 text-light">Remove </div>
+                    </div>
+                    
+                    <div class="row text-body fs-16 text-left mt-3">
+                        <div class="col-2 text-center">
+                            <input type="radio" class="mt-2" name="rightTrackID" value="1" checked/>
+                        </div>
+                        <div class="col-9">
+                            <input ng-model="track1Txt" type="text" ng-change="enableDisableSubmitChlg()"
+                               class="form-control ml-2 border border-info rounded-bottom border-top-0 border-left-0 border-right-0" 
+                               name="track1" value="" placeholder="Track1" required readonly/>
+                        </div>
+                        <div class="col-1">
+                            <button id="track1Erase" ng-click="eraseTrack(1)" disabled><i class="fas fa-eraser text-danger"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="row text-body fs-16 text-left">
+                        <div class="col-2 text-center">
+                            <input type="radio" class="mt-2" name="rightTrackID" value="2" />
+                        </div>
+                        <div class="col-9">
+                            <input ng-model="track2Txt" type="text" ng-change="enableDisableSubmitChlg()"
+                               class="form-control ml-2 border border-info rounded-bottom border-top-0 border-left-0 border-right-0" 
+                               name="track2" value="mt-2" placeholder="Track2" required readonly/>
+                        </div>
+                        <div class="col-1">
+                            <button id="track2Erase" ng-click="eraseTrack(2)" disabled><i class="fas fa-eraser text-danger"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="row text-body fs-16 text-left">
+                        <div class="col-2 text-center">
+                            <input type="radio" class="mt-2" name="rightTrackID" value="3" />
+                        </div>
+                        <div class="col-9">
+                            <input ng-model="track3Txt" type="text" ng-change="enableDisableSubmitChlg()"
+                               class="form-control ml-2 border border-info rounded-bottom border-top-0 border-left-0 border-right-0" 
+                               name="track3" value="" placeholder="Track3" required readonly/>
+                        </div>
+                        <div class="col-1">
+                            <button id="track3Erase" ng-click="eraseTrack(3)" disabled><i class="fas fa-eraser text-danger"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="row text-body fs-16 text-left">
+                        <div class="col-2 text-center">
+                            <input type="radio" class="mt-2" name="rightTrackID" value="4" />
+                        </div>
+                        <div class="col-9">
+                            <input ng-model="track4Txt" type="text" ng-change="enableDisableSubmitChlg()"
+                               class="form-control ml-2 border border-info rounded-bottom border-top-0 border-left-0 border-right-0" 
+                               name="track4" value="" placeholder="Track4" required readonly/>
+                        </div>
+                        <div class="col-1">
+                            <button id="track4Erase" ng-click="eraseTrack(4)" disabled><i class="fas fa-eraser text-danger"></i></button>
+                        </div>
+                    </div>
+                    
+                    <hr />
+                    
+                    <div class="jumbotron fs-16 text-center">
+                        
+                        <h5 class="text-dark">Search songs:</h5>
+                        
+                        <div class="row ml-auto mr-auto">
+                            <div class="col-6 col-6-12-1368">
+                                <input placeholder="Song" class="no-border border-bottom border-dark bg-transparent" type="text" ng-model="trackName" />
+                            </div>
+                            <div class="col-6 col-6-12-1368">
+                                <input placeholder="Artist" class="no-border border-bottom border-dark bg-transparent" type="text" ng-model="trackArtist" />
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="row mt-2 ml-auto mr-auto">
+                            <button id="searchBtn" type="button" class="btn btn-info text-bold w-50 m-auto" ng-click="searchSongs()">
+                                <span id="loadFa" class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span id="searchTxt" class="text-bold"><i class="fas fa-search text-light"></i></span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                     <table id="songsLyricsDB" class="float-none mt-4 table table-light text-monospace fixed_header">
+                         <tbody class="d-block">
+                            <tr class="" ng-repeat="sl in sslDB">
+                                <td class="">{{sl.trackName}}</td>
+                                <td class="">{{sl.trackArtist}}</td>
+                                <td class="">
+                                    <button ng-click="setTrackID(1, sl.trackName, sl.trackArtist, sl.trackID)" class="btn btn-outline-dark float-left setTrackID1">Tr.1</button>
+                                    <button ng-click="setTrackID(2, sl.trackName, sl.trackArtist, sl.trackID)" class="btn btn-outline-dark float-left setTrackID2">Tr.2</button>
+                                    <button ng-click="setTrackID(3, sl.trackName, sl.trackArtist, sl.trackID)" class="btn btn-outline-dark float-left setTrackID3">Tr.3</button>
+                                    <button ng-click="setTrackID(4, sl.trackName, sl.trackArtist, sl.trackID)" class="btn btn-outline-dark float-left setTrackID4">Tr.4</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+           
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input id="submitNewChlg" type="submit" class="btn btn-primary text-bold" ng-click="throwNewChallenge()" value="Challenge" disabled/>
+                </div>
+        </div>
+    </div>
+</div>

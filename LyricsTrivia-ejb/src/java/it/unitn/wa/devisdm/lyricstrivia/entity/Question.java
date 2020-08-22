@@ -15,8 +15,12 @@ import java.util.Objects;
  */
 public class Question implements Serializable{
     
-    private List<SongLyrics> options;
+    /*id of the corresponding stored question 
+    (not a mandatory field, since question could also be a rnd one, supplied by the system, thus not stored)*/
+    private int storedId;
     
+    private List<SongLyrics> options;
+      
     //index of the "right" songlyrics obj: the one that should be chosen by the user
     private int rightAnswerIndex;
  
@@ -26,6 +30,14 @@ public class Question implements Serializable{
     //index of the lyrics within the options chosen by the user
     private int givenAnswerIndex;
 
+    public int getStoredId() {
+        return storedId;
+    }
+
+    public void setStoredId(int storedId) {
+        this.storedId = storedId;
+    }
+    
     public List<SongLyrics> getOptions() {
         return options;
     }
@@ -63,6 +75,15 @@ public class Question implements Serializable{
         this.lyrics = options.get(rightAnswerIndex).getTrackLyrics();
         this.rightAnswerIndex = rightAnswerIndex;
         this.givenAnswerIndex = -1; //when you instantiate it, user has'nt decided yet
+        this.storedId = -1;//question not stored
+    }
+    
+    public Question(int storedId, List<SongLyrics> options, int rightAnswerIndex) {
+        this.options = options;
+        this.lyrics = options.get(rightAnswerIndex).getTrackLyrics();
+        this.rightAnswerIndex = rightAnswerIndex;
+        this.givenAnswerIndex = -1; //when you instantiate it, user has'nt decided yet
+        this.storedId = storedId;//question stored
     }
     
     public Question(){}
@@ -73,6 +94,7 @@ public class Question implements Serializable{
         hash = 23 * hash + Objects.hashCode(this.options);
         hash = 23 * hash + this.rightAnswerIndex;
         hash = 23 * hash + this.givenAnswerIndex;
+        hash = 23 * hash + this.storedId;
         return hash;
     }
 
@@ -89,6 +111,9 @@ public class Question implements Serializable{
         }
         
         final Question other = (Question) obj;
+        if (this.storedId != other.storedId) {
+            return false;
+        }
         if (this.rightAnswerIndex != other.rightAnswerIndex) {
             return false;
         }

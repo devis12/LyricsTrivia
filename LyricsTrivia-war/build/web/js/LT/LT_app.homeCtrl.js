@@ -14,14 +14,15 @@ angular.module("LTApp").controller("homeCtrl", ['$scope', '$rootScope', '$http',
                     (response) => {
                         //when answer is already defined, fade effect to transition to the next one smoothly
                         if($scope.qp !== undefined){
-                            $('.qoption').fadeTo(500, 0);
-                            $('#qplyrics').fadeTo(500, 0);
+                            $('.qoption').fadeTo(512, 0);
+                            $('#qplyrics').fadeTo(512, 0);
                         }
                         
                         $scope.qp = response.data;
                         console.log($scope.qp);
-                        $('.qoption').fadeTo(1000, 1);
-                        $('#qplyrics').fadeTo(1000, 1);
+                        $('.qoption').fadeTo(1024, 1);
+                        $('#qplyrics').fadeTo(1024, 1);
+                        
                     },
                     (error) =>  console.error(error)
                 );
@@ -30,7 +31,7 @@ angular.module("LTApp").controller("homeCtrl", ['$scope', '$rootScope', '$http',
         function blinkRightAnswer(index){
             $('.qoption').removeClass('bg-success');
             
-            for(let i=1; i<=4; i++)
+            for(let i=1; i<=6; i++)
                 setTimeout(()=>{
                    if(i%2 !== 0){//already green, move to gray
                         $('#qpoption'+index).removeClass('bg-success');
@@ -39,11 +40,15 @@ angular.module("LTApp").controller("homeCtrl", ['$scope', '$rootScope', '$http',
                         $('#qpoption'+index).addClass('bg-success');
                         $('#qpoption'+index).removeClass('bg-secondary');
                    }
-                }, 500*i);
+                }, 400*i);
+        }
+        
+        function showWrongAnswer(index){
+            $('#qpoption'+index).removeClass('bg-secondary');
+            $('#qpoption'+index).addClass('bg-danger');
         }
         
         $scope.qpChoose = function(index){
-          $('.qoption').prop("disabled", true);
           $scope.qp.givenAnswerIndex = index;//index chosen by the player
           $http({
                 url: "Practice", 
@@ -57,15 +62,17 @@ angular.module("LTApp").controller("homeCtrl", ['$scope', '$rootScope', '$http',
                     (response) => {
                         $scope.qp = response.data;
                         blinkRightAnswer($scope.qp.rightAnswerIndex + 1);//make the right button blinking green
+                        if($scope.qp.rightAnswerIndex !== $scope.qp.givenAnswerIndex)
+                            showWrongAnswer($scope.qp.givenAnswerIndex + 1);//make the wrong clicked button red
                         console.log($scope.qp);
                         setTimeout(()=>{
                             getNewPracticeQuestion();//load a new practice question
                             
-                            //reset options button
-                            $('.qoption').prop("disabled", false);
+                            //reset options button colors
                             $('.qoption').removeClass('bg-success');
-                            $('.qoption').removeClass('bg-secondary');//remain btn-secondary
-                        }, 6000);
+                            $('.qoption').removeClass('bg-danger');
+                            $('.qoption').addClass('bg-secondary');
+                        }, 10000);
                     },
                     (error) =>  console.error(error)
                 );  

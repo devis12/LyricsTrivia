@@ -61,3 +61,18 @@ LTApp.filter('noNewLine', function($sce) {
             return $sce.trustAsHtml(s.replace("\n", "<br />"));
     };
 });
+
+/*remove additional info in trackname / track artist if they occupy too much space*/
+LTApp.filter('cleanTrackInfo', function() {
+    return function(s) {
+        if(s === undefined)
+            return "";
+        else{
+            if(s.indexOf("(") > 0 && s.indexOf(")") > s.length/2)
+                s = s.substring(0, s.indexOf("("));
+            if(s.indexOf("-") > s.length/2)
+                s = s.substring(0, s.indexOf("-"));
+            return s;
+        }
+    };
+});

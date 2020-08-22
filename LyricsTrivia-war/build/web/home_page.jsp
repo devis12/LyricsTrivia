@@ -42,6 +42,27 @@
             </main>
 
             <footer class="mastfoot mt-auto">
+                
+                <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+                    <!-- Position it -->
+                    <div id="toastStack" style="position: absolute; bottom: 0; right: 0;">
+
+                        <!-- Then put toasts within -->
+                        <div class="toast bg-dark text-light" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
+                          <div class="toast-header">
+                            <strong class="mr-auto">New Challenge!</strong>
+                            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="toast-body">
+                            from 
+                          </div>
+                        </div>
+                    
+                    </div>
+                </div>
+                
                 <div class="inner">
                 <p class="txt1">LyricsTrivia game produced by <a href="mailto:devis.dalmoro@studenti.unitn.it">Devis Dal Moro</a></p>
                 </div>
