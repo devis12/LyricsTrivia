@@ -7,12 +7,17 @@ angular.module('secret', [])
         $scope.sslJMM = [];
         
         $scope.cliAdminTxt = '> _';
+        $scope.cliAdminTxtColor = 'text-dark';
+        
+        $scope.searchBtnDisabled = false;
+        $scope.loadFaShow = false;
+        $scope.searchTxtShow = true;
         
         $scope.searchSongs = function(){
             //GUI adjustments when clicking
-            document.getElementById("searchBtn").disabled = true;
-            $("#searchTxt").addClass('d-none');
-            $("#loadFa").removeClass('d-none');
+            $scope.searchBtnDisabled = true;
+            $scope.loadFaShow = true;
+            $scope.searchTxtShow = false;
             
             let name = $scope.trackName;
             let artist = $scope.trackArtist;
@@ -36,9 +41,9 @@ angular.module('secret', [])
                         cliColor(false, false);//adjust color of displayed text
                         //
                         //GUI adjustments after response
-                        document.getElementById("searchBtn").disabled = false;
-                        $("#searchTxt").removeClass('d-none');
-                        $("#loadFa").addClass('d-none');
+                        $scope.searchBtnDisabled = false;
+                        $scope.loadFaShow = false;
+                        $scope.searchTxtShow = true;
                     },
                     (error) =>  console.error(error)
                 );
@@ -78,17 +83,15 @@ angular.module('secret', [])
             return -1;
         }
         
+        
+        
         function cliColor(success, danger){
-            
-            $('#cliAdminTxt').removeClass('text-dark');
-            $('#cliAdminTxt').removeClass('text-danger');
-            $('#cliAdminTxt').removeClass('text-success');
             if(danger)
-                $('#cliAdminTxt').addClass('text-danger');
+               $scope.cliAdminTxtColor = 'text-danger';
             else if(success)
-                $('#cliAdminTxt').addClass('text-success');
+                $scope.cliAdminTxtColor = 'text-success';
             else
-                $('#cliAdminTxt').addClass('text-dark');
+                $scope.cliAdminTxtColor = 'text-dark';
         }
         
         $scope.addSongLyricsDB = function(sl){

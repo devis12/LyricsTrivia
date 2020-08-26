@@ -1,2 +1,2 @@
 Manifest-Version: 1.0
-Dependencies: org.jmusixmatch, com.google.gson, org.apache.commons.lang3, org.apache.commons.text
+Dependencies: org.jmusixmatch, com.google.gson, org.apache.commons.text, org.apache.commons.lang3

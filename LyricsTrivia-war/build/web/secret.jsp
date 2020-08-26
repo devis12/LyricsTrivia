@@ -88,7 +88,7 @@
                 </div>
             </div>
             
-            <input id="cliAdminTxt" ng-model="cliAdminTxt" type="text" class="mt-2 mb-2 w-75 mr-auto ml-auto fs-16 text-monospace bg-light text-dark" readonly/>
+            <input id="cliAdminTxt" ng-model="cliAdminTxt" type="text" ng-class="cliAdminTxtColor" class="mt-2 mb-2 w-75 mr-auto ml-auto fs-16 text-monospace bg-light" readonly/>
 
             <div class="jumbotron bg-dark w-75 m-auto">
                 <h5>Search your songs</h5>
@@ -104,9 +104,9 @@
                     </div>
                 </div>
                 <div class="mt-3">
-                    <button id="searchBtn" type="button" class="btn btn-info text-bold w-50 m-auto" ng-click="searchSongs()">
-                        <span id="loadFa" class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        <span id="searchTxt" class="text-bold">SEARCH</span>
+                    <button id="searchBtn" type="button" class="btn btn-info text-bold w-50 m-auto" ng-click="searchSongs()" ng-disabled="searchBtnDisabled">
+                        <span id="loadFa" ng-show="loadFaShow" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span id="searchTxt"  ng-show="searchTxtShow" class="text-bold">SEARCH</span>
                     </button>
                 </div>
             </div>
