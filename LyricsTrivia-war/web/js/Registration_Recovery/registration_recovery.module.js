@@ -1,15 +1,14 @@
-angular.module('registration_recovery', [])
+angular.module('registration_recovery', ['vcRecaptcha'])
     .controller('regRecCtrl', ['$scope', '$http', '$httpParamSerializer', function($scope, $http) {
              
         /*------------------------- REGISTRATION ---------------------*/
-        
+                
         //show "ok check", when username longer than 5 chars and not taken by other users    
         document.getElementById('iiUsername').innerHTML = "<i class=\"fas fa-pencil-alt\"></i>";
         $scope.usernameOK = false;
         $scope.usernameWrong = '';
         
         $scope.checkUsername = function() {
-            console.log("username changing");
             if($scope.username === undefined || $scope.username === null)
                 return false;
             
@@ -17,7 +16,7 @@ angular.module('registration_recovery', [])
                 $scope.usernameOK = false;
                 document.getElementById('iiUsername').innerHTML = "<i class=\"far fa-times-circle text-danger\"></i>";
                 $scope.usernameWrong = 'username too short!';
-                $scope.setDisabledSubmitBtn();
+                $scope.checkRegFormOK();
                 return;
             }
             
@@ -34,7 +33,7 @@ angular.module('registration_recovery', [])
                             document.getElementById('iiUsername').innerHTML = "<i class=\"fas fa-check text-success\"></i>";
                         }
                         
-                        $scope.setDisabledSubmitBtn();
+                        $scope.checkRegFormOK();
                     },
                     (error) =>  console.error(error)
                 );
@@ -51,7 +50,7 @@ angular.module('registration_recovery', [])
                 $scope.emailOK = false;
                 document.getElementById('iiEmail').innerHTML = "<i class=\"far fa-times-circle text-danger\"></i>";
                 $scope.emailWrong = 'invalid email';
-                $scope.setDisabledSubmitBtn();
+                $scope.checkRegFormOK();
                 return;
             }
             
@@ -68,7 +67,7 @@ angular.module('registration_recovery', [])
                             document.getElementById('iiEmail').innerHTML = "<i class=\"fas fa-check text-success\"></i>";
                         }
                         
-                        $scope.setDisabledSubmitBtn();
+                        $scope.checkRegFormOK();
                     },
                     (error) =>  console.error(error)
                 );
@@ -115,29 +114,33 @@ angular.module('registration_recovery', [])
                 document.getElementById('iiPassword2').innerHTML = "<i class=\"fas fa-check text-success\"></i>";
             }
             
-            $scope.setDisabledSubmitBtn();
+            $scope.checkRegFormOK();
             
         };
         
+                
+        /*captcha metadata and callback*/
+        $scope.captcha = {
+            key: '6Lfal78ZAAAAANUK80a_FSdn1jewQlwhWc9KCvEE',
+            verified: false
+        };
         
-        setInterval(()=> {
-            //check periodically for unlocking submitBtn (need it cause of captcha verification outside of our scope... you can just infere its result from a callback)
-            //anyway it'll be checked also server side
-            $scope.setDisabledSubmitBtn();
-        }, 1000);
+        $scope.setCaptchaResponse = function (response) {
+            //console.log(response);
+            $scope.captcha.verified = true;
+            $scope.checkRegFormOK();
+        };
         
         //disable btn for submit when all the required fields are not filled
-        $scope.setDisabledSubmitBtn = function(){
-            
-            function hasCaptchaBeenVerified(){
-                return parseInt(document.getElementById('recaptcha-response').value) > 0;//see below, when captcha verified, this is set to 1 by a callback      
-            }
-            
-            if(!$scope.pwdsOK || !$scope.emailOK || !$scope.usernameOK || !hasCaptchaBeenVerified())
-                document.getElementById("submitRegister").disabled = true;
+        $scope.regFormOK = false;
+        $scope.checkRegFormOK = function(){
+
+            if(!$scope.pwdsOK || !$scope.emailOK || !$scope.usernameOK || !$scope.captcha.verified)
+                $scope.regFormOK = false;
                 
             else
-                document.getElementById("submitRegister").disabled = false;
+                $scope.regFormOK = true;
+            
         };
         
         /*------------------------- PWD RECOVERY ---------------------*/
@@ -150,14 +153,13 @@ angular.module('registration_recovery', [])
             
             if(!$scope.isValidEmail($scope.emailRecovery)){
                 $scope.emailRecOK = false;
-                $scope.setDisabledSubmitBtnRec();
                 return;
             }
             
             $http.get("Players?email="+$scope.emailRecovery)
                 .then(
                     (response) => { 
-                        console.log(response);
+                        //console.log(response);
                         if(response.data){
                             $scope.emailRecOK = true;
                             $scope.emailRecWrong = '';
@@ -165,32 +167,13 @@ angular.module('registration_recovery', [])
                             $scope.emailRecOK = false;
                             $scope.emailRecWrong = 'No account found!';
                         }
-                        
-                        $scope.setDisabledSubmitBtnRec();
                     },
                     (error) =>  console.error(error)
                 );
         };
-        
-        //disable btn for submit when all the required fields are not filled
-        $scope.setDisabledSubmitBtnRec = function(){
-            
-            if(!$scope.emailRecOK)
-                document.getElementById("submitRecovery").disabled = true;
-                
-            else
-                document.getElementById("submitRecovery").disabled = false;
-        };
-       
-        
         
         angular.element(document).ready(function () {
             
         });
         
 }]);
-
-//callback when user verify captcha (set input hidden with recaptcha-response to value greater than zero)
-function verifyCaptcha() {
-    document.getElementById('recaptcha-response').value = 1;
-}

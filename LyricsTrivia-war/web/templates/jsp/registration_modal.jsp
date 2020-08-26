@@ -5,6 +5,10 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<!-- Include the ngReCaptcha directive -->
+<script src="js/angular-recaptcha.js"></script>
+
 <!--Registration modal-->
 <div 
      class="modal fade bg-info text-center" data-backdrop="static" data-keyboard="false" id="registerModal" 
@@ -78,15 +82,18 @@
                     <!--reCAPTCHA-->
                     <div class="row text-body fs-18 mt-5">
                         <div class="col-4"></div>
-                        <div class="col-4"><div class="g-recaptcha" data-sitekey="6Lfal78ZAAAAANUK80a_FSdn1jewQlwhWc9KCvEE" data-callback="verifyCaptcha"></div></div>
-                        <input id="recaptcha-response" type="hidden" value="-1"/>
+                        <div class="col-4">
+                            <div vc-recaptcha on-success="setCaptchaResponse(response)"
+                                 key="captcha.key"></div>
+                                
+                        </div>
                         <div class="col-4"></div>
                     </div>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
-                    <input id="submitRegister" type="submit" class="btn btn-danger text-bold" value="Register" disabled/>
+                    <input id="submitRegister" type="submit" class="btn btn-danger text-bold" value="Register" ng-disabled="!regFormOK"/>
                 </div>
             </div>
         </form>

@@ -27,7 +27,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input id="submitRecovery" type="submit" class="btn btn-info" value="Send email" disabled/>
+                    <input id="submitRecovery" type="submit" class="btn btn-info" value="Send email" ng-disabled="!emailRecOK"/>
                 </div>
             </form>
         </div>

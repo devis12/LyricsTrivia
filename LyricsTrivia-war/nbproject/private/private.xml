@@ -4,7 +4,9 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/js/secret/secret.module.js</file>
+            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/js/Registration_Recovery/registration_recovery.module.js</file>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/js/LT/LT_app.homeCtrl.js</file>
+            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/js/landing_main.js</file>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/home_page.jsp</file>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/templates/angular/home.template.html</file>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/css/lyricsTrivia.css</file>
@@ -16,6 +18,7 @@
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/js/ui_utils.js</file>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/landing.jsp</file>
             <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/templates/angular/players.template.html</file>
+            <file>file:/home/devis/NetBeansProjects/LyricsTrivia/LyricsTrivia-war/web/js/LT/LT_app.profileCtrl.js</file>
         </group>
     </open-files>
 </project-private>
