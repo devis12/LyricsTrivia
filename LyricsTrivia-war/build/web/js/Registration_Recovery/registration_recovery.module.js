@@ -4,7 +4,7 @@ angular.module('registration_recovery', ['vcRecaptcha'])
         /*------------------------- REGISTRATION ---------------------*/
                 
         //show "ok check", when username longer than 5 chars and not taken by other users    
-        document.getElementById('iiUsername').innerHTML = "<i class=\"fas fa-pencil-alt\"></i>";
+        $scope.usernameFa = "fas fa-pencil-alt";
         $scope.usernameOK = false;
         $scope.usernameWrong = '';
         
@@ -14,7 +14,7 @@ angular.module('registration_recovery', ['vcRecaptcha'])
             
             if($scope.username.length < 5){
                 $scope.usernameOK = false;
-                document.getElementById('iiUsername').innerHTML = "<i class=\"far fa-times-circle text-danger\"></i>";
+                $scope.usernameFa = 'far fa-times-circle text-danger';
                 $scope.usernameWrong = 'username too short!';
                 $scope.checkRegFormOK();
                 return;
@@ -26,11 +26,11 @@ angular.module('registration_recovery', ['vcRecaptcha'])
                         if(response.data){
                             $scope.usernameOK = false;
                             $scope.usernameWrong = 'username already taken!';
-                            document.getElementById('iiUsername').innerHTML = "<i class=\"far fa-times-circle text-danger\"></i>";
+                            $scope.usernameFa = 'far fa-times-circle text-danger';
                         }else{
                             $scope.usernameOK = true;
                             $scope.usernameWrong = '';
-                            document.getElementById('iiUsername').innerHTML = "<i class=\"fas fa-check text-success\"></i>";
+                            $scope.usernameFa = 'fas fa-check text-success';
                         }
                         
                         $scope.checkRegFormOK();
@@ -40,7 +40,7 @@ angular.module('registration_recovery', ['vcRecaptcha'])
         };
         
         //show "ok check", when email valid and not taken by other users    
-        document.getElementById('iiEmail').innerHTML = "<i class=\"fas fa-pencil-alt\"></i>";
+        $scope.emailFa = 'fas fa-pencil-alt';
         $scope.emailOK = false;
         $scope.emailWrong = '';
         
@@ -48,7 +48,7 @@ angular.module('registration_recovery', ['vcRecaptcha'])
             
             if(!$scope.isValidEmail($scope.email)){
                 $scope.emailOK = false;
-                document.getElementById('iiEmail').innerHTML = "<i class=\"far fa-times-circle text-danger\"></i>";
+                $scope.emailFa = 'far fa-times-circle text-danger';
                 $scope.emailWrong = 'invalid email';
                 $scope.checkRegFormOK();
                 return;
@@ -60,11 +60,11 @@ angular.module('registration_recovery', ['vcRecaptcha'])
                         if(response.data){
                             $scope.emailOK = false;
                             $scope.emailWrong = 'email address already used';
-                            document.getElementById('iiEmail').innerHTML = "<i class=\"far fa-times-circle text-danger\"></i>";
+                            $scope.emailFa = 'far fa-times-circle text-danger';
                         }else{
                             $scope.emailOK = true;
                             $scope.emailWrong = '';
-                            document.getElementById('iiEmail').innerHTML = "<i class=\"fas fa-check text-success\"></i>";
+                            $scope.emailFa = 'fas fa-check text-success';
                         }
                         
                         $scope.checkRegFormOK();
@@ -78,9 +78,9 @@ angular.module('registration_recovery', ['vcRecaptcha'])
         };
         
         
-        //show "ok check", when pwd equals and ok for security reasons    
-        document.getElementById('iiPassword1').innerHTML = "<i class=\"fas fa-pencil-alt\"></i>";
-        document.getElementById('iiPassword2').innerHTML = "<i class=\"fas fa-pencil-alt\"></i>";
+        //show "ok check", when pwd equals and ok for security reasons  
+        $scope.Password1Fa = 'fas fa-pencil-alt';
+        $scope.Password2Fa = 'fas fa-pencil-alt';
         $scope.pwdsOK = false;
         
         $scope.checkPwds = function() {
@@ -101,17 +101,17 @@ angular.module('registration_recovery', ['vcRecaptcha'])
             
             if(!isPwdStrong($scope.password1)){
                 $scope.pwdsOK = false;
-                document.getElementById('iiPassword1').innerHTML = "<i class=\"far fa-times-circle text-danger\"></i>";
+                $scope.Password1Fa = 'far fa-times-circle text-danger';
                 $scope.pwdsWrong = 'Doesn\'t satisfy security requirements!';
             }else if($scope.password1 !== $scope.password2){
                 $scope.pwdsOK = false;
-                document.getElementById('iiPassword2').innerHTML = "<i class=\"far fa-times-circle text-danger\"></i>";
+                $scope.Password2Fa = 'far fa-times-circle text-danger';
                 $scope.pwdsWrong = 'Passwords do not match!';
             }else{
                 $scope.pwdsOK = true;
                 $scope.pwdsWrong = '';
-                document.getElementById('iiPassword1').innerHTML = "<i class=\"fas fa-check text-success\"></i>";
-                document.getElementById('iiPassword2').innerHTML = "<i class=\"fas fa-check text-success\"></i>";
+                $scope.Password1Fa = 'fas fa-check text-success';
+                $scope.Password2Fa = 'fas fa-check text-success';
             }
             
             $scope.checkRegFormOK();

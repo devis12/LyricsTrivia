@@ -31,7 +31,7 @@
                                    ng-model="username" ng-change="checkUsername()" 
                                    name="username" value="" 
                                    placeholder="username" required />
-                            <span id="iiUsername"></span>
+                            <span id="iiUsername"><i ng-class="usernameFa"></i></span>
                             <br /><input type="text" readonly class="text-danger fs-10" value="{{usernameWrong}}"/>
                         </div>
 
@@ -40,7 +40,7 @@
                             <input type="email" class="w-75 border border-info rounded-bottom border-top-0 border-left-0 border-right-0" 
                                    ng-model="email" ng-change="checkEmail()" 
                                    name="email" value="" placeholder="a@a.com" required />
-                            <span id="iiEmail"></span>
+                            <span id="iiEmail"><i ng-class="emailFa"></i></span>
                             <br /><input type="text" readonly class="text-danger fs-10" value="{{emailWrong}}"/>
                         </div>
 
@@ -53,11 +53,11 @@
                             <label for="password1" class="label float-left mr-5">Type your password</label>
                             <input type="password" class="w-50 float-none border border-info rounded-bottom border-top-0 border-left-0 border-right-0" 
                                    ng-model="password1" name="password1" value="" placeholder="password" ng-change="checkPwds()" required />
-                            <span id="iiPassword1"></span>
+                            <span id="iiPassword1"><i ng-class="Password2Fa"></i></span>
                             <label for="password2" class="label float-left mr-4">Confirm your password</label>
                             <input type="password" class="w-50 float-none border border-info rounded-bottom border-top-0 border-left-0 border-right-0" 
                                    ng-model="password2" name="password2" value="" placeholder="password" ng-change="checkPwds()" required />
-                            <span id="iiPassword2"></span>
+                            <span id="iiPassword2"><i ng-class="Password2Fa"></i></span>
                         </div>
                         <div class="col-2"></div>
                     </div>
