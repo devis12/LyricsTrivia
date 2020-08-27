@@ -1,8 +1,13 @@
 /*Controller within home*/
-angular.module("LTApp").controller("homeCtrl", ['$scope', '$rootScope', '$http', '$httpParamSerializer', function($scope, $rootScope, $http, $httpParamSerializer) {
-       $scope.page = 'home';
-       $('.aNav').removeClass('active');
-       $('#linkHome').addClass('active');
+angular.module("LTApp")
+        .controller("homeCtrl", 
+            ['$scope', '$rootScope', '$timeout', '$interval', '$http', '$httpParamSerializer', 
+                function($scope, $rootScope, $timeout, $interval, $http, $httpParamSerializer) {
+       
+        $scope.page = 'home';
+        $rootScope.homeLinkC = 'active';
+        $rootScope.playersLinkC = '';
+        $rootScope.profileLinkC = '';
        //console.log($rootScope.username);
        
        if($scope.pq === undefined)
@@ -11,7 +16,7 @@ angular.module("LTApp").controller("homeCtrl", ['$scope', '$rootScope', '$http',
        if($scope.cq === undefined)
             getNewChallengeQuestion();
        
-       setInterval(() => {//check every x seconds if there is a current challenge question that needs to be answered, otherwise get a new one from the server
+       $interval(() => {//check every x seconds if there is a current challenge question that needs to be answered, otherwise get a new one from the server
            if($scope.cq === undefined)
             getNewChallengeQuestion();
        }, 5000);
@@ -37,17 +42,20 @@ angular.module("LTApp").controller("homeCtrl", ['$scope', '$rootScope', '$http',
                 );
         }
         
+        $scope.showWaitBox = true;//show wait challenge
+        $scope.showChallengeBox = false;//show challenge box
+        
         function moveToWaitingBox(){
             //set opacity of waiting box to zero and remove d-none
             $('#waitChlgBox').fadeTo(0,0);
-            $('#waitChlgBox').removeClass('d-none');
+            $scope.showWaitBox = true;
             
             //set opacity of newChgBox to zero slowly and add d-none
             $('#newChlgBox').fadeTo(512,0);
-            $('#newChlgBox').addClass('d-none');
+            $scope.showChallengeBox = false;
             
             //then slowly show waiting box
-            setTimeout(()=>$('#waitChlgBox').fadeTo(512,1), 512);
+            $timeout(()=>$('#waitChlgBox').fadeTo(512,1), 512);
         }
         
         function getNewChallengeQuestion(){
@@ -57,7 +65,7 @@ angular.module("LTApp").controller("homeCtrl", ['$scope', '$rootScope', '$http',
                         
                         if(response.data === null || response.data === undefined){//no challenge waiting for answer -> move to waiting box
                             $scope.cq = undefined;
-                            if ($('#waitChlgBox').hasClass('d-none'))//if you're not in waiting box and there is nothing to do, challenge otherwise do nothing -> that's ok, try again later    
+                            if (!$scope.showWaitBox)//if you're not in waiting box and there is nothing to do, challenge otherwise do nothing -> that's ok, try again later    
                                 moveToWaitingBox();
                         
                         }else{    
@@ -65,12 +73,13 @@ angular.module("LTApp").controller("homeCtrl", ['$scope', '$rootScope', '$http',
                             $scope.cq = response.data;
                             console.log($scope.cq);
                             
-                            if (!$('#waitChlgBox').hasClass('d-none')){//waiting box is not hidden -> hide it slowly and bring up the newChlgBox
+                            if (!$scope.showChallengeBox){//waiting box is not hidden -> hide it slowly and bring up the newChlgBox
                                 $('#newChlgBox').fadeTo(0, 0);
                                 $('#waitChlgBox').fadeTo(512, 0);
-                                $('#waitChlgBox').addClass('d-none');
-                                setTimeout(()=>{
-                                    $('#newChlgBox').removeClass('d-none');
+                                $scope.showWaitBox = false;
+                                $scope.showChallengeBox = true;
+                                $timeout(()=>{
+                                    
                                     $('#newChlgBox').fadeTo(1024, 1);
                                     $('.cqoption').fadeTo(1024, 1);
                                     $('#cqlyrics').fadeTo(1024, 1);
@@ -88,36 +97,54 @@ angular.module("LTApp").controller("homeCtrl", ['$scope', '$rootScope', '$http',
                 );
         }
         
-        function blinkRightAnswer(index, challenge){
-            let cp = '';
-            if(challenge)//challenge question
-                cp = 'c';
-            else
-                cp = 'p';//practice question
+        //default color for options button in practice and challenge questions
+        $scope.pqoptionC = ['bg-secondary','bg-secondary','bg-secondary','bg-secondary'];
+        $scope.cqoptionC = ['bg-secondary','bg-secondary','bg-secondary','bg-secondary'];
+        
+        /* reset all options button colors to gray         
+         * challenge flag to indicate if you have to do it wrt challenge options or practice
+         * */
+        function resetOptionsBtn(challenge){
+            if(challenge)//challenge box options
+                for(let i=0; i<$scope.cqoptionC.length; i++)
+                    $scope.cqoptionC[i] = 'bg-secondary';
+           
+            else//practice box options
+                for(let i=0; i<$scope.pqoptionC.length; i++)
+                    $scope.pqoptionC[i] = 'bg-secondary';
+                
             
-            $('.'+cp+'qoption').removeClass('bg-success');
+        }
+        
+        /* change every x ms the background of the right button answer, making it blinking green
+         * challenge flag to indicate if you have to do it wrt challenge options or practice
+         * */
+        function blinkRightAnswer(index, challenge){
             
             for(let i=1; i<=6; i++)
-                setTimeout(()=>{
+                $timeout(()=>{
                    if(i%2 !== 0){//already green, move to gray
-                        $('#'+cp+'qoption'+index).removeClass('bg-success');
-                        $('#'+cp+'qoption'+index).addClass('bg-secondary');
+                       if(challenge)
+                           $scope.cqoptionC[index] = 'bg-secondary';
+                       else
+                           $scope.pqoptionC[index] = 'bg-secondary';
                    }else{//from gray to green
-                        $('#'+cp+'qoption'+index).addClass('bg-success');
-                        $('#'+cp+'qoption'+index).removeClass('bg-secondary');
-                   }
+                       if(challenge)
+                           $scope.cqoptionC[index] = 'bg-success';
+                       else
+                           $scope.pqoptionC[index] = 'bg-success';
+                    }
                 }, 400*i);
         }
         
+        /* display wrong selected options with red background
+         * challenge flag to indicate if you have to do it wrt challenge options or practice
+         * */
         function showWrongAnswer(index, challenge){
-            let cp = '';
-            if(challenge)//challenge question
-                cp = 'c';
+            if(challenge)
+                $scope.cqoptionC[index] = 'bg-danger';
             else
-                cp = 'p';//practice question
-            
-            $('#'+cp+'qoption'+index).removeClass('bg-secondary');
-            $('#'+cp+'qoption'+index).addClass('bg-danger');
+                $scope.pqoptionC[index] = 'bg-danger';
         }
         
         $scope.pqChoose = function(index){
@@ -133,17 +160,15 @@ angular.module("LTApp").controller("homeCtrl", ['$scope', '$rootScope', '$http',
                 .then(
                     (response) => {
                         $scope.pq = response.data;
-                        blinkRightAnswer($scope.pq.rightAnswerIndex + 1, false);//make the right button blinking green (false cause it's practice q)
+                        blinkRightAnswer($scope.pq.rightAnswerIndex, false);//make the right button blinking green (false cause it's practice q)
                         if($scope.pq.rightAnswerIndex !== $scope.pq.givenAnswerIndex)
-                            showWrongAnswer($scope.pq.givenAnswerIndex + 1, false);//make the wrong clicked button red (false cause it's practice q)
+                            showWrongAnswer($scope.pq.givenAnswerIndex, false);//make the wrong clicked button red (false cause it's practice q)
                         console.log($scope.pq);
-                        setTimeout(()=>{
+                        $timeout(()=>{
                             getNewPracticeQuestion();//load a new practice question
                             
                             //reset options button colors
-                            $('.pqoption').removeClass('bg-success');
-                            $('.pqoption').removeClass('bg-danger');
-                            $('.pqoption').addClass('bg-secondary');
+                            resetOptionsBtn(false);//practice
                         }, 10000);
                     },
                     (error) =>  console.error(error)
@@ -163,17 +188,15 @@ angular.module("LTApp").controller("homeCtrl", ['$scope', '$rootScope', '$http',
                 .then(
                     (response) => {
                         $scope.cq = response.data;
-                        blinkRightAnswer($scope.cq.rightAnswerIndex + 1, true);//make the right button blinking green (true cause it's challenge q)
+                        blinkRightAnswer($scope.cq.rightAnswerIndex, true);//make the right button blinking green (true cause it's challenge q)
                         if($scope.cq.rightAnswerIndex !== $scope.cq.givenAnswerIndex)
-                            showWrongAnswer($scope.cq.givenAnswerIndex + 1, true);//make the wrong clicked button red (true cause it's challenge q)
+                            showWrongAnswer($scope.cq.givenAnswerIndex, true);//make the wrong clicked button red (true cause it's challenge q)
                         console.log($scope.cq);
-                        setTimeout(()=>{
+                        $timeout(()=>{
                             getNewChallengeQuestion();//search for a new challenge question
                             
                             //reset options button colors
-                            $('.cqoption').removeClass('bg-success');
-                            $('.cqoption').removeClass('bg-danger');
-                            $('.cqoption').addClass('bg-secondary');
+                            resetOptionsBtn(true);//true 'cause challenge box
                         }, 10000);
                     },
                     (error) =>  console.error(error)

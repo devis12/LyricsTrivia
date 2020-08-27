@@ -1,8 +1,13 @@
 /*Controller within profile*/
-angular.module("LTApp").controller("profileCtrl", ['$scope', '$rootScope', '$http', '$httpParamSerializer', function($scope, $rootScope, $http, $httpParamSerializer) {
-       $scope.page = 'profile';
-       $('.aNav').removeClass('active');
-       $('#linkProfile').addClass('active');
+angular.module("LTApp")
+        
+        .controller("profileCtrl", ['$scope', '$rootScope', '$http', '$httpParamSerializer', 
+            function($scope, $rootScope, $http, $httpParamSerializer) {
+        
+        $scope.page = 'profile';
+        $rootScope.homeLinkC = '';
+        $rootScope.playersLinkC = '';
+        $rootScope.profileLinkC = 'active';
        
        //recover player info
        $http.get("Players/"+$rootScope.username)
@@ -37,9 +42,11 @@ angular.module("LTApp").controller("profileCtrl", ['$scope', '$rootScope', '$htt
             return ($scope.passwordUpd1 === $scope.passwordUpd2);
         }
         
+        $scope.updateBtnActive = false;//disable update btn
+        
         /*Check pwds integrity*/
         $scope.checkPwds = function(){
-            document.getElementById("submitUpd").disabled = true;
+            $scope.updateBtnActive = false;
             if(!isNewPwdStrong()){
                 $scope.pwdUpdateErrMsg = "Password doesn't satisfy security requirements!";
                 return;
@@ -48,7 +55,7 @@ angular.module("LTApp").controller("profileCtrl", ['$scope', '$rootScope', '$htt
                 $scope.pwdUpdateErrMsg = "Passwords don't match!";
                 return;
             }
-            document.getElementById("submitUpd").disabled = false;
+            $scope.updateBtnActive = true;
             $scope.pwdUpdateErrMsg = "";
         };
         
@@ -77,12 +84,15 @@ angular.module("LTApp").controller("profileCtrl", ['$scope', '$rootScope', '$htt
                 );
         };
         
+        
+        $scope.deleteBtnActive = false;
+        
         $scope.checkPwdDel = function(){
             let pwdDel = $scope.passwordDel;
             if(!checkPwdStrong(pwdDel))//surely this wasn't its pwd
-                document.getElementById("submitDel").disabled = true;
+                $scope.deleteBtnActive = false;
             else
-                document.getElementById("submitDel").disabled = false;
+                $scope.deleteBtnActive = true;
         };
         
         /*Check if the typed pwd is correct, before enabling the deletion of the account*/

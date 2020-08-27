@@ -11,33 +11,33 @@
             <h6 class="text-transparent">Coming up!</h6>
             
             <!-- WAITING INCOMING CHALLENGE QUESTIONS -->
-            <div id="waitChlgBox" class="jumbotron w-75 ml-auto mr-auto mb-3 mt-1 bg-dark text-light font-italic fs-16">
+            <div id="waitChlgBox" ng-show="showWaitBox" class="jumbotron w-75 ml-auto mr-auto mb-3 mt-1 bg-dark text-light font-italic fs-16">
                 <h6>Nothing new <i class="far fa-frown"></i></h6><br />  
                 Wait for someone to challenge you and answer to its question. These will let you move up and down in the global standings visible in the section
                 <a class="fs-16 text-bold text-info" href="#Players">Players</a>
             </div>
             
             <!-- INCOMING CHALLENGE QUESTIONS -->
-            <div id="newChlgBox" class="bg-transparent d-none">
-                <div id="cqlyrics" class="jumbotron w-75 ml-auto mr-auto mb-3 mt-1 bg-dark text-light font-italic fs-16" style="opacity: 0;"  ng-bind-html='cq.lyrics | substringN: 512 | noNewLine'>
+            <div id="newChlgBox" ng-show="showChallengeBox" class="bg-transparent">
+                <div id="cqlyrics" class="jumbotron w-75 ml-auto mr-auto mb-3 mt-1 bg-dark text-light font-italic fs-16" ng-bind-html='cq.lyrics | substringN: 512 | noNewLine'>
                   
                 </div>
                 
                 <div class="row mt-1 ml-auto mr-auto text-center">
                     <div class="col-6 col-6-12-1368 mb-1">
-                        <a id="cqoption1" class="cqoption btn bg-secondary text-white pb-5" style="opacity: 0" ng-click="cqChoose(0)">{{cq.options[0].trackName | cleanTrackInfo}}<br /> <span class="artist">{{cq.options[0].trackArtist | cleanTrackInfo}}</span></a>
+                        <a id="cqoption0" ng-class="cqoptionC[0]" class="cqoption btn text-white pb-5" ng-click="cqChoose(0)">{{cq.options[0].trackName | cleanTrackInfo}}<br /> <span class="artist">{{cq.options[0].trackArtist | cleanTrackInfo}}</span></a>
                     </div>
                     <div class="col-6 col-6-12-1368 ">
-                        <a id="cqoption2" class="cqoption btn bg-secondary text-white pb-5" style="opacity: 0" ng-click="cqChoose(1)">{{cq.options[1].trackName | cleanTrackInfo}}<br /> <span class="artist">{{cq.options[1].trackArtist | cleanTrackInfo}}</span></a>
+                        <a id="cqoption1" ng-class="cqoptionC[1]" class="cqoption btn text-white pb-5" ng-click="cqChoose(1)">{{cq.options[1].trackName | cleanTrackInfo}}<br /> <span class="artist">{{cq.options[1].trackArtist | cleanTrackInfo}}</span></a>
                     </div>
                 </div>
 
                 <div class="row mt-1 ml-auto mr-auto text-center">
                    <div class="col-6 col-6-12-1368 mb-1">
-                       <a id="cqoption3" class="cqoption btn bg-secondary text-white pb-5" style="opacity: 0" ng-click="cqChoose(2)">{{cq.options[2].trackName | cleanTrackInfo}}<br /> <span class="artist">{{cq.options[2].trackArtist | cleanTrackInfo}}</span></a>
+                       <a id="cqoption2" ng-class="cqoptionC[2]" class="cqoption btn text-white pb-5" ng-click="cqChoose(2)">{{cq.options[2].trackName | cleanTrackInfo}}<br /> <span class="artist">{{cq.options[2].trackArtist | cleanTrackInfo}}</span></a>
                    </div>
                    <div class="col-6 col-6-12-1368">
-                       <a id="cqoption4" class="cqoption btn bg-secondary text-white pb-5" style="opacity: 0" ng-click="cqChoose(3)">{{cq.options[3].trackName | cleanTrackInfo}}<br /> <span class="artist">{{cq.options[3].trackArtist | cleanTrackInfo}}</span></a>
+                       <a id="cqoption3" ng-class="cqoptionC[3]" class="cqoption btn text-white pb-5" ng-click="cqChoose(3)">{{cq.options[3].trackName | cleanTrackInfo}}<br /> <span class="artist">{{cq.options[3].trackArtist | cleanTrackInfo}}</span></a>
                    </div>
                </div>
                 
@@ -51,25 +51,25 @@
             <h6>(random questions)</h6>
             
             <div class="bg-transparent">
-                <div id="pqlyrics" class="jumbotron w-75 ml-auto mr-auto mb-3 mt-1 bg-dark text-light font-italic fs-16" style="opacity: 0;"  ng-bind-html='pq.lyrics | substringN: 512 | noNewLine'>
+                <div id="pqlyrics" class="jumbotron w-75 ml-auto mr-auto mb-3 mt-1 bg-dark text-light font-italic fs-16" ng-bind-html='pq.lyrics | substringN: 512 | noNewLine'>
                   
                 </div>
                 
                 <div class="row mt-1 ml-auto mr-auto text-center">
                     <div class="col-6 col-6-12-1368 mb-1">
-                        <a id="pqoption1" class="pqoption btn bg-secondary text-white pb-5" style="opacity: 0" ng-click="pqChoose(0)">{{pq.options[0].trackName | cleanTrackInfo}}<br /> <span class="artist">{{pq.options[0].trackArtist | cleanTrackInfo}}</span></a>
+                        <a id="pqoption0" ng-class="pqoptionC[0]" class="pqoption btn text-white pb-5" ng-click="pqChoose(0)">{{pq.options[0].trackName | cleanTrackInfo}}<br /> <span class="artist">{{pq.options[0].trackArtist | cleanTrackInfo}}</span></a>
                     </div>
                     <div class="col-6 col-6-12-1368 ">
-                        <a id="pqoption2" class="pqoption btn bg-secondary text-white pb-5" style="opacity: 0" ng-click="pqChoose(1)">{{pq.options[1].trackName | cleanTrackInfo}}<br /> <span class="artist">{{pq.options[1].trackArtist | cleanTrackInfo}}</span></a>
+                        <a id="pqoption1" ng-class="pqoptionC[1]" class="pqoption btn text-white pb-5" ng-click="pqChoose(1)">{{pq.options[1].trackName | cleanTrackInfo}}<br /> <span class="artist">{{pq.options[1].trackArtist | cleanTrackInfo}}</span></a>
                     </div>
                 </div>
 
                 <div class="row mt-1 ml-auto mr-auto text-center">
                    <div class="col-6 col-6-12-1368 mb-1">
-                       <a id="pqoption3" class="pqoption btn bg-secondary text-white pb-5" style="opacity: 0" ng-click="pqChoose(2)">{{pq.options[2].trackName | cleanTrackInfo}}<br /> <span class="artist">{{pq.options[2].trackArtist | cleanTrackInfo}}</span></a>
+                       <a id="pqoption2" ng-class="pqoptionC[2]" class="pqoption btn text-white pb-5" ng-click="pqChoose(2)">{{pq.options[2].trackName | cleanTrackInfo}}<br /> <span class="artist">{{pq.options[2].trackArtist | cleanTrackInfo}}</span></a>
                    </div>
                    <div class="col-6 col-6-12-1368">
-                       <a id="pqoption4" class="pqoption btn bg-secondary text-white pb-5" style="opacity: 0" ng-click="pqChoose(3)">{{pq.options[3].trackName | cleanTrackInfo}}<br /> <span class="artist">{{pq.options[3].trackArtist | cleanTrackInfo}}</span></a>
+                       <a id="pqoption3" ng-class="pqoptionC[3]" class="pqoption btn text-white pb-5" ng-click="pqChoose(3)">{{pq.options[3].trackName | cleanTrackInfo}}<br /> <span class="artist">{{pq.options[3].trackArtist | cleanTrackInfo}}</span></a>
                    </div>
                </div>
                 

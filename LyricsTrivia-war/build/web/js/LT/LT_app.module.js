@@ -2,6 +2,10 @@ let LTApp = angular.module("LTApp", ['ngRoute', 'ngSanitize']);
 
 LTApp.run(function($rootScope) {
     $rootScope.username = $('#usernamePlayer').val();
+    $rootScope.homeLinkC = 'active';
+    $rootScope.playersLinkC = '';
+    $rootScope.profileLinkC = '';
+    
 });
 
 LTApp.config(['$routeProvider', function($routeProvider) {

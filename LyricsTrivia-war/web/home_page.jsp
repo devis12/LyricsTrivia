@@ -29,9 +29,9 @@
                 <div class="inner">
                   <h3 class="masthead-brand"><i class="fas fa-music mr-4 chgColor2"></i>LyricsTrivia<i class="ml-4 fas fa-music chgColor1"></i></h3>
                   <nav class="nav nav-masthead justify-content-center">
-                    <a id="linkHome" class="nav-link aNav" href="#Home">Home</a>
-                    <a id="linkPlayers" class="nav-link aNav" href="#Players">Players</a>
-                    <a id="linkProfile" class="nav-link aNav" href="#Profile">Account</a>
+                    <a id="linkHome" ng-class="homeLinkC" class="nav-link aNav" href="#Home">Home</a>
+                    <a id="linkPlayers" ng-class="playersLinkC" class="nav-link aNav" href="#Players">Players</a>
+                    <a id="linkProfile" ng-class="profileLinkC" class="nav-link aNav" href="#Profile">Account</a>
                     <a class="nav-link aNav" href="Logout">Logout</a>
                   </nav>
                 </div>

@@ -11,7 +11,7 @@
                    ng-model="passwordUpd1" name="passwordUpd1" ng-change="checkPwds()" value="" placeholder="Insert new password"><br />
             <input type="password" class="mb-3 border border-info rounded-bottom border-top-0 border-left-0 border-right-0" 
                    ng-model="passwordUpd2" name="passwordUpd2" ng-change="checkPwds()" value="" placeholder="Confirm new password"><br />
-            <input type="button" id="submitUpd" class="btn btn-info mb-3" ng-click="updPwd()" value="UPDATE" disabled/>
+            <input type="button" id="submitUpd" class="btn btn-info mb-3" ng-click="updPwd()" value="UPDATE" ng-disabled="!updateBtnActive"/>
             <br />
             <input type="text" readonly class="bg-light text-danger fs-12 text-bold w-100 m-auto text-center" value="{{pwdUpdateErrMsg}}" />
             <input type="text" readonly class="bg-light text-success fs-14 text-bold w-100 m-auto text-center" value="{{pwdUpdateMsg}}" />
@@ -22,7 +22,7 @@
             <h3>Delete your account</h3>
             <input type="password" class="mt-2 mb-3 bg-light border border-info rounded-bottom border-top-0 border-left-0 border-right-0" 
                    ng-model="passwordDel" name="passwordDel" value="" ng-change="checkPwdDel()" placeholder="Password"><br />
-            <input id="submitDel" ng-click="doDelete()" type="button" class="btn btn-danger text-bold text-light mb-3" value="CONFIRM" disabled/>
+            <input id="submitDel" ng-click="doDelete()" type="button" class="btn btn-danger text-bold text-light mb-3" value="CONFIRM" ng-disabled="!deleteBtnActive"/>
             <br />
             <input type="text" readonly class="bg-light text-danger fs-12 text-bold w-100 m-auto text-center" value="{{deleteErrMsg}}" />
         </div>

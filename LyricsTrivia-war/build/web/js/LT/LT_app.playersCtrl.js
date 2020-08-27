@@ -1,8 +1,14 @@
 /*Controller for players sub-page: containing list of all online/offline players*/
-angular.module("LTApp").controller("playersCtrl", ['$scope', '$rootScope', '$http', '$httpParamSerializer', function($scope, $rootScope, $http, $httpParamSerializer) {
-       $scope.page = 'players';
-       $('.aNav').removeClass('active');
-       $('#linkPlayers').addClass('active');
+angular.module("LTApp")
+        .controller("playersCtrl", 
+            
+            ['$scope', '$rootScope', '$timeout', '$interval', '$http', '$httpParamSerializer', 
+                function($scope, $rootScope, $timeout, $interval, $http, $httpParamSerializer) {
+                    
+        $scope.page = 'players';
+        $rootScope.homeLinkC = '';
+        $rootScope.playersLinkC = 'active';
+        $rootScope.profileLinkC = '';
         
         $scope.playersOnlineList = [];
         
@@ -10,15 +16,12 @@ angular.module("LTApp").controller("playersCtrl", ['$scope', '$rootScope', '$htt
             $scope.myOrderBy = x;
         };
         
+        /*Function to periodically refresh players online status & stats*/
         function refreshPlayersList(){
             $http.get("Players?online_status=1")
                 .then(
                     (response) => {
                         $scope.playersOnlineList = response.data.filter( (p)=>(p.username != $rootScope.username));
-                        if(screen.width < 768 || $(window).width()<768)
-                            $scope.col_priority_low = ('d-none');
-                        else
-                            $scope.col_priority_low = ('');
                     },
                     (error) =>  console.error(error)
                 );
@@ -27,9 +30,13 @@ angular.module("LTApp").controller("playersCtrl", ['$scope', '$rootScope', '$htt
         /*refresh periodically online status and number of all players*/
         refreshPlayersList();
         $scope.orderByMe("username");//order automatically, just first time
-        setInterval(refreshPlayersList, 2000);  
+        $interval(refreshPlayersList, 2000);  
   
         $scope.newChg = {};
+        
+        $scope.submitNewChlgC = 'btn-primary';//submit new challenge color
+        $scope.submitNewChlgV = 'Challenge';//submit new challenge value
+        $scope.submitNewChlgE = false;//submitnew challenge enabled
         
         function resetNewChlgValues(){
             //cleanup search params
@@ -47,35 +54,42 @@ angular.module("LTApp").controller("playersCtrl", ['$scope', '$rootScope', '$htt
             $scope.track3Txt = '';
             $scope.track4Txt = '';
             
-            setTrackIDVisibility();
+            setTrackIDEnabled();
             
             $scope.rightTrackID = "1";//put the radio checked ad default to 1
             
-            $('#submitNewChlg').removeClass("btn-success");
-            $('#submitNewChlg').addClass("btn-primary");
+            $scope.submitNewChlgC = 'btn-primary';
+            $scope.submitNewChlgV = 'Challenge';
+            $scope.submitNewChlgE = false;
         }
         
-        function setTrackIDVisibility(){
+        $scope.setTrackID1E = true;//true (i.e. enabled) if value is not chosen, i.e. isNaN
+        $scope.setTrackID2E = true;//true (i.e. enabled) if value is not chosen, i.e. isNaN
+        $scope.setTrackID3E = true;//true (i.e. enabled) if value is not chosen, i.e. isNaN
+        $scope.setTrackID4E = true;//true (i.e. enabled) if value is not chosen, i.e. isNaN
             
-            $('.setTrackID1').prop('disabled', !isNaN(parseInt($scope.trackID1)));
-            $('.setTrackID2').prop('disabled', !isNaN(parseInt($scope.trackID2)));
-            $('.setTrackID3').prop('disabled', !isNaN(parseInt($scope.trackID3)));
-            $('.setTrackID4').prop('disabled', !isNaN(parseInt($scope.trackID4)));
-            
+        //change the enable/disable property of setTrackIDx buttons
+        function setTrackIDEnabled(){
+            $scope.setTrackID1E = isNaN(parseInt($scope.trackID1));//true (i.e. enabled) if value is not chosen, i.e. isNaN
+            $scope.setTrackID2E = isNaN(parseInt($scope.trackID2));//true (i.e. enabled) if value is not chosen, i.e. isNaN
+            $scope.setTrackID3E = isNaN(parseInt($scope.trackID3));//true (i.e. enabled) if value is not chosen, i.e. isNaN
+            $scope.setTrackID4E = isNaN(parseInt($scope.trackID4));//true (i.e. enabled) if value is not chosen, i.e. isNaN
         }
         
         $scope.newChlgModal = function(username){
             $scope.newChg.askingPlayer = $rootScope.username;
             $scope.newChg.askedPlayer = username;
-            resetNewChlgValues();
-            $('#newChallengeModal').modal();
+            resetNewChlgValues();//reset modal
+            $('#newChallengeModal').modal();//show modal
         };
         
+        
+        $scope.searchBtnE = true; //enable searchBtn
+        $scope.searching = false; //NOT during searching phase
         $scope.searchSongs = function(){
             //GUI adjustments when clicking
-            document.getElementById("searchBtn").disabled = true;
-            $("#searchTxt").addClass('d-none');
-            $("#loadFa").removeClass('d-none');
+            $scope.searchBtnE = false; //disabled searchBtn
+            $scope.searching = true; //during searching phase
             
             let name = $scope.trackName;
             let artist = $scope.trackArtist;
@@ -93,16 +107,11 @@ angular.module("LTApp").controller("playersCtrl", ['$scope', '$rootScope', '$htt
                         //put in the scope objects an empty array in case there is just one single
                         $scope.sslDB = response.data.lyricstrivia;
                          //(do it just a little bit after to be more sure that ng-repeat has visualized content) //TODO check if there is any callback for it
-                        setTimeout(() => {setTrackIDVisibility();}, 128);   //adjust visibility wrt track already selected 
-                            
-                        console.log(response.data);
-                        //$scope.sslJMM = response.data.jmusixmatch;
+                        $timeout(() => {setTrackIDEnabled();}, 128);   //adjust visibility wrt track already selected 
                         
                         //GUI adjustments after response
-                        document.getElementById("searchBtn").disabled = false;
-                        $("#searchTxt").removeClass('d-none');
-                        $("#loadFa").addClass('d-none');
-                        
+                        $scope.searchBtnE = true; //enable searchBtn
+                        $scope.searching = false; //searching phase terminated
                     },
                     (error) =>  console.error(error)
                 );
@@ -110,33 +119,37 @@ angular.module("LTApp").controller("playersCtrl", ['$scope', '$rootScope', '$htt
         
         $scope.eraseTrack = function(idOption){
             //you cannot remove it, until you re-add it
-             $("#track"+ idOption +"Erase").prop('disabled', true);
             
             switch(idOption){
                 case 1: 
                     $scope.trackID1 = false;
                     $scope.track1Txt = '';
+                    $scope.setTrackID1E = true;//enable trackSet btn
+                    $scope.eraseTrack1E = false;//disable trackErase btn
                     $scope.newChg.trackID1 = undefined;
                     break;
                 case 2: 
                     $scope.trackID2 = false;
                     $scope.track2Txt = '';
+                    $scope.setTrackID2E = true;
+                    $scope.eraseTrack2E = false;
                     $scope.newChg.trackID2 = undefined;
                     break;
                 case 3: 
                     $scope.trackID3 = false;
                     $scope.track3Txt = '';
+                    $scope.setTrackID3E = true;
+                    $scope.eraseTrack3E = false;
                     $scope.newChg.trackID3 = undefined;
                     break;
                 case 4: 
                     $scope.trackID4 = false;
                     $scope.track4Txt = '';
+                    $scope.setTrackID4E = true;
+                    $scope.eraseTrack4E = false;
                     $scope.newChg.trackID4 = undefined;
                     break;
             }
-            
-            //you can now re-add it
-            $('.setTrackID'+idOption).prop('disabled', false);
             
             //enable/disable submit
              $scope.enableDisableSubmitChlg();
@@ -151,34 +164,37 @@ angular.module("LTApp").controller("playersCtrl", ['$scope', '$rootScope', '$htt
                 alert("You cannot set two times the same song in a question!");
                 return;
             }
-                
-            //cannot re-set it, until you remove it
-            $('.setTrackID'+idOption).prop('disabled', true);
+
             switch(idOption){
                 case 1: 
                     $scope.trackID1 = trackID;
+                    $scope.setTrackID1E = false;//disable trackSet btn
+                    $scope.eraseTrack1E = true;//enable erase track btn
                     $scope.track1Txt = trackName + " ("+ trackArtist +")";
                     $scope.newChg.trackID1 = trackID;
                     break;
                 case 2: 
                     $scope.trackID2 = trackID;
+                    $scope.setTrackID2E = false;
+                    $scope.eraseTrack2E = true;
                     $scope.track2Txt = trackName + " ("+ trackArtist +")";
                     $scope.newChg.trackID2 = trackID;
                     break;
                 case 3: 
                     $scope.trackID3 = trackID;
+                    $scope.setTrackID3E = false;
+                    $scope.eraseTrack3E = true;
                     $scope.track3Txt = trackName + " ("+ trackArtist +")";
                     $scope.newChg.trackID3 = trackID;
                     break;
                 case 4: 
                     $scope.trackID4 = trackID;
+                    $scope.setTrackID4E = false;
+                    $scope.eraseTrack4E = true;
                     $scope.track4Txt = trackName + " ("+ trackArtist +")";
                     $scope.newChg.trackID4 = trackID;
                     break;
             }
-            
-            //possibility to remove it and set another one
-             $("#track"+ idOption +"Erase").prop('disabled', false);
              
              //enable/disable submit
              $scope.enableDisableSubmitChlg();
@@ -195,9 +211,9 @@ angular.module("LTApp").controller("playersCtrl", ['$scope', '$rootScope', '$htt
           console.log(trackID3);
           console.log(trackID4);
           if(!isNaN(trackID1) && !isNaN(trackID2) && !isNaN(trackID3) && !isNaN(trackID4))
-              $('#submitNewChlg').prop('disabled', false);
+              $scope.submitNewChlgE = true;
           else
-              $('#submitNewChlg').prop('disabled', true);
+              $scope.submitNewChlgE = false;
         };
         
         
@@ -223,11 +239,11 @@ angular.module("LTApp").controller("playersCtrl", ['$scope', '$rootScope', '$htt
                 .then(
                     () => {
                         //$('#newChallengeModal').modal('toggle');
-                        $('#submitNewChlg').removeClass("btn-primary");
-                        $('#submitNewChlg').addClass("btn-success");
-                        $('#submitNewChlg').prop("disabled", true);
-                        $('#submitNewChlg').val("SENT");
-                        setTimeout(() => $('#newChallengeModal').modal('toggle'), 3000);
+                        $scope.submitNewChlgC = 'btn-success';
+                        $scope.submitNewChlgE = false;
+                        $scope.submitNewChlgV = 'SENT';
+                        
+                        $timeout(() => $('#newChallengeModal').modal('toggle'), 3000);
                     },
                     (error) =>  console.error(error)
                 );

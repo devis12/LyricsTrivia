@@ -76,7 +76,7 @@
                                name="track1" value="" placeholder="Track1" required readonly/>
                         </div>
                         <div class="col-1">
-                            <button id="track1Erase" ng-click="eraseTrack(1)" disabled><i class="fas fa-eraser text-danger"></i></button>
+                            <button id="track1Erase" ng-click="eraseTrack(1)" ng-disabled="!eraseTrack1E"><i class="fas fa-eraser text-danger"></i></button>
                         </div>
                     </div>
                     
@@ -90,7 +90,7 @@
                                name="track2" value="mt-2" placeholder="Track2" required readonly/>
                         </div>
                         <div class="col-1">
-                            <button id="track2Erase" ng-click="eraseTrack(2)" disabled><i class="fas fa-eraser text-danger"></i></button>
+                            <button id="track2Erase" ng-click="eraseTrack(2)"  ng-disabled="!eraseTrack2E"><i class="fas fa-eraser text-danger"></i></button>
                         </div>
                     </div>
                     
@@ -104,7 +104,7 @@
                                name="track3" value="" placeholder="Track3" required readonly/>
                         </div>
                         <div class="col-1">
-                            <button id="track3Erase" ng-click="eraseTrack(3)" disabled><i class="fas fa-eraser text-danger"></i></button>
+                            <button id="track3Erase" ng-click="eraseTrack(3)" ng-disabled="!eraseTrack3E"><i class="fas fa-eraser text-danger"></i></button>
                         </div>
                     </div>
                     
@@ -118,7 +118,7 @@
                                name="track4" value="" placeholder="Track4" required readonly/>
                         </div>
                         <div class="col-1">
-                            <button id="track4Erase" ng-click="eraseTrack(4)" disabled><i class="fas fa-eraser text-danger"></i></button>
+                            <button id="track4Erase" ng-click="eraseTrack(4)" ng-disabled="!eraseTrack4E"><i class="fas fa-eraser text-danger"></i></button>
                         </div>
                     </div>
                     
@@ -139,9 +139,9 @@
                         
                         
                         <div class="row mt-2 ml-auto mr-auto">
-                            <button id="searchBtn" type="button" class="btn btn-info text-bold w-50 m-auto" ng-click="searchSongs()">
-                                <span id="loadFa" class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                <span id="searchTxt" class="text-bold"><i class="fas fa-search text-light"></i></span>
+                            <button id="searchBtn" type="button" class="btn btn-info text-bold w-50 m-auto" ng-click="searchSongs()" ng-disabled="!searchBtnE">
+                                <span id="loadFa" ng-show="searching" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span id="searchTxt" ng-show="!searching" class="text-bold"><i class="fas fa-search text-light"></i></span>
                             </button>
                         </div>
                     </div>
@@ -152,10 +152,10 @@
                                 <td class="">{{sl.trackName}}</td>
                                 <td class="">{{sl.trackArtist}}</td>
                                 <td class="">
-                                    <button ng-click="setTrackID(1, sl.trackName, sl.trackArtist, sl.trackID)" class="btn btn-outline-dark float-left setTrackID1">Tr.1</button>
-                                    <button ng-click="setTrackID(2, sl.trackName, sl.trackArtist, sl.trackID)" class="btn btn-outline-dark float-left setTrackID2">Tr.2</button>
-                                    <button ng-click="setTrackID(3, sl.trackName, sl.trackArtist, sl.trackID)" class="btn btn-outline-dark float-left setTrackID3">Tr.3</button>
-                                    <button ng-click="setTrackID(4, sl.trackName, sl.trackArtist, sl.trackID)" class="btn btn-outline-dark float-left setTrackID4">Tr.4</button>
+                                    <button ng-click="setTrackID(1, sl.trackName, sl.trackArtist, sl.trackID)" class="btn btn-outline-dark float-left setTrackID1" ng-disabled="!setTrackID1E">Tr.1</button>
+                                    <button ng-click="setTrackID(2, sl.trackName, sl.trackArtist, sl.trackID)" class="btn btn-outline-dark float-left setTrackID2" ng-disabled="!setTrackID2E">Tr.2</button>
+                                    <button ng-click="setTrackID(3, sl.trackName, sl.trackArtist, sl.trackID)" class="btn btn-outline-dark float-left setTrackID3" ng-disabled="!setTrackID3E">Tr.3</button>
+                                    <button ng-click="setTrackID(4, sl.trackName, sl.trackArtist, sl.trackID)" class="btn btn-outline-dark float-left setTrackID4" ng-disabled="!setTrackID4E">Tr.4</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -165,7 +165,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input id="submitNewChlg" type="submit" class="btn btn-primary text-bold" ng-click="throwNewChallenge(this)" value="Challenge" disabled/>
+                    <input id="submitNewChlg" type="submit" class="btn text-bold" ng-class="submitNewChlgC" ng-click="throwNewChallenge(this)" value="{{submitNewChlgV}}" ng-disabled="!submitNewChlgE"/>
                 </div>
         </div>
     </div>
