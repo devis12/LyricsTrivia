@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.wa.devisdm.lyricstrivia.dao;
 
 import it.unitn.wa.devisdm.lyricstrivia.entity.SongLyrics;
@@ -15,10 +10,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import org.apache.commons.text.StringEscapeUtils;
 
 /**
- *
+ * CRUD operation on SongLyrics Entity
+ * Interaction with MusixMatch beans' methods to retrieve SongLyrics from external service and format them in a LyricsTrivia like fashion
+ * Utilities that will come handy to automatically generate and build up questions
  * @author devis
  */
 @Stateless
@@ -71,12 +67,14 @@ public class SongLyricsDAO implements SongLyricsDAORemote, SongLyricsDAOLocal {
         return sl;
     }
     
+    /*Get song by artist and song name using musix match bean*/    
     @Override
     public SongLyrics getSongLyricsJMM(String trackName, String trackArtist) {
         SongLyrics sl = musixMatchLocal.getSongLyrics(trackName, trackArtist);
         return sl;
     }
-
+    
+    /*Get songs by artist using musix match bean*/
     @Override
     public List<SongLyrics> getSongsByArtistJMM(String trackArtist) {
         return  musixMatchLocal.getSongsByArtist(trackArtist);
@@ -94,7 +92,8 @@ public class SongLyricsDAO implements SongLyricsDAORemote, SongLyricsDAOLocal {
         }
         return ssl;
     }
-
+    
+    /*Get songs by name using musix match bean*/
     @Override
     public List<SongLyrics> getSongsByNameJMM(String trackName) {
         return musixMatchLocal.getSongsByName(trackName);

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.wa.devisdm.lyricstrivia.util;
 
 import java.util.HashMap;
@@ -10,7 +5,8 @@ import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * Useful functions to extract Path or Query parameters
+ * Comes handy in combination with Gson library to develop quick REST services out of a servlet
  * @author devis
  */
 public class RequestsUtilities {

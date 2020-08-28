@@ -1,15 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.wa.devisdm.lyricstrivia.listener;
 
 import it.unitn.wa.devisdm.lyricstrivia.dao.OnlinePlayersRemote;
 import it.unitn.wa.devisdm.lyricstrivia.dao.PlayerDAORemote;
 import it.unitn.wa.devisdm.lyricstrivia.entity.Player;
-import java.util.HashMap;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;

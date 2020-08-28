@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.wa.devisdm.lyricstrivia.util;
 
 import java.util.regex.Pattern;
 
 /**
- *
+ * Utility checks for validity of an email, strong password...
  * @author devis
  */
 public class UtilityCheck {

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.wa.devisdm.lyricstrivia.module;
 
 import it.unitn.wa.devisdm.lyricstrivia.entity.SongLyrics;
@@ -18,7 +13,8 @@ import org.jmusixmatch.entity.track.Track;
 import org.jmusixmatch.entity.track.TrackData;
 
 /**
- *
+ * Wrapper beans useful to make usage of the MusixMatch API and unofficial SDK https://github.com/sachin-handiekar/jMusixMatch
+ * for delivering SongLyrics data in a LyricsTrivia like fashion to other beans
  * @author devis
  */
 @Stateless
@@ -133,16 +129,5 @@ public class MusixMatchLyrics implements MusixMatchLyricsLocal{
         
         return null;
     }
-    
-    
-    /*
-    public static void main(String[] args){
-        List<SongLyrics> ssl = new MusixMatchLyrics().getSongsByArtist("Beatles");
-        System.out.println("ID: " + ssl.get(0).getTrackID());
-        System.out.println("Name: " + ssl.get(0).getTrackName());
-        System.out.println("Artist: " + ssl.get(0).getTrackArtist());
-        System.out.println("Lyrics: " + ssl.get(0).getTrackLyrics());
-    }
-    */
     
 }

@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *  Servlet for validating player account
+ * Servlet for validating player account with token sent in registration process
  * @author devis
  */
 public class Validation extends HttpServlet {

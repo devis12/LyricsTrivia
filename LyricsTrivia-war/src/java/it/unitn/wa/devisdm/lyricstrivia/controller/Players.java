@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.wa.devisdm.lyricstrivia.controller;
 
 import it.unitn.wa.devisdm.lyricstrivia.util.RequestsUtilities;
@@ -15,12 +10,10 @@ import it.unitn.wa.devisdm.lyricstrivia.util.TokenGenerator;
 import it.unitn.wa.devisdm.lyricstrivia.util.UtilityCheck;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -110,7 +103,7 @@ public class Players extends HttpServlet {
         
     }
     
-    /*  Check if PUT, DELETE operations are authorized */
+    /*  Check if PUT, DELETE operations are authorized (i.e. made by the very same logged in user to its own entity stored representation)*/
     private boolean isAuthorized(HttpServletRequest request){
         String specificUsername = RequestsUtilities.getPathParameter(request); //extract username
         

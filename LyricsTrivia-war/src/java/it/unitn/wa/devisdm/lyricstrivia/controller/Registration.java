@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Registration form servlet -> create new user and sends email with confirmation token
  * @author devis
  */
 public class Registration extends HttpServlet {

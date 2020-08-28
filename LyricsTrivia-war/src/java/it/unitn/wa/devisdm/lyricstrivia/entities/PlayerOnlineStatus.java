@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.wa.devisdm.lyricstrivia.entities;
 
 import it.unitn.wa.devisdm.lyricstrivia.entity.Player;
 import java.io.Serializable;
 
 /**
- *
+ * Handy class to extract and map easily info from the OnlinePlayers stateful hashmap
  * @author devis
  */
 public class PlayerOnlineStatus extends Player implements Serializable{

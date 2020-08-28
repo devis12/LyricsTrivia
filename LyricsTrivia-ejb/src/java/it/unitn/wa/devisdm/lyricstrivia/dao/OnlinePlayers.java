@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.wa.devisdm.lyricstrivia.dao;
 
 import it.unitn.wa.devisdm.lyricstrivia.entity.Player;
@@ -17,7 +12,7 @@ import javax.ejb.Stateful;
 public class OnlinePlayers implements OnlinePlayersRemote {
 
     public HashMap<Player, Boolean> playerMap = new HashMap<>();
-
+    
     @Override
     public void addPlayer(Player p) {
         playerMap.put(p, Boolean.FALSE);

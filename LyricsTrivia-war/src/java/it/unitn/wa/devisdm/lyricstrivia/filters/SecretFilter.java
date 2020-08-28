@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.wa.devisdm.lyricstrivia.filters;
 
 import java.io.IOException;
@@ -27,7 +22,7 @@ import javax.servlet.http.HttpServletResponseWrapper;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ * Control authorized access to admin restricted sections
  * @author devis
  */
 public class SecretFilter implements Filter {

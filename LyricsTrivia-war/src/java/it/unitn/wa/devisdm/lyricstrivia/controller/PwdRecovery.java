@@ -19,7 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Offers the possibility to submit a password recovery request (POST) and 
+ * successfully login into the application with a GET request providing the received token
  * @author devis
  */
 public class PwdRecovery extends HttpServlet {

@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
@@ -21,7 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Perform admin and player login into the application... 
+ * this will make possible to the user to successfully "overcome" respectively the SecretFilter and LoggedInFilter
  * @author devis
  */
 public class Login extends HttpServlet {

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.wa.devisdm.lyricstrivia.entity;
 
 import java.io.Serializable;
@@ -32,10 +27,10 @@ public class Player implements Serializable {
     private String email;
     
     @Column
-    private byte[] pwd;
+    private byte[] pwd;//encrypted pwd
     
     @Column
-    private byte[] salt;
+    private byte[] salt;//used to compute password and hide the fact that different users can have same passwords
     
     @Column
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -45,14 +40,13 @@ public class Player implements Serializable {
     private char gender;
     
     @Column
-    private int played;
+    private int played;//number of played challenges
     
     @Column
-    private boolean confirmed;
-    
+    private boolean confirmed;//account has been confirmed
     
     @Column
-    private int won;
+    private int won;//number of challenges won
     
     public String getUsername() {
         return username;

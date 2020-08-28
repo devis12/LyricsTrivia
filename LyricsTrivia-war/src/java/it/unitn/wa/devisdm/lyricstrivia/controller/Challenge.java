@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.wa.devisdm.lyricstrivia.controller;
 
 import com.google.gson.Gson;
@@ -30,7 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ * REST API to
+ * (GET) get new Challenge Question (if there any unanswered ones in the local storage) and 
+ * (PUT) answer to them
  * @author devis
  */
 public class Challenge extends HttpServlet {

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.wa.devisdm.lyricstrivia.util;
 
 import com.google.gson.Gson;
@@ -14,7 +9,7 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 /**
- *
+ * Verifying submitted google recaptcha v2 check
  * @author devis
  */
 public class VerifyRecaptcha {
@@ -33,7 +28,7 @@ public class VerifyRecaptcha {
     }
     
     public static final String URL = "https://www.google.com/recaptcha/api/siteverify";
-    public static final String SECRET = "6Lfal78ZAAAAAC7KRxkzUpWeeZaJ6xECo2FjwAT7";
+    public static final String SECRET = "6Lfal78ZAAAAAC7KRxkzUpWeeZaJ6xECo2FjwAT7";//server secret code
     private final static String USER_AGENT = "Mozilla/5.0";
 
 	public static boolean verify(String gRecaptchaResponse) throws IOException {

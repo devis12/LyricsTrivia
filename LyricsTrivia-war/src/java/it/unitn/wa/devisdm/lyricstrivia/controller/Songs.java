@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.wa.devisdm.lyricstrivia.controller;
 
 import com.google.gson.Gson;
@@ -27,7 +22,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *  REST APIs for song lyrics
+ * REST APIs for song lyrics
+ * POST, PUT and DELETE can be performed only by admin
  * @author devis
  */
 public class Songs extends HttpServlet {

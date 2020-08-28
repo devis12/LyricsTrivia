@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.wa.devisdm.lyricstrivia.entity;
 
 import java.io.Serializable;
@@ -27,7 +22,7 @@ public class StoredQuestion implements Serializable {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int id;//automatic internal id related to the question
     
     /*Player from which the question is coming*/
     @Column
@@ -37,7 +32,7 @@ public class StoredQuestion implements Serializable {
     @Column
     private String askedPlayer;
     
-    /*List 4 options*/
+    /*List 4 options (just take into account their musix match trackID)*/
     @Column
     private int trackID1;
     
@@ -50,11 +45,11 @@ public class StoredQuestion implements Serializable {
     @Column
     private int trackID4;
     
-    /*right answer trackID: {trackID1,trackID2,trackID3,trackID4}*/
+    /*right answer trackID: belongs to set {trackID1,trackID2,trackID3,trackID4}*/
     @Column
     private int rightTrackID;
     
-    /*answered trackID: {trackID1,trackID2,trackID3,trackID4}*/
+    /*answered trackID: belongs to set {trackID1,trackID2,trackID3,trackID4}*/
     @Column
     private int givenTrackID;
 

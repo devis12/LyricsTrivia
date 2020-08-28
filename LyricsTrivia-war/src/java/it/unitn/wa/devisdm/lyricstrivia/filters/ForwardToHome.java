@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.wa.devisdm.lyricstrivia.filters;
 
 import it.unitn.wa.devisdm.lyricstrivia.controller.Players;
@@ -34,7 +29,7 @@ import javax.servlet.http.HttpServletResponseWrapper;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ * Directly forward logged user to their home destionation if they're in the / (i.e. landing page)
  * @author devis
  */
 public class ForwardToHome implements Filter {

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.wa.devisdm.lyricstrivia.dao;
 
 import it.unitn.wa.devisdm.lyricstrivia.entity.Question;
@@ -18,7 +13,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 /**
- *
+ * CRUD operation on StoredQuestion Entity 
+ * plus interaction with SongLyrics Beans to generate random questions (that are not supposed to be stored)
  * @author devis
  */
 @Stateful
@@ -32,6 +28,7 @@ public class QuestionDAO implements QuestionDAORemote {
     @EJB
     private SongLyricsDAOLocal songLyricsDAOLocal;
     
+    /*Build up random question using random songlyrics from local dump*/
     @Override
     public Question getNewRndQuestion() {
         List<SongLyrics> slList = songLyricsDAOLocal.getRandomSongLyricsDB(N_OPTIONS_RND);//question has 4 options
@@ -60,7 +57,10 @@ public class QuestionDAO implements QuestionDAORemote {
     public StoredQuestion getStoredQuestion(int id) {
         return manager.find(StoredQuestion.class, id);
     }
-
+    
+    /* Retrieve list of unanswered StoredQuestion (challenges) destined to a specific player and already format 
+     * them as mere Question object (i.e. recover the song lyrics related to them)
+    */
     @Override
     public List<Question> getUnansweredQuestion(String askedPlayerU) {
         if(askedPlayerU == null)

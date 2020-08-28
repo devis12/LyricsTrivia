@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.wa.devisdm.lyricstrivia.controller;
 
 import com.google.gson.Gson;
@@ -11,7 +6,6 @@ import it.unitn.wa.devisdm.lyricstrivia.entity.Question;
 import it.unitn.wa.devisdm.lyricstrivia.entity.SongLyrics;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
@@ -24,7 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ * REST API to
+ * (GET) get new random practice Question which doesn't need to be stored and 
+ * (PUT) answer to them
  * @author devis
  */
 public class Practice extends HttpServlet {
